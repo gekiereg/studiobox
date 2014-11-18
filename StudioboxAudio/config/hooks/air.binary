@@ -1,0 +1,8 @@
+#!/bin/sh
+
+#pg_dropcluster --stop 9.1 main
+#pg_createcluster --locale fr_FR.UTF-8 --start 9.1 main
+
+
+
+#apt-get install airtime

@@ -1,0 +1,11 @@
+airtime	airtime/icecast-hostname	string	localhost
+airtime	airtime/apache-setup	select	dedicated v-host
+airtime	airtime/icecast-sourcepw	string	hackme
+airtime	airtime/apache-servername	string	localhost
+airtime	airtime/storage-directory	string	/home/webradio/Musique/
+airtime	airtime/apache-deldefault	select	remove default
+airtime	airtime/admin-password	string	webradio
+airtime	airtime/icecast-relaypw	string	hackme
+airtime	airtime/apache-serveradmin	string	root@localhost
+airtime	airtime/icecast-adminpw	string	webradio
+airtime	airtime/icecast-setup	boolean	true

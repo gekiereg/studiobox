@@ -1,0 +1,5 @@
+#!/bin/sh
+
+chown 104:108 /etc/icecast2/icecast.xml
+chmod 644 /etc/icecast2/icecast.xml
+#apt-get install airtime

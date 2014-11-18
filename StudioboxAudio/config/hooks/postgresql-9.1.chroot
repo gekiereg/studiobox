@@ -1,0 +1,10 @@
+#sudo -u postgres pg_dumpall > /tmp/postgres.sql
+#sudo pg_dropcluster --stop 9.1 main
+#sudo pg_createcluster --locale fr_FR.UTF-8 --start 9.1 main
+#sudo -u postgres psql -f /tmp/postgres.sql
+#sudo aptitude install silan airtime
+
+#export LC_ALL=fr_FR.UTF-8
+#export DEBIAN_FRONTEND=noninteractive
+#aptitude install -y postgresql
+#aptitude install -y airtime

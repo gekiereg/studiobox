@@ -1,0 +1,83 @@
+[Devices]
+MATSHITA DVD-RAM UJ892AS=4234,11080
+
+[External Programs]
+cdrdao default=/usr/bin/cdrdao
+cdrdao last seen newest version=1.2.3
+cdrdao user parameters=
+cdrecord default=/usr/bin/wodim
+cdrecord last seen newest version=1.1.11
+cdrecord user parameters=
+dvd+rw-format default=/usr/bin/dvd+rw-format
+dvd+rw-format last seen newest version=7.1
+dvd+rw-format user parameters=
+eMovix user parameters=
+growisofs default=/usr/bin/growisofs
+growisofs last seen newest version=7.1
+growisofs user parameters=
+mkisofs default=/usr/bin/genisoimage
+mkisofs last seen newest version=1.1.11
+mkisofs user parameters=
+normalize-audio user parameters=
+readcd default=/usr/bin/readom
+readcd last seen newest version=1.1.11
+readcd user parameters=
+search path[$e]=/usr/bin/,/usr/local/bin/,/usr/sbin/,/usr/local/sbin/,/opt/schily/bin/,/sbin
+sox user parameters=
+transcode user parameters=
+vcdxbuild default=/usr/bin/vcdxbuild
+vcdxbuild last seen newest version=0.7.23
+vcdxbuild user parameters=
+vcdxminfo default=/usr/bin/vcdxminfo
+vcdxminfo last seen newest version=0.7.23
+vcdxminfo user parameters=
+vcdxrip default=/usr/bin/vcdxrip
+vcdxrip last seen newest version=0.7.23
+vcdxrip user parameters=
+
+[General Options]
+Allow overburning=false
+Fifo buffer=4
+Force unsafe operations=false
+Last system check version=2.0.1
+Lock Panels=true
+Manual buffer size=false
+Navigator breadcrumb mode=true
+No cd eject=false
+Show Document Header=true
+Temp Dir=/tmp/kde-user/
+burnfree=true
+check system config=true
+config version=2.0.1
+current theme=quant
+
+[KFileDialog Settings]
+Height 800=450
+Recent Files[$e]=debian-6.0.4-i386-netinst.iso,/media/3fd2ec25-3651-4f97-921c-4f1c6f05fbec/fx/iso/debian-6.0.4-i386-netinst.iso
+Width 1280=720
+
+[TipOfDay]
+RunOnStart=false
+
+[Welcome Widget]
+welcome_actions=file_new_audio,tools_copy_medium,tools_write_image,tools_cdda_rip
+
+[file view]
+Decoration position=0
+Previews=false
+Show Preview=false
+Show hidden files=false
+Sort by=Name
+Sort reversed=false
+View Style=Simple
+last url[$e]=$HOME/
+show bookmarks=false
+
+[image writing]
+recent images[$e]=/media/3fd2ec25-3651-4f97-921c-4f1c6f05fbec/fx/iso/debian-6.0.4-i386-netinst.iso
+
+[main_window_settings]
+Height 800=663
+State=AAAA/wAAAAD9AAAAAgAAAAIAAAM5AAABJfwBAAAAAvsAAAAWAGQAaQByAHQAcgBlAGUAZABvAGMAawEAAAAAAAAAtAAAAEkBAAAF+wAAABgAYwBvAG4AdABlAG4AdABzAGQAbwBjAGsBAAAAtwAAAoIAAAEkAQAABQAAAAMAAAM5AAABJPwBAAAAAfsAAAAYAGQAbwBjAHUAbQBlAG4AdABkAG8AYwBrAQAAAAAAAAM5AAACjgEAAAUAAAM5AAAAAAAAAAQAAAAEAAAACAAAAAj8AAAAAQAAAAIAAAABAAAAFgBtAGEAaQBuAFQAbwBvAGwAQgBhAHIBAAAAAP////8AAAAAAAAAAA==
+ToolBarsMovable=Disabled
+Width 1280=825
