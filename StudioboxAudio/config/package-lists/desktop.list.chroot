@@ -111,6 +111,8 @@ flac
 ssh
 less
 ntp
+parted
+gawk
 #paquets privateurs
 flashplugin-nonfree
 firmware-linux

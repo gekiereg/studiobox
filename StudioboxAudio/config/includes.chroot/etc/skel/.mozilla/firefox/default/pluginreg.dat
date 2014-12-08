@@ -1,14 +1,14 @@
 Generated File. Do not edit.
 
 [HEADER]
-Version:0.16:$
+Version:0.17:$
 Arch:x86_64-gcc3:$
 
 [PLUGINS]
 IcedTeaPlugin.so:$
 /usr/lib/jvm/java-6-openjdk-amd64/jre/lib/amd64/IcedTeaPlugin.so:$
 :$
-1380727231000:0:0:$
+1380727231000:0:0:0:$
 The <a href="http://icedtea.classpath.org/wiki/IcedTea-Web">IcedTea-Web Plugin</a> executes Java applets.:$
 IcedTea-Web Plugin (using IcedTea-Web 1.4 (1.4-3~deb7u2)):$
 34
