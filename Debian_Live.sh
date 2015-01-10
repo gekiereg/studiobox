@@ -31,15 +31,17 @@
 # Erreur de syntaxe
 function Erreur
 {
-    echo "*** Utilisation du script"
-    echo "    /bin/bash Debian_Live_perso_moi.sh version arch [device_de_la_clé]"
+    echo "** Utilisation du script"
+    echo "   /bin/bash Debian_Live_perso_moi.sh version arch [device_de_la_clé]"
     echo ""
-    echo "        * version peut prendre les valeurs « cesar », "
-    echo "          « studioboxAudio » ou « studioboxVideo » et *est obligatoire*"
-    echo "        * arch peut prendre les valeurs « i386 » ou « amd64 »"
-    echo "          et est *obligatoire*"
-    echo "        * S'il faut créer la clé dans la foulée, il faut spécifier sur quel "
-    echo "          « device » créer la clé, sdb, sdc ou..."
+    echo "    * version peut prendre les valeurs « cesar », "
+    echo "      « studioboxAudio » ou « studioboxVideo » et "
+    echo "      *est obligatoire*"
+    echo "    * peut prendre les valeurs « i386 » ou « amd64 »"
+    echo "      et est *obligatoire*"
+    echo "    * s'il faut créer la clé dans la foulée, il faut "
+    echo "      spécifier sur quel « device » créer la clé, "
+    echo "      sdb, sdc ou..."
     exit
 }
 
@@ -53,7 +55,7 @@ function Erreur_cle
 # Erreur d'oubli de version
 function Erreur_version
 {
-    echo "Vous n'avez pas mis quelle version créer, « cesar » ou « studiobox »"    
+    echo "Vous n'avez pas mis quelle version créer, « cesar », « studioboxAudio » ou « studioboxVideo »"    
     Erreur
 }
 
@@ -69,20 +71,25 @@ function PreparationCesar
 {
     # Copie des configurations des démons
     rsync -av --exclude=".*" $REP3/$VERSION/config/includes.chroot/* \
-            $REP1/config/includes.chroot/
+            $REP_LIVE/config/includes.chroot/
     # Copie de la liste des logiciels à installer
     rsync -av --exclude=".*" $REP3/$VERSION/config/package-lists/* \
-            $REP1/config/package-lists/
+            $REP_LIVE/config/package-lists/
     # Copie des configurations des logiciels
-    rsync -av --exclude=".*" $REP3/$VERSION/config/preseed/* $REP1/config/preseed/
+    rsync -av --exclude=".*" $REP3/$VERSION/config/preseed/* $REP_LIVE/config/preseed/
 }
 
 # Préparation pour la création de StudioBoxAudio
 function PreparationStudioBoxAudio
 {
-    # Mise à jour de la doc
     REP6=`pwd`
-    cd $REP5
+    # Mise à jour arborescence git
+    cd $REP_DEPOT_PEDA
+    git pull
+    cp -ar * $REP_LIVE
+    #cd $REP6
+    # Mise à jour de la doc
+    cd $REP_DOC
     svn update
     rm -rf $REP3/$VERSION/config/includes.chroot/etc/skel/Documents/*
     cp *.pdf $REP3/$VERSION/config/includes.chroot/etc/skel/Documents
@@ -91,31 +98,31 @@ function PreparationStudioBoxAudio
     # Copie des dépôts supplémentaires
     echo "*** Copie des dépôts supplémentaires"
     rsync -av --exclude=".*" $REP3/$VERSION/config/archives/* \
-            $REP1/config/archives/
+            $REP_LIVE/config/archives/
     # Copie des fichiers de réponse pour l'installation
     echo "*** Copie des dépôts supplémentaires"
     rsync -av --exclude=".*" $REP3/$VERSION/config/debian-installer/* \
-            $REP1/config/debian-installer/
+            $REP_LIVE/config/debian-installer/
     # Copie des configurations des logiciels
     echo "*** Copie des configurations des logiciels"
     rsync -av --exclude=".*" $REP3/$VERSION/config/hooks/* \
-            $REP1/config/hooks/
+            $REP_LIVE/config/hooks/
     # Copie des configurations des logiciels
     echo "*** Copie des configurations des logiciels"
     rsync -av --exclude=".*" $REP3/$VERSION/config/includes.binary/* \
-            $REP1/config/includes.binary/
+            $REP_LIVE/config/includes.binary/
     # Copie des configurations des démons
     echo "*** Copie des configurations des démons"
     rsync -av  $REP3/$VERSION/config/includes.chroot/* \
-            $REP1/config/includes.chroot/
+            $REP_LIVE/config/includes.chroot/
     # Copie de la liste des logiciels à installer
     echo "*** Copie de la liste des logiciels à installer"
     rsync -av --exclude=".*" $REP3/$VERSION/config/package-lists/* \
-            $REP1/config/package-lists/
+            $REP_LIVE/config/package-lists/
     # Copie des configurations des logiciels
     echo "*** Copie des configurations des logiciels"
     rsync -av --exclude=".*" $REP3/$VERSION/config/preseed/* \
-            $REP1/config/preseed/
+            $REP_LIVE/config/preseed/
 }
 
 # Préparation pour la création de StudioBoxVideo
@@ -124,24 +131,24 @@ function PreparationStudioBoxVideo
     # Copie des configurations des démons
     echo "*** Copie des configurations des démons"
     rsync -av --exclude=".*" $REP3/$VERSION/config/includes.chroot/* \
-            $REP1/config/includes.chroot/
+            $REP_LIVE/config/includes.chroot/
     # Copie de la liste des logiciels à installer
     echo "*** Copie de la liste des logiciels à installer"
     rsync -av --exclude=".*" $REP3/$VERSION/config/package-lists/* \
-            $REP1/config/package-lists/
+            $REP_LIVE/config/package-lists/
     # Copie des configurations des logiciels
     echo "*** Copie des configurations des logiciels"
-    rsync -av --exclude=".*" $REP3/$VERSION/config/preseed/* $REP1/config/preseed/
+    rsync -av --exclude=".*" $REP3/$VERSION/config/preseed/* $REP_LIVE/config/preseed/
     # Copie des configurations des logiciels
     echo "*** Copie des configurations des logiciels"
-    rsync -av --exclude=".*" $REP3/$VERSION/config/hooks/* $REP1/config/hooks/
+    rsync -av --exclude=".*" $REP3/$VERSION/config/hooks/* $REP_LIVE/config/hooks/
     # Copie des configurations des logiciels
     echo "*** Copie des configurations des logiciels"
     rsync -av --exclude=".*" $REP3/$VERSION/config/includes.binary/* \
-            $REP1/config/includes.binary/
+            $REP_LIVE/config/includes.binary/
     # Copie des dépôts supplémentaires
     echo "*** Copie des dépôts supplémentaires"
-    rsync -av --exclude=".*" $REP3/$VERSION/config/archives/* $REP1/config/archives/
+    rsync -av --exclude=".*" $REP3/$VERSION/config/archives/* $REP_LIVE/config/archives/
 }
 
 # Configuration de l'image de la clé
@@ -163,20 +170,20 @@ function Preparation
     LISTE=`ls $REP3/$VERSION/config/packages.chroot/* | grep _all`
     if [ "$LISTE" != "" ];
         then
-            cp $LISTE $REP1/config/packages.chroot
+            cp $LISTE $REP_LIVE/config/packages.chroot
             if [ "$ARCH" = "amd64" ];
                 then 
                     LISTE=`ls $REP3/$VERSION/config/packages.chroot/* | grep _amd64`
                 else
                     LISTE=`ls $REP3/$VERSION/config/packages.root/* | grep _i386`
             fi
-            cp $LISTE $REP1/config/packages.chroot
+            cp $LISTE $REP_LIVE/config/packages.chroot
     fi
     echo "*** Création de l'image pour clé USB"
     sudo lb build 
     #2>&1 | tee build.log
-    echo "*** Copie de l'image $VERSION-$ARCH-binary.hybrid.iso dans $REP2"
-    cp binary.hybrid.iso $REP2/$VERSION-$ARCH-v$NVERSION-binary.hybrid.iso
+    echo "*** Copie de l'image $VERSION-$ARCH-binary.hybrid.iso dans $REP_IMG"
+    cp binary.hybrid.iso $REP_IMG/$VERSION-$ARCH-v$NVERSION-binary.hybrid.iso
 }
 
 function EnvoieFtp
@@ -188,7 +195,7 @@ function EnvoieFtp
             read -s -p "Mot de passe de connexion : " PASS
             echo ""
 	    ISO="$VERSION-$ARCH-v$NVERSION-binary.hybrid.iso"
-            bash envoie_ftp.sh $ID $PASS $VERSION $ISO $MONHOME $REP1 $REP2
+            bash envoie_ftp.sh $ID $PASS $VERSION $ISO $MONHOME $REP_LIVE $REP_IMG
     fi
 }
 
@@ -213,46 +220,45 @@ function MaJsvn
 ####################
 
 MONHOME=$1
-REP_DEPOT_PEDA=$2                   # Répertoires du dépôt Subversion
+REP_DEPOT_PEDA=$2                   # Répertoires du dépôt Git
 REP_DEPOT_FORMATION=$3
-REP1=$4                             # Répertoire où se trouve 
+REP_LIVE=$4                         # Répertoire où se trouve 
                                     #   l'arborescence de Debian_live
-REP2=$5                             # Répertoire où sauvegarder 
+REP_IMG=$5                          # Répertoire où sauvegarder 
                                     #   les images obtenues
-
-REP4=$6
-REP5=$7
-DIST=$8
-MIROIRDISTANT=$9                    # Mirroir à mettre dans le système
+#REP4=$6
+REP_DOC=$6
+#DIST=$8
+MIROIRDISTANT=$7                    # Mirroir à mettre dans le système
                                     #   de la clé
+MIROIRLOCAL=$8                      # Mirroir à utiliser pour 
+                                    #   construire la clé
+VERSION=$9
+NOM=$VERSION
 shift 9                             # Décalage dans les variables passées pour
                                     #   récupérer au-delà de $10
-MIROIRLOCAL=$1                      # Mirroir à utiliser pour 
-                                    #   construire la clé
-
-VERSION=$2
-NOM=$VERSION
-ARCH=$3
-CLE=$4
-PROG="$VERSION/desktop.list.chroot" # Nom du fichier dans config/package-lists/ 
-                                    #   qui contient la liste des programmes 
-                                    #   à installer
+ARCH=$1
+CLE=$2
+PROG="$VERSION/desktop.list.chroot" # Nom du fichier dans
+                                    #   config/package-lists/ qui 
+                                    #   contient la liste des  
+                                    #   programmes à installer
 REP3=`pwd`                          # Sauvegarde du répertoire courant
-
 ####################
 # À modifier en fonction de la version à générer
 ####################
-NVERSION="2.00"
+DIST="wheezy"
+NVERSION="2.10"
 
 ####################
 # À décommenter pour vérifier la transmission de paramètres
 ####################
-#echo -e " Home : \t$MONHOME\n Svn péda (REP_DEPOT_PEDA) : \t$REP_DEPOT_PEDA\n \
-#Svn formation (REP_DEPOT FORMATION) : \t$REP_DEPOT_FORMATION\n \
-#Rep DebianLive (REP1) : \t$REP1\n Rep images (REP2) : \t$REP2\n  \
-#Rep svn (REP4): \t$REP4\n Rep svn (REP5) : \t$REP5\n Distribution : \t$DIST\n \
-#MiroirD : \t$MIROIRDISTANT\n MiroirL : \t$MIROIRLOCAL\n \
-#Version : \t$VERSION\n Archi :  \t$ARCH\n Clé :  \t$CLE\n"
+echo -e " Home : \t$MONHOME\n Git péda (REP_DEPOT_PEDA) : \t$REP_DEPOT_PEDA\n \
+Svn formation (REP_DEPOT FORMATION) : \t$REP_DEPOT_FORMATION\n \
+Rep DebianLive (REP_LIVE) : \t$REP_LIVE\n Rep images (REP_IMG) : \t$REP_IMG\n  \
+Rep Doc (REP_DOC) : \t$REP_DOC\n Distribution : \t$DIST\n \
+MiroirD : \t$MIROIRDISTANT\n MiroirL : \t$MIROIRLOCAL\n \
+Version : \t$VERSION\n Archi :  \t$ARCH\n Clé :  \t$CLE\n"
 #exit
 
 ####################
@@ -284,7 +290,8 @@ if [ "$VERSION" = "cesar" ];sftp://lmds@aptenodytes/home/lmds/Documents/Scripts/
             fi
 fi
 
-# Définitions des paramètres de construction et des paramètres à passer au noyau
+# Définitions des paramètres de construction et des paramètres à
+#   passer au noyau
 AUTOCONFIG='#!/bin/sh
 lb config noauto \
      --architectures '$ARCH' \
@@ -312,7 +319,7 @@ lb config noauto \
 echo "****** Création de $VERSION en $ARCH ******"
 #echo "*** Téléchargement des firmwares privateurs"
 # Allez dans le répertoire de l'arborescence Debian-live
-cd $REP1
+cd $REP_LIVE
 echo "$AUTOCONFIG" > auto/config
 chmod u+x auto/config
 rm -rf config
@@ -337,7 +344,7 @@ if  [ "$CLE" != "" ]
              done
           fi
           Preparation
-          bash ../Cles_DebianLive/creation_cle.sh $CLE $REP2/$VERSION-$ARCH-v$NVERSION-binary.hybrid.iso
+          bash ../Cles_DebianLive/creation_cle.sh $CLE $REP_IMG/$VERSION-$ARCH-v$NVERSION-binary.hybrid.iso
       fi    
   else
     Preparation
