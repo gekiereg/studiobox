@@ -34,11 +34,11 @@ ln -s $git_studiobox_dir/Debian_Live.sh $working_dir/dir/Debian_Live.sh
 ln -s $git_studiobox_dir/envoie_ftp.sh $working_dir/envoie_ftp.sh
 ```
 
-4 copy Debian_Live_perso.sh as Debian_Live_perso_me.sh in
+4 copy Debian_Live_perso.sh as Deian_Live_perso_me.sh in
 the working directory
 
 ```sh
 cp $git_studiobox_dir/Debian_Live_perso.sh $working_dir/Debian_Live_perso_me.sh
 ```
 
-5 make Debian_Live_perso_me.sh feet to your filesystem
+5 make Debian_Live_perso_me.sh fit your filesystem
