@@ -259,7 +259,7 @@ Rep DebianLive (REP_LIVE) : \t$REP_LIVE\n Rep images (REP_IMG) : \t$REP_IMG\n  \
 Rep Doc (REP_DOC) : \t$REP_DOC\n Distribution : \t$DIST\n \
 MiroirD : \t$MIROIRDISTANT\n MiroirL : \t$MIROIRLOCAL\n \
 Version : \t$VERSION\n Archi :  \t$ARCH\n Clé :  \t$CLE\n"
-#exit
+exit
 
 ####################
 # Vérifications des paramètres passés
