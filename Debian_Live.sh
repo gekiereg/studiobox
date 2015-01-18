@@ -300,15 +300,13 @@ fi
 AUTOCONFIG='#!/bin/sh
 lb config noauto \
      --architectures '$ARCH' \
-     --distribution '$DIST'
+     --distribution '$DIST' \
      --bootappend-live "boot=live config locales=fr_FR.UTF-8 keyboard-layouts=fr \
           username='$USER' persistence timezone=Europe/Paris"\
      --mirror-bootstrap '$MIROIRLOCAL/debian/' \
      --mirror-chroot-security '$MIROIRLOCAL/debian-security/' \
- #    --mirror-chroot-backports '$MIROIRLOCAL/debian-backports/' \
      --mirror-binary '$MIROIRDISTANT/debian/' \
      --mirror-binary-security '$MIROIRDISTANT/debian-security/' \
- #    --mirror-binary-backports '$MIROIRDISTANT/debian-backports/' \
      --archive-areas "main contrib non-free" \
      --chroot-filesystem squashfs \
      --debian-installer '$DBI' \
@@ -323,6 +321,8 @@ lb config noauto \
 #     --apt-indices false \
 #     --firmware-binary true \
 #     --firmware-chroot true \     
+#     --mirror-chroot-backports '$MIROIRLOCAL/debian-backports/' \
+#     --mirror-binary-backports '$MIROIRDISTANT/debian-backports/' \
 
 echo "****** Création de $VERSION en $ARCH ******"
 #echo "*** Téléchargement des firmwares privateurs"
