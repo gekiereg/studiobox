@@ -84,44 +84,47 @@ function PreparationStudioBoxAudio
 {
     REP6=`pwd`
     # Mise à jour arborescence git
+    echo "Récupération de la configuration sur git"
     cd $REP_DEPOT_PEDA
     git pull
-    cp -ar * $REP_LIVE
+    rm -r $REP_CONFIG/*
+    cp -ar * $REP_CONFIG
     #cd $REP6
     # Mise à jour de la doc
+    echo "Mise à jour de la documentation"
     cd $REP_DOC
     svn update
-    rm -rf $REP3/$VERSION/config/includes.chroot/etc/skel/Documents/*
-    cp *.pdf $REP3/$VERSION/config/includes.chroot/etc/skel/Documents
+    rm -rf $REP_CONFIG/config/includes.chroot/etc/skel/Documents/*
+    cp *.pdf $REP_CONFIG/config/includes.chroot/etc/skel/Documents
     cd $REP6
     #read Z
     # Copie des dépôts supplémentaires
     echo "*** Copie des dépôts supplémentaires"
-    rsync -av --exclude=".*" $REP3/$VERSION/config/archives/* \
+    rsync -av --exclude=".*" $REP_CONFIG/config/archives/* \
             $REP_LIVE/config/archives/
     # Copie des fichiers de réponse pour l'installation
     echo "*** Copie des dépôts supplémentaires"
-    rsync -av --exclude=".*" $REP3/$VERSION/config/debian-installer/* \
+    rsync -av --exclude=".*" $REP_CONFIG/config/debian-installer/* \
             $REP_LIVE/config/debian-installer/
     # Copie des configurations des logiciels
     echo "*** Copie des configurations des logiciels"
-    rsync -av --exclude=".*" $REP3/$VERSION/config/hooks/* \
+    rsync -av --exclude=".*" $REP_CONFIG/config/hooks/* \
             $REP_LIVE/config/hooks/
     # Copie des configurations des logiciels
     echo "*** Copie des configurations des logiciels"
-    rsync -av --exclude=".*" $REP3/$VERSION/config/includes.binary/* \
+    rsync -av --exclude=".*" $REP_CONFIG/config/includes.binary/* \
             $REP_LIVE/config/includes.binary/
     # Copie des configurations des démons
     echo "*** Copie des configurations des démons"
-    rsync -av  $REP3/$VERSION/config/includes.chroot/* \
+    rsync -av  $REP_CONFIG/config/includes.chroot/* \
             $REP_LIVE/config/includes.chroot/
     # Copie de la liste des logiciels à installer
     echo "*** Copie de la liste des logiciels à installer"
-    rsync -av --exclude=".*" $REP3/$VERSION/config/package-lists/* \
+    rsync -av --exclude=".*" $REP_CONFIG/config/package-lists/* \
             $REP_LIVE/config/package-lists/
     # Copie des configurations des logiciels
     echo "*** Copie des configurations des logiciels"
-    rsync -av --exclude=".*" $REP3/$VERSION/config/preseed/* \
+    rsync -av --exclude=".*" $REP_CONFIG/config/preseed/* \
             $REP_LIVE/config/preseed/
 }
 
@@ -130,25 +133,25 @@ function PreparationStudioBoxVideo
 {
     # Copie des configurations des démons
     echo "*** Copie des configurations des démons"
-    rsync -av --exclude=".*" $REP3/$VERSION/config/includes.chroot/* \
+    rsync -av --exclude=".*" $REP_CONFIG/$VERSION/config/includes.chroot/* \
             $REP_LIVE/config/includes.chroot/
     # Copie de la liste des logiciels à installer
     echo "*** Copie de la liste des logiciels à installer"
-    rsync -av --exclude=".*" $REP3/$VERSION/config/package-lists/* \
+    rsync -av --exclude=".*" $REP_CONFIG/$VERSION/config/package-lists/* \
             $REP_LIVE/config/package-lists/
     # Copie des configurations des logiciels
     echo "*** Copie des configurations des logiciels"
-    rsync -av --exclude=".*" $REP3/$VERSION/config/preseed/* $REP_LIVE/config/preseed/
+    rsync -av --exclude=".*" $REP_CONFIG/$VERSION/config/preseed/* $REP_LIVE/config/preseed/
     # Copie des configurations des logiciels
     echo "*** Copie des configurations des logiciels"
-    rsync -av --exclude=".*" $REP3/$VERSION/config/hooks/* $REP_LIVE/config/hooks/
+    rsync -av --exclude=".*" $REP_CONFIG/$VERSION/config/hooks/* $REP_LIVE/config/hooks/
     # Copie des configurations des logiciels
     echo "*** Copie des configurations des logiciels"
-    rsync -av --exclude=".*" $REP3/$VERSION/config/includes.binary/* \
+    rsync -av --exclude=".*" $REP_CONFIG/$VERSION/config/includes.binary/* \
             $REP_LIVE/config/includes.binary/
     # Copie des dépôts supplémentaires
     echo "*** Copie des dépôts supplémentaires"
-    rsync -av --exclude=".*" $REP3/$VERSION/config/archives/* $REP_LIVE/config/archives/
+    rsync -av --exclude=".*" $REP_CONFIG/$VERSION/config/archives/* $REP_LIVE/config/archives/
 }
 
 # Configuration de l'image de la clé
@@ -167,15 +170,15 @@ function Preparation
     echo ""
     echo "*** Si les fichiers se sont copiés correctement appuyer sur « Entrée »"
     read Z
-    LISTE=`ls $REP3/$VERSION/config/packages.chroot/* | grep _all`
+    LISTE=`ls $REP_CONFIG/$VERSION/config/packages.chroot/* | grep _all`
     if [ "$LISTE" != "" ];
         then
             cp $LISTE $REP_LIVE/config/packages.chroot
             if [ "$ARCH" = "amd64" ];
                 then 
-                    LISTE=`ls $REP3/$VERSION/config/packages.chroot/* | grep _amd64`
+                    LISTE=`ls $REP_CONFIG/$VERSION/config/packages.chroot/* | grep _amd64`
                 else
-                    LISTE=`ls $REP3/$VERSION/config/packages.root/* | grep _i386`
+                    LISTE=`ls $REP_CONFIG/$VERSION/config/packages.root/* | grep _i386`
             fi
             cp $LISTE $REP_LIVE/config/packages.chroot
     fi
@@ -208,7 +211,7 @@ function MaJsvn
             tar -cjvf $REP4/$VERSION.tar.bz2 config/
             cd $REP4
             svn commit $VERSION.tar.bz2 
-            cd $REP3
+            cd $REP_CONFIG
     fi
 }
 #################################
@@ -222,23 +225,24 @@ function MaJsvn
 MONHOME=$1
 REP_DEPOT_PEDA=$2                   # Répertoires du dépôt Git
 REP_DEPOT_FORMATION=$3
-REP_LIVE=$4                         # Répertoire où se trouve 
+REP_CONFIG=$4
+REP_LIVE=$5                         # Répertoire où se trouve 
                                     #   l'arborescence de Debian_live
-REP_IMG=$5                          # Répertoire où sauvegarder 
+REP_IMG=$6                          # Répertoire où sauvegarder 
                                     #   les images obtenues
 #REP4=$6
-REP_DOC=$6
+REP_DOC=$7
 #DIST=$8
-MIROIRDISTANT=$7                    # Mirroir à mettre dans le système
+MIROIRDISTANT=$8                    # Mirroir à mettre dans le système
                                     #   de la clé
-MIROIRLOCAL=$8                      # Mirroir à utiliser pour 
+MIROIRLOCAL=$9                      # Mirroir à utiliser pour 
                                     #   construire la clé
-VERSION=$9
-NOM=$VERSION
 shift 9                             # Décalage dans les variables passées pour
                                     #   récupérer au-delà de $10
-ARCH=$1
-CLE=$2
+VERSION=$1
+NOM=$VERSION
+ARCH=$2
+CLE=$3
 PROG="$VERSION/desktop.list.chroot" # Nom du fichier dans
                                     #   config/package-lists/ qui 
                                     #   contient la liste des  
@@ -256,10 +260,11 @@ NVERSION="2.10"
 echo -e " Home : \t$MONHOME\n Git péda (REP_DEPOT_PEDA) : \t$REP_DEPOT_PEDA\n \
 Svn formation (REP_DEPOT FORMATION) : \t$REP_DEPOT_FORMATION\n \
 Rep DebianLive (REP_LIVE) : \t$REP_LIVE\n Rep images (REP_IMG) : \t$REP_IMG\n  \
+Rep Config (REP_CONFIG) : \t$REP_CONFIG\n \
 Rep Doc (REP_DOC) : \t$REP_DOC\n Distribution : \t$DIST\n \
 MiroirD : \t$MIROIRDISTANT\n MiroirL : \t$MIROIRLOCAL\n \
 Version : \t$VERSION\n Archi :  \t$ARCH\n Clé :  \t$CLE\n"
-exit
+#exit
 
 ####################
 # Vérifications des paramètres passés
@@ -273,7 +278,7 @@ if  [ "$ARCH" != "i386" ] && [ "$ARCH" != "amd64" ];
     then Erreur_arch
 fi 
 
-if [ "$VERSION" = "cesar" ];sftp://lmds@aptenodytes/home/lmds/Documents/Scripts/ip_publique.sh
+if [ "$VERSION" = "cesar" ];
     then 
         DBI="false" 
         DBIGUI="false" 
@@ -295,12 +300,15 @@ fi
 AUTOCONFIG='#!/bin/sh
 lb config noauto \
      --architectures '$ARCH' \
+     --distribution '$DIST'
      --bootappend-live "boot=live config locales=fr_FR.UTF-8 keyboard-layouts=fr \
           username='$USER' persistence timezone=Europe/Paris"\
-     --mirror-binary '$MIROIRDISTANT/debian' \
-     --mirror-bootstrap '$MIROIRLOCAL/debian' \
-     --mirror-chroot-security '$MIROIRDISTANT/debian-security/' \
-     --mirror-chroot-backports '$MIROIRLOCAL/debian/'\
+     --mirror-bootstrap '$MIROIRLOCAL/debian/' \
+     --mirror-chroot-security '$MIROIRLOCAL/debian-security/' \
+ #    --mirror-chroot-backports '$MIROIRLOCAL/debian-backports/' \
+     --mirror-binary '$MIROIRDISTANT/debian/' \
+     --mirror-binary-security '$MIROIRDISTANT/debian-security/' \
+ #    --mirror-binary-backports '$MIROIRDISTANT/debian-backports/' \
      --archive-areas "main contrib non-free" \
      --chroot-filesystem squashfs \
      --debian-installer '$DBI' \
@@ -351,7 +359,7 @@ if  [ "$CLE" != "" ]
 fi
 
 cd $REP3
-MaJsvn
+#MaJsvn
 EnvoieFtp
 
 
