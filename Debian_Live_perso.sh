@@ -48,7 +48,11 @@ REP_WORK="$MONHOME/StudioBoxAudio"
 # Répertoire où se trouve  l'arborescence de DebianLive
 REP_LIVE="$REP_WORK/DebianLive"
 # Répertoire où sauvegarder les images obtenues
-REP_IMG="$REP_WORK/DebianImg"    
+REP_IMG="$REP_WORK/DebianImg"
+
+# (Répertoire où sauvegarder la config ?)
+REP_CONFIG="$REP_WORK/DebianConfig"
+
 # Répertoires du dépôt Subversion
 #REP4="$REP_DEPOT_PEDA/Scripts/Cles_DebianLive"
 # Répertoire de la documentation sur le Subversion
