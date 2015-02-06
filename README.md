@@ -62,4 +62,9 @@ This option is mandatory.
 * If an USB key has to be created, the name of the device has to be specified.
 For instance, `sdb` or `sdc` etc.
 
+For instance, a typical launch could be:
+
+```sh
+cd "$BUILD_DIR" && bash Debian_Live_perso_me.sh studioboxAudio amd64
+```
 
