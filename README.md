@@ -1,57 +1,65 @@
-Studiobox
-=========
+How to build a Studiobox USB key step by step
+=============================================
 
-Build a live USB key for webradio usage.
-
-1 create a working directory (StudioBoxAudio)
-
-```sh
-home_dir="/home/user"
-git_studiobox_dir="/home/user/git_repo/studiobox"
-mkdir $home_dir/StudioBoxAudio
-working_dir="$home_dir/StudioBoxAudio"
-```
-
-2 in this directory create three directories
-  one for the livebuild (DebianLive)
-  one to prepare the configuration (DebianConfig)
-  one to store the image (DebianImg)
+Take a fresh installation of a simple **Debian Wheezy**.
+Firstly, you must install the building environment. We
+assume that you use a Unix account with a "sudo" access (it
+could be `root` but, in this case, the `sudo` command is not
+necessary). Normally, you must launch these commands below
+just once:
 
 ```sh
-mkdir $working_dir/DebianLive
-mkdir $working_dir/DebianConfig
-mkdir $working_dir/DebianImg
+# Use a svn account that can access to the repository below.
+SVN_ACCOUNT="lafont"
+SVN_URL="https://svn.crdp.ac-versailles.fr/svn/formation/trunk/Education_aux_media/WebRadio/Documentation/Diaporamas"
+GIT_URL="http://gitlab.crdp.ac-versailles.fr:80/francois.lafont/studiobox.git"
+DOC_SVN_DIR="$HOME/Diaporamas"
+STDBOX_GIT_DIR="$HOME/studiobox"
+BUILD_DIR="$HOME/build_dir"
+
+# Some packages are needed (ssl is needed for the svn repository).
+sudo apt-get update
+# TODO: list of packages probably incomplete.
+sudo apt-get install openssl ca-certificates git subversion rsync live-build
+
+# Get the git and svn repositories.
+cd "$HOME" && git clone "$GIT_URL"
+cd "$HOME" && svn checkout "$SVN_URL" --username="$SVN_ACCOUNT"
+
+# Create the building directory.
+mkdir "$BUILD_DIR"
+mkdir "$BUILD_DIR/DebianLive"
+mkdir "$BUILD_DIR/DebianImg"
+mkdir "$BUILD_DIR/DebianConfig"
+ln -s "$STDBOX_GIT_DIR/creation_cle.sh" "$BUILD_DIR/creation_cle.sh"
+ln -s "$STDBOX_GIT_DIR/Debian_Live.sh" "$BUILD_DIR/Debian_Live.sh"
+ln -s "$STDBOX_GIT_DIR/envoie_ftp.sh" "$BUILD_DIR/envoie_ftp.sh"
+cp -a "$STDBOX_GIT_DIR/Debian_Live_perso.sh" "$BUILD_DIR/Debian_Live_perso_me.sh"
+
+
+# Modify Debian_Live_perso_me.sh to match with your directories.
+sed -r -i -e "s|^MONHOME=.*$|MONHOME=\"$HOME\"|"                         \
+          -e "s|^REP_DEPOT_PEDA=.*$|REP_DEPOT_PEDA=\"$STDBOX_GIT_DIR\"|" \
+          -e "s|^REP_WORK=.*$|REP_WORK=\"$BUILD_DIR\"|"                  \
+          -e "s|^REP_LIVE=.*$|REP_LIVE=\"$BUILD_DIR/DebianLive\"|"       \
+          -e "s|^REP_IMG=.*$|REP_IMG=\"$BUILD_DIR/DebianImg\"|"          \
+          -e "s|^REP_CONFIG=.*$|REP_CONFIG=\"$BUILD_DIR/DebianConfig\"|" \
+          -e "s|^REP_DOC=.*$|REP_DOC=\"$DOC_SVN_DIR\"|"                  \
+    "$BUILD_DIR/Debian_Live_perso_me.sh"
 ```
-3 create symbolic links for 
-  creation_cle.sh
-  Debian_Live.sh
-  envoie_ftp.sh  
-  in StudioBoxAudio
+
+Now you can build the StudioBox USB key with:
 
 ```sh
-ln -s $git_studiobox_dir/creation_cle.sh $working_dir/creation_cle.sh
-ln -s $git_studiobox_dir/Debian_Live.sh $working_dir/dir/Debian_Live.sh
-ln -s $git_studiobox_dir/envoie_ftp.sh $working_dir/envoie_ftp.sh
+# Use the BUILD_DIR variable defined above.
+cd "$BUILD_DIR" && bash Debian_Live_perso_me.sh version arch [device_key]
 ```
 
-4 copy Debian_Live_perso.sh as Debian_Live_perso_me.sh in
-the working directory
+where:
+* `version` can have several values. For studioboxAudio it's `studioboxAudio`.
+This option is mandatory.
+* `arch` can have two values, `i386` or `amd64`. This option is mandatory
+* If an USB key has to be created, the name of the device has to be specified.
+For instance, `sdb` or `sdc` etc.
 
-```sh
-cp $git_studiobox_dir/Debian_Live_perso.sh $working_dir/Debian_Live_perso_me.sh
-```
 
-5 make Debian_Live_perso_me.sh fit your filesystem
-
-6 launch Debian_Live_perso_me.sh
-
-```sh
-/bin/bash Debian_Live_perso_me.sh version arch [device_key]
-```
-
-    - "version" can have several values. For studioboxAudio it's "studioboxAudio". 
-    This option is mandatory
-    - "arch" can have two values, "i386" or "amd64".
-    This option is mandatory
-    - If an USB key has to be created the name of the device has to be specified.
-    "sdb" or "sdc" or...
