@@ -46,6 +46,9 @@ sed -r -i -e "s|^MONHOME=.*$|MONHOME=\"$HOME\"|"                         \
           -e "s|^REP_CONFIG=.*$|REP_CONFIG=\"$BUILD_DIR/DebianConfig\"|" \
           -e "s|^REP_DOC=.*$|REP_DOC=\"$DOC_SVN_DIR\"|"                  \
     "$BUILD_DIR/Debian_Live_perso_me.sh"
+
+# Create the key building directory.
+cd $BUILD_DIR/DebianConfig" && lb build
 ```
 
 Now you can build the StudioBox USB key with:
@@ -67,4 +70,3 @@ For instance, a typical launch could be:
 ```sh
 cd "$BUILD_DIR" && bash Debian_Live_perso_me.sh studioboxAudio amd64
 ```
-
