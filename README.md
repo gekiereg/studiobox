@@ -39,7 +39,7 @@ cp -a "$STDBOX_GIT_DIR/Debian_Live_perso.sh" "$BUILD_DIR/Debian_Live_perso_me.sh
 
 # Modify Debian_Live_perso_me.sh to match with your directories.
 sed -r -i -e "s|^MONHOME=.*$|MONHOME=\"$HOME\"|"                         \
-          -e "s|^REP_DEPOT_PEDA=.*$|REP_DEPOT_PEDA=\"$STDBOX_GIT_DIR\StudioboxAudio\"|" \
+          -e "s|^REP_DEPOT_PEDA=.*$|REP_DEPOT_PEDA=\"$STDBOX_GIT_DIR/StudioboxAudio\"|" \
           -e "s|^REP_WORK=.*$|REP_WORK=\"$BUILD_DIR\"|"                  \
           -e "s|^REP_LIVE=.*$|REP_LIVE=\"$BUILD_DIR/DebianLive\"|"       \
           -e "s|^REP_IMG=.*$|REP_IMG=\"$BUILD_DIR/DebianImg\"|"          \
