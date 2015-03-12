@@ -26,6 +26,8 @@ if  [ "$CLE" = "" ]
 fi
 
 echo "*** Création de la partiton persistante"
+sudo aptitude update
+sudo aptitude install parted coreutils util-linux e2fsprogs gawk
 START=`sudo parted /dev/$CLE print free | grep Free | grep [MG]B | gawk '{print $1}'`
 END=`sudo parted /dev/$CLE print free | grep Free | grep [MG]B | gawk '{print $2}'`
 sudo parted /dev/$CLE mkpart primary ext2 $START $END
