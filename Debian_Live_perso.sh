@@ -61,7 +61,8 @@ REP_DOC="$REP_DEPOT_FORMATION/Education_aux_media/WebRadio/Documentation/Diapora
 # Mirroir à mettre dans le système de la clé
 MIROIRDISTANT="http://ftp.fr.debian.org"
 # Mirroir à utiliser pour construire la clé
-MIROIRLOCAL="http://altair/depot/mirror/ftp.fr.debian.org"
+#MIROIRLOCAL="http://altair/depot/mirror/ftp.fr.debian.org"
+MIROIRLOCAL="http://ftp.fr.debian.org"
 
 /bin/bash Debian_Live.sh $MONHOME $REP_DEPOT_PEDA $REP_DEPOT_FORMATION \
 	  $REP_CONFIG $REP_LIVE $REP_IMG $REP_DOC $MIROIRDISTANT \
