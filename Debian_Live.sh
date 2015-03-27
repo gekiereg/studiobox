@@ -131,27 +131,50 @@ function PreparationStudioBoxAudio
 # Préparation pour la création de StudioBoxVideo
 function PreparationStudioBoxVideo
 {
+    REP6=`pwd`
+    # Mise à jour arborescence git
+    echo "Récupération de la configuration sur git"
+    cd $REP_DEPOT_PEDA 
+    git pull
+    rm -r $REP_CONFIG/*
+    cp -ar * $REP_CONFIG
+    #cd $REP6
+    # Mise à jour de la doc
+    #echo "Mise à jour de la documentation"
+    #cd $REP_DOC
+    #svn update
+    #rm -rf $REP_CONFIG/config/includes.chroot/etc/skel/Documents/*
+    #cp *.pdf $REP_CONFIG/config/includes.chroot/etc/skel/Documents
+    cd $REP6
+    #read Z
+    # Copie des dépôts supplémentaires
+    echo "*** Copie des dépôts supplémentaires"
+    rsync -av --exclude=".*" $REP_CONFIG/config/archives/* \
+            $REP_LIVE/config/archives/
+    # Copie des fichiers de réponse pour l'installation
+    echo "*** Copie des dépôts supplémentaires"
+    rsync -av --exclude=".*" $REP_CONFIG/config/debian-installer/* \
+            $REP_LIVE/config/debian-installer/
+    # Copie des configurations des logiciels
+    echo "*** Copie des configurations des logiciels"
+    rsync -av --exclude=".*" $REP_CONFIG/config/hooks/* \
+            $REP_LIVE/config/hooks/
+    # Copie des configurations des logiciels
+    echo "*** Copie des configurations des logiciels"
+    rsync -av --exclude=".*" $REP_CONFIG/config/includes.binary/* \
+            $REP_LIVE/config/includes.binary/
     # Copie des configurations des démons
     echo "*** Copie des configurations des démons"
-    rsync -av --exclude=".*" $REP_CONFIG/$VERSION/config/includes.chroot/* \
+    rsync -av  $REP_CONFIG/config/includes.chroot/* \
             $REP_LIVE/config/includes.chroot/
     # Copie de la liste des logiciels à installer
     echo "*** Copie de la liste des logiciels à installer"
-    rsync -av --exclude=".*" $REP_CONFIG/$VERSION/config/package-lists/* \
+    rsync -av --exclude=".*" $REP_CONFIG/config/package-lists/* \
             $REP_LIVE/config/package-lists/
     # Copie des configurations des logiciels
     echo "*** Copie des configurations des logiciels"
-    rsync -av --exclude=".*" $REP_CONFIG/$VERSION/config/preseed/* $REP_LIVE/config/preseed/
-    # Copie des configurations des logiciels
-    echo "*** Copie des configurations des logiciels"
-    rsync -av --exclude=".*" $REP_CONFIG/$VERSION/config/hooks/* $REP_LIVE/config/hooks/
-    # Copie des configurations des logiciels
-    echo "*** Copie des configurations des logiciels"
-    rsync -av --exclude=".*" $REP_CONFIG/$VERSION/config/includes.binary/* \
-            $REP_LIVE/config/includes.binary/
-    # Copie des dépôts supplémentaires
-    echo "*** Copie des dépôts supplémentaires"
-    rsync -av --exclude=".*" $REP_CONFIG/$VERSION/config/archives/* $REP_LIVE/config/archives/
+    rsync -av --exclude=".*" $REP_CONFIG/config/preseed/* \
+            $REP_LIVE/config/preseed/
 }
 
 # Configuration de l'image de la clé
@@ -254,17 +277,6 @@ REP3=`pwd`                          # Sauvegarde du répertoire courant
 DIST="wheezy"
 NVERSION="2.10"
 
-####################
-# À décommenter pour vérifier la transmission de paramètres
-####################
-echo -e " Home : \t$MONHOME\n Git péda (REP_DEPOT_PEDA) : \t$REP_DEPOT_PEDA\n \
-Svn formation (REP_DEPOT FORMATION) : \t$REP_DEPOT_FORMATION\n \
-Rep DebianLive (REP_LIVE) : \t$REP_LIVE\n Rep images (REP_IMG) : \t$REP_IMG\n  \
-Rep Config (REP_CONFIG) : \t$REP_CONFIG\n \
-Rep Doc (REP_DOC) : \t$REP_DOC\n Distribution : \t$DIST\n \
-MiroirD : \t$MIROIRDISTANT\n MiroirL : \t$MIROIRLOCAL\n \
-Version : \t$VERSION\n Archi :  \t$ARCH\n Clé :  \t$CLE\n"
-#exit
 
 ####################
 # Vérifications des paramètres passés
@@ -283,6 +295,7 @@ if [ "$VERSION" = "cesar" ];
         DBI="false" 
         DBIGUI="false" 
         USER="jules"
+	REP_CONFIG="${REP_CONFIG}/cesar"
     elif [ "$VERSION" = "studioboxAudio" ] || [ "$VERSION" = "studioboxVideo" ];
         then 
             DBI="live"
@@ -290,10 +303,25 @@ if [ "$VERSION" = "cesar" ];
             if [ "$VERSION" = "studioboxAudio" ];
                 then
                     USER="webradio"
+		    REP_CONFIG="${REP_CONFIG}/StudioboxAudio"
                 else
                     USER="video"
+		    REP_CONFIG="${REP_CONFIG}/StudioboxVideo"
             fi
 fi
+
+####################
+# À décommenter pour vérifier la transmission de paramètres
+####################
+echo -e " Home : \t$MONHOME\n Git péda (REP_DEPOT_PEDA) : \t$REP_DEPOT_PEDA\n \
+Svn formation (REP_DEPOT FORMATION) : \t$REP_DEPOT_FORMATION\n \
+Rep DebianLive (REP_LIVE) : \t$REP_LIVE\n Rep images (REP_IMG) : \t$REP_IMG\n  \
+Rep Config (REP_CONFIG) : \t$REP_CONFIG\n \
+Rep Doc (REP_DOC) : \t$REP_DOC\n Distribution : \t$DIST\n \
+MiroirD : \t$MIROIRDISTANT\n MiroirL : \t$MIROIRLOCAL\n \
+Version : \t$VERSION\n Archi :  \t$ARCH\n Clé :  \t$CLE\n"
+exit
+
 
 # Définitions des paramètres de construction et des paramètres à
 #   passer au noyau

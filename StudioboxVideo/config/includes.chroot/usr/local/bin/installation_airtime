@@ -1,0 +1,13 @@
+#!/bin/bash
+sudo aptitude update && aptitude -y upgrade | tee >(zenity --progress --pulsate --auto-close --title="Mise à jour du cache des paquets" --text="Mise à jour en cours") > airtime.log
+sudo aptitude -y install airtime | tee >(zenity --progress --pulsate --auto-close --title="Installation de airtime" --text="Installation en cours") > airtime.log
+#sed -e "/<item label=\"Installer Airtime\">/,/<\/item>/d" .config/openbox/menu.xml > .config/openbox/menu.xml.new
+mv .config/openbox/menu2.xml .config/openbox/menu.xml 
+
+zenity --info --text="Airtime est maintenant installé. Dans quelques instants le navigateur va se lancer pour accéder à AIRTIME.
+À l'avenir, vous pourrez y accéder en cliquant sur « Outils de diffusion → Airtime »"
+
+openbox --restart
+killall conky
+conky &
+iceweasel https://localhost/login &

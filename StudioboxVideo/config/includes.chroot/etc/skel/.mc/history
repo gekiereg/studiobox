@@ -1,0 +1,16 @@
+
+[input-def]
+0=*
+
+[input2]
+0=default
+
+[Dir Hist New Right Panel]
+0=/home/webradio
+
+[cmdline]
+0=
+
+[Dir Hist New Left Panel]
+0=/home/webradio/.mc
+1=/home/webradio

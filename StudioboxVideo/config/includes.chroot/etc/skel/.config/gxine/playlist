@@ -1,0 +1,7 @@
+<ASX VERSION="3.0">
+  <SETTINGS REPEAT='false' REPEAT-TRACK='false' RANDOM='false'/>
+  <ENTRY>
+    <TITLE></TITLE>
+    <REF HREF="dvd://tmp/dvd-out" />
+  </ENTRY>
+</ASX>
