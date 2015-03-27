@@ -90,7 +90,7 @@ function PreparationStudioBoxAudio
     git pull
     rm -r $REP_CONFIG/*
     echo "cp -ar * $REP_CONFIG"
-    cp -ar * $REP_CONFIG
+    cp -ar $REP_DEPOT_PEDA/config  $REP_CONFIG
     #cd $REP6
     # Mise à jour de la doc
     echo "Mise à jour de la documentation"
@@ -139,7 +139,7 @@ function PreparationStudioBoxVideo
     cd $REP_DEPOT_PEDA 
     git pull
     rm -r $REP_CONFIG/*
-    cp -ar * $REP_CONFIG
+    cp -ar $REP_DEPOT_PEDA/config $REP_CONFIG
     #cd $REP6
     # Mise à jour de la doc
     #echo "Mise à jour de la documentation"
@@ -195,15 +195,15 @@ function Preparation
     echo ""
     echo "*** Si les fichiers se sont copiés correctement appuyer sur « Entrée »"
     read Z
-    LISTE=`ls $REP_CONFIG/$VERSION/config/packages.chroot/* | grep _all`
+    LISTE=`ls $REP_CONFIG/config/packages.chroot/* | grep _all`
     if [ "$LISTE" != "" ];
         then
             cp $LISTE $REP_LIVE/config/packages.chroot
             if [ "$ARCH" = "amd64" ];
                 then 
-                    LISTE=`ls $REP_CONFIG/$VERSION/config/packages.chroot/* | grep _amd64`
+                    LISTE=`ls $REP_CONFIG/config/packages.chroot/* | grep _amd64`
                 else
-                    LISTE=`ls $REP_CONFIG/$VERSION/config/packages.root/* | grep _i386`
+                    LISTE=`ls $REP_CONFIG/config/packages.root/* | grep _i386`
             fi
             cp $LISTE $REP_LIVE/config/packages.chroot
     fi
