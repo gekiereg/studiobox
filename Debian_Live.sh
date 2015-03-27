@@ -320,7 +320,7 @@ Rep Config (REP_CONFIG) : \t$REP_CONFIG\n \
 Rep Doc (REP_DOC) : \t$REP_DOC\n Distribution : \t$DIST\n \
 MiroirD : \t$MIROIRDISTANT\n MiroirL : \t$MIROIRLOCAL\n \
 Version : \t$VERSION\n Archi :  \t$ARCH\n Clé :  \t$CLE\n"
-exit
+#exit
 
 
 # Définitions des paramètres de construction et des paramètres à
