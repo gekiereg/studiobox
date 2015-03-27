@@ -85,9 +85,11 @@ function PreparationStudioBoxAudio
     REP6=`pwd`
     # Mise à jour arborescence git
     echo "Récupération de la configuration sur git"
+    echo "$REP_DEPOT_PEDA"
     cd $REP_DEPOT_PEDA
     git pull
     rm -r $REP_CONFIG/*
+    echo "cp -ar * $REP_CONFIG"
     cp -ar * $REP_CONFIG
     #cd $REP6
     # Mise à jour de la doc
