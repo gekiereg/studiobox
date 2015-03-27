@@ -296,6 +296,7 @@ if [ "$VERSION" = "cesar" ];
         DBIGUI="false" 
         USER="jules"
 	REP_CONFIG="${REP_CONFIG}/cesar"
+	REP_DEPOT_PEDA="${REP_DEPOT_PEDA}/cesar"
     elif [ "$VERSION" = "studioboxAudio" ] || [ "$VERSION" = "studioboxVideo" ];
         then 
             DBI="live"
@@ -304,9 +305,11 @@ if [ "$VERSION" = "cesar" ];
                 then
                     USER="webradio"
 		    REP_CONFIG="${REP_CONFIG}/StudioboxAudio"
+		    REP_DEPOT_PEDA="${REP_DEPOT_PEDA}/StudioboxAudio"
                 else
                     USER="video"
 		    REP_CONFIG="${REP_CONFIG}/StudioboxVideo"
+		    REP_DEPOT_PEDA="${REP_DEPOT_PEDA}/StudioboxVideo"
             fi
 fi
 
