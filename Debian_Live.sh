@@ -90,7 +90,7 @@ function PreparationStudioBoxAudio
     git pull
     rm -r $REP_CONFIG/*
     echo "cp -ar * $REP_CONFIG"
-    cp -ar $REP_DEPOT_PEDA/config  $REP_CONFIG
+    cp -ar $REP_DEPOT_PEDA  $REP_CONFIG
     #cd $REP6
     # Mise à jour de la doc
     echo "Mise à jour de la documentation"
@@ -139,7 +139,7 @@ function PreparationStudioBoxVideo
     cd $REP_DEPOT_PEDA 
     git pull
     rm -r $REP_CONFIG/*
-    cp -ar $REP_DEPOT_PEDA/config $REP_CONFIG
+    cp -ar $REP_DEPOT_PEDA/ $REP_CONFIG
     #cd $REP6
     # Mise à jour de la doc
     #echo "Mise à jour de la documentation"
