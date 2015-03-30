@@ -6,11 +6,11 @@
 0=default
 
 [Dir Hist New Right Panel]
-0=/home/webradio
+0=/home/video
 
 [cmdline]
 0=
 
 [Dir Hist New Left Panel]
-0=/home/webradio/.mc
-1=/home/webradio
+0=/home/video/.mc
+1=/home/video

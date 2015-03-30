@@ -88,7 +88,7 @@ function PreparationStudioBoxAudio
     echo "$REP_DEPOT_PEDA"
     cd $REP_DEPOT_PEDA
     git pull
-    rm -r $REP_CONFIG/*
+    rm -r $REP_CONFIG
     echo "cp -ar * $REP_CONFIG"
     cp -ar $REP_DEPOT_PEDA  $REP_CONFIG
     #cd $REP6
@@ -138,7 +138,7 @@ function PreparationStudioBoxVideo
     echo "Récupération de la configuration sur git"
     cd $REP_DEPOT_PEDA 
     git pull
-    rm -r $REP_CONFIG/*
+    rm -r $REP_CONFIG
     cp -ar $REP_DEPOT_PEDA/ $REP_CONFIG
     #cd $REP6
     # Mise à jour de la doc
@@ -210,8 +210,8 @@ function Preparation
     echo "*** Création de l'image pour clé USB"
     sudo lb build 
     #2>&1 | tee build.log
-    echo "*** Copie de l'image $VERSION-$ARCH-binary.hybrid.iso dans $REP_IMG"
-    cp binary.hybrid.iso $REP_IMG/$VERSION-$ARCH-v$NVERSION-binary.hybrid.iso
+    echo "*** Copie de l'image .iso dans $REP_IMG"
+    cp *.iso $REP_IMG/$VERSION-$DIST-$ARCH-v$NVERSION-live.iso
 }
 
 function EnvoieFtp
@@ -222,7 +222,7 @@ function EnvoieFtp
             read -p "Identifiant de connexion : " ID
             read -s -p "Mot de passe de connexion : " PASS
             echo ""
-	    ISO="$VERSION-$ARCH-v$NVERSION-binary.hybrid.iso"
+	    ISO="$VERSION-$DIST-$ARCH-v$NVERSION-live.iso"
             bash envoie_ftp.sh $ID $PASS $VERSION $ISO $MONHOME $REP_LIVE $REP_IMG
     fi
 }
@@ -309,7 +309,7 @@ if [ "$VERSION" = "cesar" ];
 		    REP_CONFIG="${REP_CONFIG}/StudioboxAudio"
 		    REP_DEPOT_PEDA="${REP_DEPOT_PEDA}/StudioboxAudio"
                 else
-                    USER="video"
+                    USER="sbvideo"
 		    REP_CONFIG="${REP_CONFIG}/StudioboxVideo"
 		    REP_DEPOT_PEDA="${REP_DEPOT_PEDA}/StudioboxVideo"
             fi
@@ -357,6 +357,9 @@ lb config noauto \
 #     --mirror-chroot-backports '$MIROIRLOCAL/debian-backports/' \
 #     --mirror-binary-backports '$MIROIRDISTANT/debian-backports/' \
 
+echo $AUTOCONFIG
+read Z
+
 echo "****** Création de $VERSION en $ARCH ******"
 #echo "*** Téléchargement des firmwares privateurs"
 # Allez dans le répertoire de l'arborescence Debian-live
@@ -385,7 +388,7 @@ if  [ "$CLE" != "" ]
              done
           fi
           Preparation
-          bash ../Cles_DebianLive/creation_cle.sh $CLE $REP_IMG/$VERSION-$ARCH-v$NVERSION-binary.hybrid.iso
+          bash $REP3/creation_cle.sh $CLE $VERSION $REP_IMG/$VERSION-$DIST-$ARCH-v$NVERSION-live.iso
       fi    
   else
     Preparation

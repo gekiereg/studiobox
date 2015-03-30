@@ -1,8 +1,0 @@
-#!/bin/sh
-
-
-sudo aptitude reinstall airtime | tee >(zenity --progress --pulsate --auto-close --title="Finalisation de l'installation de Airtime'" --text="Installation de Airtime en cours") > airtime.log
-sudo mv /etc/rc.local.old /etc/rc.local
-zenity --info --text="Airtime est installé. Cette opération ne se fait qu'au premier démarrage. Bonne utilisation de StudioBox. :-)"
-
-exit 0

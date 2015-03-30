@@ -4,12 +4,12 @@
 		<separator label=".:: StudioBox ::."/>
 		<item label="Documentation">
 			<action name="Execute">
-				<execute>pcmanfm &quot;/home/webradio/Documents&quot;</execute>
+				<execute>pcmanfm &quot;~/Documents&quot;</execute>
 			</action>
 		</item>
 		<item label="Musique">
 			<action name="Execute">
-				<execute>pcmanfm &quot;/home/webradio/Musique&quot;</execute>
+				<execute>pcmanfm &quot;~/Musique&quot;</execute>
 			</action>
 		</item>
 		<separator/>
@@ -36,24 +36,29 @@
 				</action>
 			</item>
 		</menu>
-		<menu id="root-menu-504920" label="Outils de diffusion">
-			<item label="Installer Airtime">
+		<menu id="root-menu-504920" label="Montage vidéo">
+			<item label="KdenLive">
 				<action name="Execute">
-					<execute>sudo installation_airtime</execute>
+					<execute>kdenlive</execute>
 				</action>
 			</item>
-			<item label="Butt">
+			<item label="OpenShot">
 				<action name="Execute">
-					<execute>/usr/local/bin/butt</execute>
+					<execute>openshot</execute>
 				</action>
 			</item>
-			<item label="Icecast">
+			<item label="Pitivi">
 				<action name="Execute">
-					<execute>iceweasel http://localhost:8000</execute>
+					<execute>pitivi</execute>
+				</action>
+			</item>
+			<item label="LiVes">
+				<action name="Execute">
+					<execute>lives</execute>
 				</action>
 			</item>
 		</menu>
-		<menu id="root-menu-841711" label="Outils montage vidéo-son">
+		<menu id="root-menu-841711" label="Outils montage son">
 			<item label="Audacity">
 				<action name="Execute">
 					<execute>audacity</execute>
@@ -74,6 +79,11 @@
 						</execute>
 					</action>
 				</item>
+			<item label="Phatch">
+				<action name="Execute">
+					<execute>phatch</execute>
+				</action>
+			</item>
 			</menu>
 		</menu>
 		<separator/>

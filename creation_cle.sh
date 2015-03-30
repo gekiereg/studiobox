@@ -11,13 +11,17 @@ function Erreur
   echo "Il manque un ou plusieurs paramètres"
   echo ""
   echo "*** Utilisation du script"
-  echo "	/bin/bash creation_cle.sh device_de_la_clé image_iso"
+  echo "	/bin/bash creation_cle.sh version device_de_la_clé image_iso"
   echo ""
   echo "		* Spécifier sur quel « device » créer la clé, sdb, sdc ou..."
+  echo "		* Spécifier la version, studioboxAudio, studioboxVideo ou..."
+  
   exit
 }
 
 CLE=$1
+VERSION=$2
+IMAGE=$3
 PART1="1"
 PART2="2"
 
@@ -49,7 +53,7 @@ echo "*** Effacement des deux partitions"
 sudo parted /dev/$CLE rm 1
 sudo parted /dev/$CLE rm 2
 echo "*** Création de la partition StudioBox"
-dd if=$2 of=/dev/$CLE 
+dd if=$IMAGE of=/dev/$CLE 
 sync
 echo "*** Création de la partiton persistante"
 START=`sudo parted /dev/$CLE print free | grep Free | grep [MG]B | gawk '{print $1}'`
@@ -62,8 +66,14 @@ sudo mount -t ext2 /dev/$CLE$PART2 /mnt
 sleep 5
 echo "*** Effacement du contenu de la partition persistante"
 sudo rm -rf /mnt/*
-echo "*** Copie du fichier « live-persistence.conf »"
-echo "/ union" >> live-persistence.conf
+if [ "$VERSION" = "studioboxAudio" ]
+then
+  echo "*** Copie du fichier « live-persistence.conf »"
+  echo "/ union" >> live-persistence.conf
+else
+  echo "*** Copie du fichier « live-persistence.conf »"
+  echo "/home union" >> live-persistence.conf
+fi
 sudo cp live-persistence.conf /mnt/live-persistence.conf
 rm live-persistence.conf
 sudo umount /dev/$CLE$PART2
