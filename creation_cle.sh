@@ -11,7 +11,7 @@ function Erreur
   echo "Il manque un ou plusieurs paramètres"
   echo ""
   echo "*** Utilisation du script"
-  echo "	/bin/bash creation_cle.sh version device_de_la_clé image_iso"
+  echo "	/bin/bash creation_cle.sh device_de_la_clé version image_iso"
   echo ""
   echo "		* Spécifier sur quel « device » créer la clé, sdb, sdc ou..."
   echo "		* Spécifier la version, studioboxAudio, studioboxVideo ou..."
@@ -25,7 +25,7 @@ IMAGE=$3
 PART1="1"
 PART2="2"
 
-sudo umount $CLE*
+#sudo umount /dev/$CLE*
 
 if  [ "$CLE" = "" ] || [ "$2" = "" ];
 	then Erreur
@@ -53,7 +53,7 @@ echo "*** Effacement des deux partitions"
 sudo parted /dev/$CLE rm 1
 sudo parted /dev/$CLE rm 2
 echo "*** Création de la partition StudioBox"
-dd if=$IMAGE of=/dev/$CLE 
+sudo dd if=$IMAGE of=/dev/$CLE 
 sync
 echo "*** Création de la partiton persistante"
 START=`sudo parted /dev/$CLE print free | grep Free | grep [MG]B | gawk '{print $1}'`

@@ -64,6 +64,8 @@ MIROIRDISTANT="http://ftp.fr.debian.org"
 #MIROIRLOCAL="http://altair/depot/mirror/ftp.fr.debian.org"
 MIROIRLOCAL="http://ftp.fr.debian.org"
 
+MODE="manuel"
+
 /bin/bash Debian_Live.sh $MONHOME $REP_DEPOT_PEDA $REP_DEPOT_FORMATION \
 	  $REP_CONFIG $REP_LIVE $REP_IMG $REP_DOC $MIROIRDISTANT \
-	  $MIROIRLOCAL $VERSION $ARCH $CLE 
+	  $MIROIRLOCAL $VERSION $ARCH $CLE $MODE 

@@ -193,8 +193,10 @@ function Preparation
     fi
 
     echo ""
-    echo "*** Si les fichiers se sont copiés correctement appuyer sur « Entrée »"
-    read Z
+    if [ $MODE = "manuel" ]; then
+	echo "*** Si les fichiers se sont copiés correctement appuyer sur « Entrée »"
+	read Z
+    fi
     LISTE=`ls $REP_CONFIG/config/packages.chroot/* | grep _all`
     if [ "$LISTE" != "" ];
         then
@@ -210,8 +212,9 @@ function Preparation
     echo "*** Création de l'image pour clé USB"
     sudo lb build 
     #2>&1 | tee build.log
-    echo "*** Copie de l'image .iso dans $REP_IMG"
-    cp *.iso $REP_IMG/$VERSION-$DIST-$ARCH-v$NVERSION-live.iso
+    IMAGEISO="$REP_IMG/$VERSION-$DIST-$ARCH-v$NVERSION-live.iso"
+    echo "*** Copie de l'image $IMAGEISO dans $REP_IMG"
+    cp *.iso $IMAGEISO
 }
 
 function EnvoieFtp
@@ -268,6 +271,7 @@ VERSION=$1
 NOM=$VERSION
 ARCH=$2
 CLE=$3
+MODE=$4
 PROG="$VERSION/desktop.list.chroot" # Nom du fichier dans
                                     #   config/package-lists/ qui 
                                     #   contient la liste des  
@@ -277,7 +281,7 @@ REP3=`pwd`                          # Sauvegarde du répertoire courant
 # À modifier en fonction de la version à générer
 ####################
 DIST="wheezy"
-NVERSION="2.10"
+NVERSION="2.20"
 
 
 ####################
@@ -315,19 +319,6 @@ if [ "$VERSION" = "cesar" ];
             fi
 fi
 
-####################
-# À décommenter pour vérifier la transmission de paramètres
-####################
-echo -e " Home : \t$MONHOME\n Git péda (REP_DEPOT_PEDA) : \t$REP_DEPOT_PEDA\n \
-Svn formation (REP_DEPOT FORMATION) : \t$REP_DEPOT_FORMATION\n \
-Rep DebianLive (REP_LIVE) : \t$REP_LIVE\n Rep images (REP_IMG) : \t$REP_IMG\n  \
-Rep Config (REP_CONFIG) : \t$REP_CONFIG\n \
-Rep Doc (REP_DOC) : \t$REP_DOC\n Distribution : \t$DIST\n \
-MiroirD : \t$MIROIRDISTANT\n MiroirL : \t$MIROIRLOCAL\n \
-Version : \t$VERSION\n Archi :  \t$ARCH\n Clé :  \t$CLE\n"
-#exit
-
-
 # Définitions des paramètres de construction et des paramètres à
 #   passer au noyau
 AUTOCONFIG='#!/bin/sh
@@ -357,8 +348,23 @@ lb config noauto \
 #     --mirror-chroot-backports '$MIROIRLOCAL/debian-backports/' \
 #     --mirror-binary-backports '$MIROIRDISTANT/debian-backports/' \
 
-echo $AUTOCONFIG
-read Z
+
+####################
+# À décommenter pour vérifier la transmission de paramètres
+####################
+if [ $MODE = "manuel" ]; then
+    echo -e " Home : \t$MONHOME\n Git péda (REP_DEPOT_PEDA) : \t$REP_DEPOT_PEDA\n \
+Svn formation (REP_DEPOT FORMATION) : \t$REP_DEPOT_FORMATION\n \
+Rep DebianLive (REP_LIVE) : \t$REP_LIVE\n Rep images (REP_IMG) : \t$REP_IMG\n  \
+Rep Config (REP_CONFIG) : \t$REP_CONFIG\n \
+Rep Doc (REP_DOC) : \t$REP_DOC\n Distribution : \t$DIST\n \
+MiroirD : \t$MIROIRDISTANT\n MiroirL : \t$MIROIRLOCAL\n \
+Version : \t$VERSION\n Archi :  \t$ARCH\n Clé :  \t$CLE\n"
+#exit
+    echo $AUTOCONFIG
+    read -p "Vérification des paramètres. Appuyer sur « Entrée » pour continuer ou \
+« Ctrl-C » pour interrompre le script" Z
+fi
 
 echo "****** Création de $VERSION en $ARCH ******"
 #echo "*** Téléchargement des firmwares privateurs"
@@ -388,7 +394,7 @@ if  [ "$CLE" != "" ]
              done
           fi
           Preparation
-          bash $REP3/creation_cle.sh $CLE $VERSION $REP_IMG/$VERSION-$DIST-$ARCH-v$NVERSION-live.iso
+          bash $REP3/creation_cle.sh $CLE $VERSION $IMAGEISO
       fi    
   else
     Preparation
@@ -396,6 +402,7 @@ fi
 
 cd $REP3
 #MaJsvn
-EnvoieFtp
-
+if [ $MODE = "manuel" ]; then
+    EnvoieFtp
+fi
 
