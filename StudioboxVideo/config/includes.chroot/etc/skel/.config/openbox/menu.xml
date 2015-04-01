@@ -84,7 +84,7 @@
 		<menu id="root-menu-505920" label="Outils multimédia">
 			<item label="ffDiaporama">
 				<action name="Execute">
-					<execute>ffdiaporama</execute>
+					<execute>ffDiaporama</execute>
 				</action>
 			</item>
 			<item label="Imagination">

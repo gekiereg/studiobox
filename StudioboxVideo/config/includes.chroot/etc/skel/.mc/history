@@ -6,11 +6,11 @@
 0=default
 
 [Dir Hist New Right Panel]
-0=/home/video
+0=/home/sbvideo
 
 [cmdline]
 0=
 
 [Dir Hist New Left Panel]
-0=/home/video/.mc
-1=/home/video
+0=/home/sbvideo/.mc
+1=/home/sbvideo

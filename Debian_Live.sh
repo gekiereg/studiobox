@@ -184,12 +184,12 @@ function Preparation
 {
     echo "*** Création de l'arbre de configuration pour clé USB"
     lb config  
-    if [ "$VERSION" = "cesar" ];
-        then PreparationCesar
-        elif [ "$VERSION" = "studioboxAudio" ];
-            then PreparationStudioBoxAudio
-            elif [ "$VERSION" = "studioboxVideo" ];
-                then PreparationStudioBoxVideo
+    if [ "$VERSION" = "cesar" ];  then
+	PreparationCesar
+    elif [ "$VERSION" = "studioboxAudio" ]; then
+	PreparationStudioBoxAudio
+    elif [ "$VERSION" = "studioboxVideo" ]; then
+	PreparationStudioBoxVideo
     fi
 
     echo ""
@@ -198,16 +198,14 @@ function Preparation
 	read Z
     fi
     LISTE=`ls $REP_CONFIG/config/packages.chroot/* | grep _all`
-    if [ "$LISTE" != "" ];
-        then
-            cp $LISTE $REP_LIVE/config/packages.chroot
-            if [ "$ARCH" = "amd64" ];
-                then 
-                    LISTE=`ls $REP_CONFIG/config/packages.chroot/* | grep _amd64`
-                else
-                    LISTE=`ls $REP_CONFIG/config/packages.root/* | grep _i386`
-            fi
-            cp $LISTE $REP_LIVE/config/packages.chroot
+    if [ "$LISTE" != "" ]; then
+        cp $LISTE $REP_LIVE/config/packages.chroot
+        if [ "$ARCH" = "amd64" ]; then 
+            LISTE=`ls $REP_CONFIG/config/packages.chroot/* | grep _amd64`
+        else
+            LISTE=`ls $REP_CONFIG/config/packages.root/* | grep _i386`
+        fi
+        cp $LISTE $REP_LIVE/config/packages.chroot
     fi
     echo "*** Création de l'image pour clé USB"
     sudo lb build 
@@ -220,26 +218,24 @@ function Preparation
 function EnvoieFtp
 {
     read -p "Souhaitez-vous transférer les images sur le site ? (oui/Non) " REPONSE
-    if [ "$REPONSE" = "oui" ];
-        then
-            read -p "Identifiant de connexion : " ID
-            read -s -p "Mot de passe de connexion : " PASS
-            echo ""
-	    ISO="$VERSION-$DIST-$ARCH-v$NVERSION-live.iso"
-            bash envoie_ftp.sh $ID $PASS $VERSION $ISO $MONHOME $REP_LIVE $REP_IMG
+    if [ "$REPONSE" = "oui" ]; then
+        read -p "Identifiant de connexion : " ID
+        read -s -p "Mot de passe de connexion : " PASS
+        echo ""
+	ISO="$VERSION-$DIST-$ARCH-v$NVERSION-live.iso"
+        bash envoie_ftp.sh $ID $PASS $VERSION $ISO $MONHOME $REP_LIVE $REP_IMG
     fi
 }
 
 function MaJsvn
 {
     read -p "Souhaitez-vous mettre à jour le SVN ? (oui/Non) " REPONSE
-    if [ "$REPONSE" = "oui" ];
-        then
-            cd $VERSION
-            tar -cjvf $REP4/$VERSION.tar.bz2 config/
-            cd $REP4
-            svn commit $VERSION.tar.bz2 
-            cd $REP_CONFIG
+    if [ "$REPONSE" = "oui" ]; then
+        cd $VERSION
+        tar -cjvf $REP4/$VERSION.tar.bz2 config/
+        cd $REP4
+        svn commit $VERSION.tar.bz2 
+        cd $REP_CONFIG
     fi
 }
 #################################
@@ -267,11 +263,11 @@ MIROIRLOCAL=$9                      # Mirroir à utiliser pour
                                     #   construire la clé
 shift 9                             # Décalage dans les variables passées pour
                                     #   récupérer au-delà de $10
-VERSION=$1
+MODE=$1
+VERSION=$2
 NOM=$VERSION
-ARCH=$2
-CLE=$3
-MODE=$4
+ARCH=$3
+CLE=$4
 PROG="$VERSION/desktop.list.chroot" # Nom du fichier dans
                                     #   config/package-lists/ qui 
                                     #   contient la liste des  
@@ -288,35 +284,32 @@ NVERSION="2.20"
 # Vérifications des paramètres passés
 ####################
 if  [ "$VERSION" != "cesar" ] && [ "$VERSION" != "studioboxAudio" ] \
-        && [ "$VERSION" != "studioboxVideo" ];
-    then Erreur_version
+        && [ "$VERSION" != "studioboxVideo" ]; then
+    Erreur_version
 fi
 
-if  [ "$ARCH" != "i386" ] && [ "$ARCH" != "amd64" ];
-    then Erreur_arch
+if  [ "$ARCH" != "i386" ] && [ "$ARCH" != "amd64" ]; then
+    Erreur_arch
 fi 
 
-if [ "$VERSION" = "cesar" ];
-    then 
-        DBI="false" 
-        DBIGUI="false" 
-        USER="jules"
-	REP_CONFIG="${REP_CONFIG}/cesar"
-	REP_DEPOT_PEDA="${REP_DEPOT_PEDA}/cesar"
-    elif [ "$VERSION" = "studioboxAudio" ] || [ "$VERSION" = "studioboxVideo" ];
-        then 
-            DBI="live"
-            DBIGUI="true"
-            if [ "$VERSION" = "studioboxAudio" ];
-                then
-                    USER="webradio"
-		    REP_CONFIG="${REP_CONFIG}/StudioboxAudio"
-		    REP_DEPOT_PEDA="${REP_DEPOT_PEDA}/StudioboxAudio"
-                else
-                    USER="sbvideo"
-		    REP_CONFIG="${REP_CONFIG}/StudioboxVideo"
-		    REP_DEPOT_PEDA="${REP_DEPOT_PEDA}/StudioboxVideo"
-            fi
+if [ "$VERSION" = "cesar" ];  then 
+    DBI="false" 
+    DBIGUI="false" 
+    USER="jules"
+    REP_CONFIG="${REP_CONFIG}/cesar"
+    REP_DEPOT_PEDA="${REP_DEPOT_PEDA}/cesar"
+elif [ "$VERSION" = "studioboxAudio" ] || [ "$VERSION" = "studioboxVideo" ]; then 
+    DBI="live"
+    DBIGUI="true"
+    if [ "$VERSION" = "studioboxAudio" ]; then
+        USER="webradio"
+	REP_CONFIG="${REP_CONFIG}/StudioboxAudio"
+	REP_DEPOT_PEDA="${REP_DEPOT_PEDA}/StudioboxAudio"
+    else
+        USER="sbvideo"
+	REP_CONFIG="${REP_CONFIG}/StudioboxVideo"
+	REP_DEPOT_PEDA="${REP_DEPOT_PEDA}/StudioboxVideo"
+    fi
 fi
 
 # Définitions des paramètres de construction et des paramètres à
@@ -360,7 +353,7 @@ Rep Config (REP_CONFIG) : \t$REP_CONFIG\n \
 Rep Doc (REP_DOC) : \t$REP_DOC\n Distribution : \t$DIST\n \
 MiroirD : \t$MIROIRDISTANT\n MiroirL : \t$MIROIRLOCAL\n \
 Version : \t$VERSION\n Archi :  \t$ARCH\n Clé :  \t$CLE\n"
-#exit
+    #exit
     echo $AUTOCONFIG
     read -p "Vérification des paramètres. Appuyer sur « Entrée » pour continuer ou \
 « Ctrl-C » pour interrompre le script" Z
@@ -375,28 +368,25 @@ chmod u+x auto/config
 rm -rf config
 sudo lb clean --purge
 
-if  [ "$CLE" != "" ]
-  then
+if  [ "$CLE" != "" ]; then
     DISQUE=(`sudo fdisk -l | grep ^/dev/$CLE`)
-      if [ "$DISQUE" = "" ]
-        then
-          Erreur_cle
-        else
-          MONTE=(`mount | grep ^/dev/$CLE | cut -b 1-9`)
-          if [ "$MONTE" != "" ]
-            then
-              NBPART=${#MONTE[@]}
-              let NBPART-=1
-              while  [ "$NBPART" -ge 0 ]; do
-               PART=${MONTE[$NBPART]}
-               sudo umount $PART
-               let NBPART-=1
-             done
-          fi
-          Preparation
-          bash $REP3/creation_cle.sh $CLE $VERSION $IMAGEISO
-      fi    
-  else
+    if [ "$DISQUE" = "" ]; then
+        Erreur_cle
+    else
+        MONTE=(`mount | grep ^/dev/$CLE | cut -b 1-9`)
+        if [ "$MONTE" != "" ]; then
+            NBPART=${#MONTE[@]}
+            let NBPART-=1
+            while  [ "$NBPART" -ge 0 ]; do
+		PART=${MONTE[$NBPART]}
+		sudo umount $PART
+		let NBPART-=1
+            done
+        fi
+        Preparation
+        bash $REP3/creation_cle.sh $CLE $VERSION $IMAGEISO
+    fi    
+else
     Preparation
 fi
 

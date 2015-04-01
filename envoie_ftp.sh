@@ -36,6 +36,12 @@ Rep images (DossierImages) : \t$DossierImages\n  \
 Version : \t$Version\n Iso :  \t$Iso\n"
 #exit
 
+echo "user $User $Pass" > commands.txt
+echo "put creation_cle.sh" >> commands.txt
+echo "quit" >> commands.txt
+echo "*** Transfert de creation_cle.sh par FTP"
+ftp -n $Site < commands.txt
+rm commands.txt
 
 cd $DossierImages
 echo "user $User $Pass" > commands.txt
