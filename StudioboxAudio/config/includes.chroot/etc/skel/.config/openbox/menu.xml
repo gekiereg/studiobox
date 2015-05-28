@@ -39,7 +39,7 @@
 		<menu id="root-menu-504920" label="Outils de diffusion">
 			<item label="Installer Airtime">
 				<action name="Execute">
-					<execute>sudo installation_airtime</execute>
+					<execute>installation_airtime</execute>
 				</action>
 			</item>
 			<item label="Butt">

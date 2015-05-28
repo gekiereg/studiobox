@@ -5,9 +5,10 @@ sudo aptitude -y install airtime | tee >(zenity --progress --pulsate --auto-clos
 mv .config/openbox/menu2.xml .config/openbox/menu.xml 
 
 zenity --info --text="Airtime est maintenant installé. Dans quelques instants le navigateur va se lancer pour accéder à AIRTIME.
+L'utilisateur est « admin » et le mot de passe est « webradio »
 À l'avenir, vous pourrez y accéder en cliquant sur « Outils de diffusion → Airtime »"
 
-openbox --restart
 killall conky
+openbox --restart
 conky &
 iceweasel https://localhost/login &

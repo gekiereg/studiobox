@@ -63,19 +63,20 @@ sudo mkfs.ext2 /dev/$CLE$PART2
 echo "*** définition du label « persistence »"
 sudo tune2fs -L persistence /dev/$CLE$PART2
 sudo mount -t ext2 /dev/$CLE$PART2 /mnt
+PERSIST='persistence.conf'
 sleep 5
 echo "*** Effacement du contenu de la partition persistante"
 sudo rm -rf /mnt/*
 if [ "$VERSION" = "studioboxAudio" ]
 then
-  echo "*** Copie du fichier « live-persistence.conf »"
-  echo "/ union" >> live-persistence.conf
+  echo "*** Copie du fichier « $PERSIST »"
+  echo "/ union" >> $PERSIST
 else
-  echo "*** Copie du fichier « live-persistence.conf »"
-  echo "/home union" >> live-persistence.conf
+  echo "*** Copie du fichier « $PERSIST »"
+  echo "/home union" >> $PERSIST
 fi
-sudo cp live-persistence.conf /mnt/live-persistence.conf
-rm live-persistence.conf
+sudo cp $PERSIST /mnt/$PERSIST
+rm $PERSIST
 sudo umount /dev/$CLE$PART2
 echo "Votre clé est prête"
 echo "Vous pouvez la retirer et démarrer un ordinateur avec"

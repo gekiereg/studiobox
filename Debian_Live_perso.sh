@@ -41,8 +41,6 @@ CLE=$3
 MONHOME="/home/user/Documents"
 # Emplacement du dépôt git de studiobox
 REP_DEPOT_PEDA="$MONHOME/Dépôt_git/studiobox"
-# Emplacement de trunk du Subversion « formation »
-REP_DEPOT_FORMATION="$MONHOME/Dépôt_Subversion/Formation/trunk"
 # Répertoire de travail
 REP_WORK="$MONHOME/StudioBoxAudio"
 # Répertoire où se trouve  l'arborescence de DebianLive
