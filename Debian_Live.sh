@@ -248,26 +248,25 @@ function MaJsvn
 
 MONHOME=$1
 REP_DEPOT_PEDA=$2                   # Répertoires du dépôt Git
-REP_DEPOT_FORMATION=$3
-REP_CONFIG=$4
-REP_LIVE=$5                         # Répertoire où se trouve 
+REP_CONFIG=$3
+REP_LIVE=$4                         # Répertoire où se trouve 
                                     #   l'arborescence de Debian_live
-REP_IMG=$6                          # Répertoire où sauvegarder 
+REP_IMG=$5                          # Répertoire où sauvegarder 
                                     #   les images obtenues
 #REP4=$6
-REP_DOC=$7
+REP_DOC=$6
 #DIST=$8
-MIROIRDISTANT=$8                    # Mirroir à mettre dans le système
+MIROIRDISTANT=$7                    # Mirroir à mettre dans le système
                                     #   de la clé
-MIROIRLOCAL=$9                      # Mirroir à utiliser pour 
+MIROIRLOCAL=$8                      # Mirroir à utiliser pour 
                                     #   construire la clé
+MODE=$9
 shift 9                             # Décalage dans les variables passées pour
                                     #   récupérer au-delà de $10
-MODE=$1
-VERSION=$2
+VERSION=$1
 NOM=$VERSION
-ARCH=$3
-CLE=$4
+ARCH=$2
+CLE=$3
 PROG="$VERSION/desktop.list.chroot" # Nom du fichier dans
                                     #   config/package-lists/ qui 
                                     #   contient la liste des  

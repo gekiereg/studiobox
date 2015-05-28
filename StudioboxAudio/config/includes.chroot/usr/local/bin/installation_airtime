@@ -1,6 +1,7 @@
 #!/bin/bash
-sudo aptitude update && aptitude -y upgrade | tee >(zenity --progress --pulsate --auto-close --title="Mise à jour du cache des paquets" --text="Mise à jour en cours") > airtime.log
-sudo aptitude -y install airtime | tee >(zenity --progress --pulsate --auto-close --title="Installation de airtime" --text="Installation en cours") > airtime.log
+sudo aptitude update
+sudo aptitude -y upgrade | tee >(zenity --progress --pulsate --auto-close --title="Mise à jour du cache des paquets" --text="Mise à jour en cours") > airtime.log
+sudo aptitude -y install airtime | tee >(zenity --progress --pulsate --auto-close --title="Installation de airtime" --text="Installation en cours") >> airtime.log
 #sed -e "/<item label=\"Installer Airtime\">/,/<\/item>/d" .config/openbox/menu.xml > .config/openbox/menu.xml.new
 mv .config/openbox/menu2.xml .config/openbox/menu.xml 
 
@@ -10,5 +11,6 @@ L'utilisateur est « admin » et le mot de passe est « webradio »
 
 killall conky
 openbox --restart
+sleep 5
 conky &
 iceweasel https://localhost/login &
