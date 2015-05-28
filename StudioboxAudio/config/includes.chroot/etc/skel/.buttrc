@@ -15,13 +15,13 @@ connect_at_startup = 0
 
 [audio]
 device = 2
-samplerate = 48000
+samplerate = 44100
 bitrate = 256
 channel = 2
 codec = ogg
 
 [record]
-samplerate = 48000
+samplerate = 44100
 bitrate = 256
 channel = 2
 codec = ogg

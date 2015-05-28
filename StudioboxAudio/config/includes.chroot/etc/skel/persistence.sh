@@ -1,9 +1,8 @@
 #!/bin/bash
 # Script de création de la persistance de la clé studiobox
 # Utilisation du script
-#	/bin/bash creation_cle.sh device_de_la_clé image_iso
+#	/bin/bash persistence.sh device_de_la_clé 
 #	* Spécifier sur quel « device » créer la clé, sdb, sdc ou...
-#	* Indiquer le chemin et le nom de l'image iso téléchargée
 
 # Erreur de syntaxe
 function Erreur
@@ -11,7 +10,7 @@ function Erreur
   echo "Il manque un paramètre"
   echo ""
   echo "*** Utilisation du script"
-  echo "	/bin/bash creation_cle.sh device_de_la_clé"
+  echo "	/bin/bash persistence.sh device_de_la_clé"
   echo ""
   echo "		* Spécifier sur quel « device » créer la clé, sdb, sdc ou..."
   exit
@@ -26,8 +25,6 @@ if  [ "$CLE" = "" ]
 fi
 
 echo "*** Création de la partiton persistante"
-sudo aptitude update
-sudo aptitude install parted coreutils util-linux e2fsprogs gawk
 START=`sudo parted /dev/$CLE print free | grep Free | grep [MG]B | gawk '{print $1}'`
 END=`sudo parted /dev/$CLE print free | grep Free | grep [MG]B | gawk '{print $2}'`
 sudo parted /dev/$CLE mkpart primary ext2 $START $END

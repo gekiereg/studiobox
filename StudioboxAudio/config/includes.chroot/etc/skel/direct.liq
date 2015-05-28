@@ -3,5 +3,5 @@
 # par ALSA est envoyé sur le serveur Icecast défini dans le script
 #
 
-liquidsoap 'output.icecast(%vorbis, mount="pointmontage.ogg",host="webradio.ac-versailles.fr", port=80 ,user="identifiant", password="motdepasse",input.alsa())'
+liquidsoap 'output.icecast(%vorbis, mount="pointmontage.ogg",host="webradio.ac-versailles.fr", port=8000 ,user="identifiant", password="motdepasse",input.alsa())'
 
