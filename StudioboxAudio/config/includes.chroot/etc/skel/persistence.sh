@@ -35,10 +35,11 @@ sudo mount -t ext2 /dev/$CLE$PART2 /mnt
 sleep 5
 echo "*** Effacement du contenu de la partition persistante"
 sudo rm -rf /mnt/*
-echo "*** Copie du fichier « live-persistence.conf »"
-echo "/ union" >> live-persistence.conf
-sudo cp live-persistence.conf /mnt/live-persistence.conf
-rm live-persistence.conf
+PERSIST="persistence.conf"
+echo "*** Copie du fichier « $PERSIST »"
+echo "/ union" >> $PERSIST
+sudo cp $PERSIST /mnt/$PERSIST
+rm $PERSIST
 sudo umount /dev/$CLE$PART2
 echo "Votre clé est désormais persistante"
 echo "Cela signifie que les modifications et réglages que vous effectuerez"
