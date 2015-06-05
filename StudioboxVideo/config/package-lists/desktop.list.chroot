@@ -1,5 +1,6 @@
 #Liste StudioBoxAudio
 xinit 
+xdg-user-dirs
 locales
 xorg 
 xserver-xorg 
