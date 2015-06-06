@@ -2,9 +2,14 @@
 <openbox_menu xmlns="http://openbox.org/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://openbox.org/                 file:///usr/share/openbox/menu.xsd">
 	<menu id="root-menu" label="Openbox 3">
 		<separator label=".:: StudioBox ::."/>
-		<item label="Documentation">
+		<item label="Navigateur de fichiers">
 			<action name="Execute">
-				<execute>pcmanfm &quot;/home/sbvideo/Documents&quot;</execute>
+				<execute>pcmanfm &quot;/home/sbvideo/&quot;</execute>
+			</action>
+		</item>
+		<item label="Vidéos">
+			<action name="Execute">
+				<execute>pcmanfm &quot;/home/sbvideo/Vidéos&quot;</execute>
 			</action>
 		</item>
 		<item label="Musique">
