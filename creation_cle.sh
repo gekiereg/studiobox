@@ -1,7 +1,7 @@
 #!/bin/bash
 # Script de création des clés studioBox
 # Utilisation du script
-#	/bin/bash creation_cle.sh device_de_la_clé image_iso
+#	/bin/bash creation_cle.sh device_de_la_clé version image_iso
 #	* Spécifier sur quel « device » créer la clé, sdb, sdc ou...
 #	* Indiquer le chemin et le nom de l'image iso téléchargée
 
@@ -15,6 +15,7 @@ function Erreur
   echo ""
   echo "		* Spécifier sur quel « device » créer la clé, sdb, sdc ou..."
   echo "		* Spécifier la version, studioboxAudio, studioboxVideo ou..."
+  echo "		* Spécifier l'image iso de la studiobox à utiliser..."
   
   exit
 }
