@@ -37,7 +37,7 @@ echo "*** Effacement du contenu de la partition persistante"
 sudo rm -rf /mnt/*
 PERSIST="persistence.conf"
 echo "*** Copie du fichier « $PERSIST »"
-echo "/ union" >> $PERSIST
+echo "/home union" >> $PERSIST
 sudo cp $PERSIST /mnt/$PERSIST
 rm $PERSIST
 sudo umount /dev/$CLE$PART2
