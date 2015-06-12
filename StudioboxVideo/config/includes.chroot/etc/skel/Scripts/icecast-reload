@@ -1,5 +1,0 @@
-#!/bin/bash
-sudo /etc/init.d/icecast2 stop
-sudo chgrp icecast /etc/icecast2/icecast.xml
-sudo /etc/init.d/icecast2 start
-exit 0
