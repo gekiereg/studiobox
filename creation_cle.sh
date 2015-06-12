@@ -1,7 +1,7 @@
 #!/bin/bash
 # Script de création des clés studioBox
 # Utilisation du script
-#	/bin/bash creation_cle.sh device_de_la_clé image_iso
+#	/bin/bash creation_cle.sh device_de_la_clé version image_iso
 #	* Spécifier sur quel « device » créer la clé, sdb, sdc ou...
 #	* Indiquer le chemin et le nom de l'image iso téléchargée
 
@@ -15,6 +15,7 @@ function Erreur
   echo ""
   echo "		* Spécifier sur quel « device » créer la clé, sdb, sdc ou..."
   echo "		* Spécifier la version, studioboxAudio, studioboxVideo ou..."
+  echo "		* Spécifier l'image iso de la studiobox à utiliser..."
   
   exit
 }
@@ -56,8 +57,8 @@ echo "*** Création de la partition StudioBox"
 sudo dd if=$IMAGE of=/dev/$CLE 
 sync
 echo "*** Création de la partiton persistante"
-START=`sudo parted /dev/$CLE print free | grep Free | grep [MG]B | gawk '{print $1}'`
-END=`sudo parted /dev/$CLE print free | grep Free | grep [MG]B | gawk '{print $2}'`
+START=`LC_ALL=C sudo parted /dev/$CLE print free | grep Free | grep [MG]B | gawk '{print $1}'`
+END=`LC_ALL=C sudo parted /dev/$CLE print free | grep Free | grep [MG]B | gawk '{print $2}'`
 sudo parted /dev/$CLE mkpart primary ext2 $START $END
 sudo mkfs.ext2 /dev/$CLE$PART2
 echo "*** définition du label « persistence »"
