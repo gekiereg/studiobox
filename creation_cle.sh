@@ -57,8 +57,15 @@ echo "*** Création de la partition StudioBox"
 sudo dd if=$IMAGE of=/dev/$CLE 
 sync
 echo "*** Création de la partiton persistante"
-START=`sudo parted /dev/$CLE print free | grep Free | grep [MG]B | gawk '{print $1}'`
-END=`sudo parted /dev/$CLE print free | grep Free | grep [MG]B | gawk '{print $2}'`
+LPARTED=`sudo aptitude search libparted-i18n | cut -d" " -f1`
+if [ "$LPARTED" = "i" ]
+then
+  START=`sudo parted /dev/$CLE print free | grep libre | grep [MG]B | gawk '{print $1}'`
+  END=`sudo parted /dev/$CLE print free | grep libre | grep [MG]B | gawk '{print $2}'`
+else
+  START=`sudo parted /dev/$CLE print free | grep Free | grep [MG]B | gawk '{print $1}'`
+  END=`sudo parted /dev/$CLE print free | grep Free | grep [MG]B | gawk '{print $2}'`
+fi   
 sudo parted /dev/$CLE mkpart primary ext2 $START $END
 sudo mkfs.ext2 /dev/$CLE$PART2
 echo "*** définition du label « persistence »"
