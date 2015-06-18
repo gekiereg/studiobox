@@ -4,7 +4,7 @@ This is a configuration file for butt (broadcast using this tool)
 bg_color = 151540480
 txt_color = -256
 server = diffusion-crdp
-srv_ent = difffusion-locale;diffusion-internet
+srv_ent = diffusion-locale;diffusion-internet
 icy = 
 icy_ent = 
 num_of_srv = 2
