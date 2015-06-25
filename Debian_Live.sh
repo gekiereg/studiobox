@@ -137,6 +137,16 @@ function PreparationStudioBoxAudio
     echo "*** Copie des configurations des logiciels"
     rsync -av --exclude=".*" $REP_CONFIG/config/preseed/* \
             $REP_LIVE/config/preseed/
+    echo "*** Préparation de la version de butt"
+    if [ "$ARCH" = "amd64" ]; then
+        rm $REP_LIVE/config/includes.chroot/etc/usr/local/bin/butt-i386
+        mv $REP_LIVE/config/includes.chroot/etc/usr/local/bin/butt-amd64 \
+	$REP_LIVE/config/includes.chroot/etc/usr/local/bin/butt
+    else
+        rm $REP_LIVE/config/includes.chroot/etc/usr/local/bin/butt-amd64
+        mv $REP_LIVE/config/includes.chroot/etc/usr/local/bin/butt-i386 \
+	$REP_LIVE/config/includes.chroot/etc/usr/local/bin/butt
+    fi
 }
 
 # Préparation pour la création de StudioBoxVideo
