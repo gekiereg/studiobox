@@ -210,9 +210,9 @@ function Preparation
     echo "*** Création de l'image pour clé USB"
     sudo lb build 
     #2>&1 | tee build.log
-    IMAGEISO="$REP_IMG/$VERSION-$DIST-$ARCH-v$NVERSION-live.iso"
+    IMAGEISO="$REP_IMG/$VERSION-$DIST-$ARCH-v$NVERSION-live.img"
     echo "*** Copie de l'image $IMAGEISO dans $REP_IMG"
-    cp *.iso $IMAGEISO
+    cp *.img $IMAGEISO
 }
 
 function EnvoieFtp
@@ -222,7 +222,7 @@ function EnvoieFtp
         read -p "Identifiant de connexion : " ID
         read -s -p "Mot de passe de connexion : " PASS
         echo ""
-	ISO="$VERSION-$DIST-$ARCH-v$NVERSION-live.iso"
+	ISO="$VERSION-$DIST-$ARCH-v$NVERSION-live.img"
         bash envoie_ftp.sh $ID $PASS $VERSION $ISO $MONHOME $REP_LIVE $REP_IMG
     fi
 }
@@ -316,6 +316,7 @@ fi
 AUTOCONFIG='#!/bin/sh
 lb config noauto \
      --architectures '$ARCH' \
+     --binary-images hdd \
      --distribution '$DIST' \
      --bootappend-live "boot=live config locales=fr_FR.UTF-8 keyboard-layouts=fr \
           username='$USER' persistence timezone=Europe/Paris"\

@@ -25,8 +25,8 @@ if  [ "$CLE" = "" ]
 fi
 
 echo "*** Création de la partiton persistante"
-START=`sudo parted /dev/$CLE print free | grep Free | grep [MG]B | gawk '{print $1}'`
-END=`sudo parted /dev/$CLE print free | grep Free | grep [MG]B | gawk '{print $2}'`
+START=`LC_ALL=C sudo parted /dev/$CLE print free | grep Free | grep [MG]B | gawk '{print $1}'`
+END=`LC_ALL=C sudo parted /dev/$CLE print free | grep Free | grep [MG]B | gawk '{print $2}'`
 sudo parted /dev/$CLE mkpart primary ext2 $START $END
 sudo mkfs.ext2 /dev/$CLE$PART2
 echo "*** définition du label « persistence »"
