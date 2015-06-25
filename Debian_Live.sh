@@ -32,12 +32,14 @@
 function Erreur
 {
     echo "** Utilisation du script"
-    echo "   /bin/bash Debian_Live_perso_moi.sh version arch [device_de_la_clé]"
+    echo "   /bin/bash Debian_Live_perso_moi.sh version arch type [device_de_la_clé]"
     echo ""
     echo "    * version peut prendre les valeurs « cesar », "
     echo "      « studioboxAudio » ou « studioboxVideo » et "
     echo "      *est obligatoire*"
-    echo "    * peut prendre les valeurs « i386 » ou « amd64 »"
+    echo "    * arch peut prendre les valeurs « i386 » ou « amd64 »"
+    echo "      et est *obligatoire*"
+    echo "    * type peut prendre les valeurs « img » ou « iso »"
     echo "      et est *obligatoire*"
     echo "    * s'il faut créer la clé dans la foulée, il faut "
     echo "      spécifier sur quel « device » créer la clé, "
@@ -56,6 +58,13 @@ function Erreur_cle
 function Erreur_version
 {
     echo "Vous n'avez pas mis quelle version créer, « cesar », « studioboxAudio » ou « studioboxVideo »"    
+    Erreur
+}
+
+# Erreur d'oubli de type
+function Erreur_type
+{
+    echo "Vous n'avez pas mis quel type d'image créer, « iso », ou « img »"    
     Erreur
 }
 
@@ -210,9 +219,9 @@ function Preparation
     echo "*** Création de l'image pour clé USB"
     sudo lb build 
     #2>&1 | tee build.log
-    IMAGEISO="$REP_IMG/$VERSION-$DIST-$ARCH-v$NVERSION-live.img"
+    IMAGEISO="$REP_IMG/$VERSION-$DIST-$ARCH-v$NVERSION-live.$TYPE"
     echo "*** Copie de l'image $IMAGEISO dans $REP_IMG"
-    cp *.img $IMAGEISO
+    cp *.$TYPE $IMAGEISO
 }
 
 function EnvoieFtp
@@ -266,7 +275,8 @@ shift 9                             # Décalage dans les variables passées pour
 VERSION=$1
 NOM=$VERSION
 ARCH=$2
-CLE=$3
+TYPE=$3
+CLE=$4
 PROG="$VERSION/desktop.list.chroot" # Nom du fichier dans
                                     #   config/package-lists/ qui 
                                     #   contient la liste des  
@@ -291,6 +301,10 @@ if  [ "$ARCH" != "i386" ] && [ "$ARCH" != "amd64" ]; then
     Erreur_arch
 fi 
 
+if [ "$TYPE" != "img" ] && [ "$TYPE" != "iso" ]; then
+    Erreur_type
+fi
+
 if [ "$VERSION" = "cesar" ];  then 
     DBI="false" 
     DBIGUI="false" 
@@ -313,34 +327,61 @@ fi
 
 # Définitions des paramètres de construction et des paramètres à
 #   passer au noyau
-AUTOCONFIG='#!/bin/sh
-lb config noauto \
-     --architectures '$ARCH' \
-     --binary-images hdd \
-     --distribution '$DIST' \
-     --bootappend-live "boot=live config locales=fr_FR.UTF-8 keyboard-layouts=fr \
-          username='$USER' persistence timezone=Europe/Paris"\
-     --mirror-bootstrap '$MIROIRLOCAL/debian/' \
-     --mirror-chroot-security '$MIROIRLOCAL/debian-security/' \
-     --mirror-binary '$MIROIRDISTANT/debian/' \
-     --mirror-binary-security '$MIROIRDISTANT/debian-security/' \
-     --archive-areas "main contrib non-free" \
-     --chroot-filesystem squashfs \
-     --debian-installer '$DBI' \
-     --debian-installer-gui '$DBIGUI' \
-     --source false \
-     --updates false \
-     --backports true \
-     --memtest none \
-     --verbose \
-     "${@}"' 
-#     --apt-recommends false \
-#     --apt-indices false \
-#     --firmware-binary true \
-#     --firmware-chroot true \     
-#     --mirror-chroot-backports '$MIROIRLOCAL/debian-backports/' \
+if [ "$TYPE" = "img" ]; then
+	AUTOCONFIG='#!/bin/sh
+	lb config noauto \
+	     --architectures '$ARCH' \
+	     --binary-images hdd \
+	     --distribution '$DIST' \
+	     --bootappend-live "boot=live config locales=fr_FR.UTF-8 keyboard-layouts=fr \
+		  username='$USER' persistence timezone=Europe/Paris"\
+	     --mirror-bootstrap '$MIROIRLOCAL/debian/' \
+	     --mirror-chroot-security '$MIROIRLOCAL/debian-security/' \
+	     --mirror-binary '$MIROIRDISTANT/debian/' \
+	     --mirror-binary-security '$MIROIRDISTANT/debian-security/' \
+	     --archive-areas "main contrib non-free" \
+	     --chroot-filesystem squashfs \
+	     --debian-installer '$DBI' \
+	     --debian-installer-gui '$DBIGUI' \
+	     --source false \
+	     --updates false \
+	     --backports true \
+	     --memtest none \
+	     --verbose \
+	     "${@}"' 
+	#     --apt-recommends false \
+	#     --apt-indices false \
+	#     --firmware-binary true \
+	#     --firmware-chroot true \     
+	#     --mirror-chroot-backports '$MIROIRLOCAL/debian-backports/' \
 #     --mirror-binary-backports '$MIROIRDISTANT/debian-backports/' \
-
+else
+	AUTOCONFIG='#!/bin/sh
+	lb config noauto \
+	     --architectures '$ARCH' \
+	     --distribution '$DIST' \
+	     --bootappend-live "boot=live config locales=fr_FR.UTF-8 keyboard-layouts=fr \
+		  username='$USER' persistence timezone=Europe/Paris"\
+	     --mirror-bootstrap '$MIROIRLOCAL/debian/' \
+	     --mirror-chroot-security '$MIROIRLOCAL/debian-security/' \
+	     --mirror-binary '$MIROIRDISTANT/debian/' \
+	     --mirror-binary-security '$MIROIRDISTANT/debian-security/' \
+	     --archive-areas "main contrib non-free" \
+	     --chroot-filesystem squashfs \
+	     --debian-installer '$DBI' \
+	     --debian-installer-gui '$DBIGUI' \
+	     --source false \
+	     --updates false \
+	     --backports true \
+	     --memtest none \
+	     --verbose \
+	     "${@}"' 
+	#     --apt-recommends false \
+	#     --apt-indices false \
+	#     --firmware-binary true \
+	#     --firmware-chroot true \     
+	#     --mirror-chroot-backports '$MIROIRLOCAL/debian-backports/' \
+fi
 
 ####################
 # À décommenter pour vérifier la transmission de paramètres
@@ -359,7 +400,7 @@ Version : \t$VERSION\n Archi :  \t$ARCH\n Clé :  \t$CLE\n"
 « Ctrl-C » pour interrompre le script" Z
 fi
 
-echo "****** Création de $VERSION en $ARCH ******"
+echo "****** Création d'une image $TYPE de $VERSION en $ARCH ******"
 #echo "*** Téléchargement des firmwares privateurs"
 # Allez dans le répertoire de l'arborescence Debian-live
 cd $REP_LIVE
