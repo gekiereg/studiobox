@@ -114,6 +114,7 @@ less
 ntp
 parted
 gawk
+libjpeg62
 #paquets privateurs
 flashplugin-nonfree
 firmware-linux
