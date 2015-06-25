@@ -113,7 +113,7 @@
 		<item label="Navigateur Web">
 			<action name="Execute">
 				<execute>
-					iceweasel http://www.education-aux-medias.ac-versailles.fr/
+					iceweasel 
 				</execute>
 			</action>
 		</item>
