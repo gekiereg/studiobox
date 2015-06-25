@@ -16,6 +16,16 @@ function Erreur
   exit
 }
 
+VERIFPERSIST=$(ls / | grep persistence)
+
+if [ "$VERIFPERSIST" = "persistence.conf" ]; then
+  echo "La persistance existe déjà"
+  echo "Vous n'avez pas besoin de lancer ce script"
+  echo ""
+  echo "Fin du script"
+  exit
+fi
+
 CLE=$1
 PART1="1"
 PART2="2"
