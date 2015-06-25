@@ -33,7 +33,7 @@ folder = /home/webradio/Musique/
 attach = 0
 ontop = 0
 
-[difffusion-locale]
+[diffusion-locale]
 address = localhost
 port = 8000
 password = webradio
