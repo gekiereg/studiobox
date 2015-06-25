@@ -25,7 +25,7 @@ samplerate = 44100
 bitrate = 256
 channel = 2
 codec = ogg
-start_rec = 0
+start_rec = 1
 filename = rec_(%m_%d_%y)_%i.ogg
 folder = /home/webradio/Musique/
 
