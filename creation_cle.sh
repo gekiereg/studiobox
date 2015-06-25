@@ -1,9 +1,9 @@
 #!/bin/bash
 # Script de création des clés studioBox
 # Utilisation du script
-#	/bin/bash creation_cle.sh device_de_la_clé version image_iso
+#	/bin/bash creation_cle.sh device_de_la_clé version image_img
 #	* Spécifier sur quel « device » créer la clé, sdb, sdc ou...
-#	* Indiquer le chemin et le nom de l'image iso téléchargée
+#	* Indiquer le chemin et le nom de l'image img téléchargée
 
 # Erreur de syntaxe
 function Erreur
@@ -11,11 +11,11 @@ function Erreur
   echo "Il manque un ou plusieurs paramètres"
   echo ""
   echo "*** Utilisation du script"
-  echo "	/bin/bash creation_cle.sh device_de_la_clé version image_iso"
+  echo "	/bin/bash creation_cle.sh device_de_la_clé version image_img"
   echo ""
   echo "		* Spécifier sur quel « device » créer la clé, sdb, sdc ou..."
   echo "		* Spécifier la version, studioboxAudio, studioboxVideo ou..."
-  echo "		* Spécifier l'image iso de la studiobox à utiliser..."
+  echo "		* Spécifier l'image img de la studiobox à utiliser..."
   
   exit
 }
@@ -25,8 +25,6 @@ VERSION=$2
 IMAGE=$3
 PART1="1"
 PART2="2"
-
-#sudo umount /dev/$CLE*
 
 if  [ "$CLE" = "" ] || [ "$2" = "" ];
 	then Erreur
