@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<CONFIG>
+  <unix ffmpeg="/usr/bin/ffmpeg" ffplay="/usr/bin/ffplay" terminal="/usr/bin/x-terminal-emulator" termoptions="-e"/>
+  <general pause="true" playsound="true" showoptions="false" pass2="false" destfolder="" rememberlast="false" multithreading="false" numberofthreads="" priority=""/>
+  <window height="400" width="640" top="184" left="363"/>
+</CONFIG>
