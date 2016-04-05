@@ -121,11 +121,16 @@
 					<execute>lxterminal -e 'Scripts/.direct-local.liq'</execute>
 				</action>
 			</item>
-			</item>
 			<item label="Diffuser un flux radio sur internet">
+				<action name="Execute">
+					<execute>lxterminal -e 'Scripts/direct.liq'</execute>
+				</action>
+			</item>
+			<item label="Configurer le flux de diffusion radio">
 				<action name="Execute">
 					<execute>lxterminal -e 'Scripts/config.bash'</execute>
 				</action>
+			</item>
 			<item label="Diffuser un flux TV (script)">
 				<action name="Execute">
 					<execute>lxterminal -e 'Scripts/diff-tv.bash'</execute>

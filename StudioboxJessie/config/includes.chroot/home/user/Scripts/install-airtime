@@ -1,3 +1,8 @@
 #!/bin/bash
+zenity --info --text="Le processus d'installation du logiciel de programmation radiophonique se lancera une fois que vous fermerez cette fenêtre.\\
+Notes: l'installation nécessite une connexion internet, et peut prendre un certain temps, soyez patient! :)"
 cd Documents/airtime-airtime-2.5.2.1
-./install -fpai
+lxterminal -e 'sudo ./install -fpai' | tee >(zenity --progress --pulsate --auto-close --title="Installation d'Airtime" --text="Installation en cours, merci de patienter... À la fin de l'installation, suivre les instructions qui s'afficheront")
+cd ../
+rm .config/openbox/menu.xml
+mv .config/openbox/menu2.xml .config/openbox/menu.xml

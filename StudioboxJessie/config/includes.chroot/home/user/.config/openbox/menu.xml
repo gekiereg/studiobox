@@ -116,11 +116,6 @@
 					<execute>lxterminal -e 'sudo bash Scripts/install-airtime'</execute>
 				</action>
 			</item>
-			<item label="Programmer une diffusion radio">
-				<action name="Execute">
-					<execute>iceweasel &quot;http://localhost/login&quot;</execute>
-				</action>
-			</item>
 			<item label="Diffuser un flux radio dans l'établissement">
 				<action name="Execute">
 					<execute>lxterminal -e 'Scripts/.direct-local.liq'</execute>
