@@ -1,4 +1,6 @@
 xinit 
+aptitude
+gawk
 apache2
 libcamomile-ocaml-data
 coreutils

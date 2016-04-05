@@ -6,12 +6,20 @@ lxterminal -e 'sudo ./install -fpai' | tee >(zenity --progress --pulsate --auto-
 zenity --info --text="Une fenêtre de votre navigateur va se lancer pour\\ 
 vous permettre de finaliser l'installation.\\
 Faites défiler les boîtes de dialogue en laissant\\
-les données par défaut\\
+les données par défaut.\\
 À l'avenir, vous pourrez accéder à Airtime en cliquant\\ 
 sur «Outils de diffusion Webradio-WebTV» →\\
  «Programmer une diffusion radio»\\
 (identifiant: admin, mot de passe: admin)"
-iceweasel https://localhost/login &
+zenity --info --text="Une dernière chose :)
+Ne tenez pas compte des demandes concernant des commandes à renseigner 
+dans le terminal et du message d'erreur sur la dernière page: ces 
+manipulations seront réalisées automatiquement quand vous fermerez votre navigateur..."
+sleep 2
+iceweasel http://localhost/login | tee >(zenity --progress --pulsate --auto-close --title="Finalisation de l'installation" --text="Lancement du navigateur web")
 cd ../../
 rm .config/openbox/menu.xml
 mv .config/openbox/menu2.xml .config/openbox/menu.xml
+sudo service airtime-playout start
+sudo service airtime-liquidsoap start
+sudo service airtime-media-monitor start
