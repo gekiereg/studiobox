@@ -20,6 +20,7 @@ file-roller
 p7zip-full 
 conky-all 
 tint2 
+apache2
 gedit 
 wicd 
 scrot 
@@ -66,6 +67,8 @@ gnome-subtitles
 devede
 xfburn 
 liquidsoap
+liquidsoap-plugin-alsa
+alsa-utils
 icecast2
 icedtea-7-plugin
 gdebi
