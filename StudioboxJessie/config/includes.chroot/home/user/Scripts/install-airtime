@@ -1,8 +1,17 @@
 #!/bin/bash
 zenity --info --text="Le processus d'installation du logiciel de programmation radiophonique se lancera une fois que vous fermerez cette fenêtre.\\
-Notes: l'installation nécessite une connexion internet, et peut prendre un certain temps, soyez patient! :)"
-cd Documents/airtime-airtime-2.5.2.1
-lxterminal -e 'sudo ./install -fpai' | tee >(zenity --progress --pulsate --auto-close --title="Installation d'Airtime" --text="Installation en cours, merci de patienter... À la fin de l'installation, suivre les instructions qui s'afficheront")
-cd ../
+Notes: l'installation nécessite une connexion internet, et peut prendre un certain temps, soyez patient! :)" 
+cd Documents/.airtime-airtime-2.5.2.1
+lxterminal -e 'sudo ./install -fpai' | tee >(zenity --progress --pulsate --auto-close --title="Installation d'Airtime" --text="Installation en cours, merci de patienter...")
+zenity --info --text="Une fenêtre de votre navigateur va se lancer pour\\ 
+vous permettre de finaliser l'installation.\\
+Faites défiler les boîtes de dialogue en laissant\\
+les données par défaut\\
+À l'avenir, vous pourrez accéder à Airtime en cliquant\\ 
+sur «Outils de diffusion Webradio-WebTV» →\\
+ «Programmer une diffusion radio»\\
+(identifiant: admin, mot de passe: admin)"
+iceweasel https://localhost/login &
+cd ../../
 rm .config/openbox/menu.xml
 mv .config/openbox/menu2.xml .config/openbox/menu.xml
