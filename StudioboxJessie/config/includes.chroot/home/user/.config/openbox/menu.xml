@@ -136,11 +136,6 @@
 					<execute>lxterminal -e 'Scripts/diff-tv.bash'</execute>
 				</action>
 			</item>
-			<item label="Diffuser un flux TV (graphique)">
-				<action name="Execute">
-					<execute>tss</execute>
-				</action>
-			</item>
 		</menu>
 		<menu id="graph" label="Graphisme">
 			<item label="Editeur d'images Gimp">

@@ -86,27 +86,18 @@ ${font Sans:size=11,weight:bold}${alignc}.:: ${nodename} ::.${font}
 ${hr}
 ${font Sans:size=11,weight:bold}${alignc}${time %a %d %b %Y}${font}
 ${font Sans:size=18,weight:bold}${alignc}${time %H:%M}${font}
-${hr}
-Kernel : ${alignr}${color 0F64A2}${kernel}${color}
-Uptime : ${alignr}${color 0F64A2}${uptime}${color}
 ${hr}${color}
 Freq & Temp CPU : ${alignr}${color 0F64A2}${freq_g}GHz${color} - ${color 0F64A2}${acpitemp}°C${color}
 ${alignc}${cpugraph 6,200 ffc11f 8b4b0b}
 CPU : ${alignr}${color 0F64A2}${cpu cpu0}%${color} ${cpugauge cpu0 10,25}
 RAM : ${alignr}${color 0F64A2}${mem} - ${memperc}%${color} ${memgauge 10,25}
-Swap : ${alignr}${color 0F64A2}${swap} - ${swapperc}%${color} ${swapbar 6,25}
 ${hr}
-Process ${goto 145}MEM${alignr}CPU
-${color 0F64A2}${top name 1} ${goto 140}${top mem 1}${alignr}${top cpu 1}
-${top name 2} ${goto 140}${top mem 2}${alignr}${top cpu 2}
-${top name 3} ${goto 140}${top mem 3}${alignr}${top cpu 3}
-${top name 4} ${goto 140}${top mem 4}${alignr}${top cpu 4}
-${top name 5} ${goto 140}${top mem 5}${alignr}${top cpu 5}${color}
-
-${font Sans:size=10,weight:bold}Stockages${font} ${hr 2}
-${execpi 30 grep -v -E ^fuse\|^udev\|^lrm\|^securityfs\|^binfmt\|^devpts\|^tmpfs\|^varlock\|^varrun\|^sysfs\|^\/proc\|^none\|^gvfs-fuse-daemon /etc/mtab | cut -d" " -f2 | sed '2d;' | while read line ; do
-echo $line '${alignr}${color 0F64A2}${fs_used '$line'} - ${fs_used_perc '$line'}% ${color}${fs_bar 6,25 '$line'}'
-done }
+Process ${goto 145}${alignr}CPU
+${color 0F64A2}${top name 1} ${goto 140}${alignr}${top cpu 1}
+${top name 2} ${goto 140}${alignr}${top cpu 2}
+${top name 3} ${goto 140}${alignr}${top cpu 3}
+${top name 4} ${goto 140}${alignr}${top cpu 4}
+${top name 5} ${goto 140}${alignr}${top cpu 5}${color}
 
 ${font Sans:size=10,weight:bold}Réseau${font} ${hr 2}
 ${if_existing /proc/net/route eth0}${font sans-serif:normal:size=8}IP filaire : $alignr${color 0F64A2} ${addr eth0}${color}${endif}
