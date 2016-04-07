@@ -23,3 +23,4 @@ mv .config/openbox/menu2.xml .config/openbox/menu.xml
 sudo service airtime-playout start
 sudo service airtime-liquidsoap start
 sudo service airtime-media-monitor start
+openbox --restart
