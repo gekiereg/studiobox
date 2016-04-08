@@ -42,6 +42,8 @@ echo "Le direct va être lancé dans 5 secondes !
 
 "
 
+rm ~/Scripts/direct_local.liq
+
 echo 	"Si cette configuration convient, il est inutile pour
 	la prochaine diffusion de reconfigurer le service. Il 
 	suffit de sélectionner l'entrée 'Diffuser un flux radio 
@@ -55,8 +57,10 @@ echo "
 # par ALSA est envoyé sur le serveur Icecast défini dans le script
 #
 
-liquidsoap 'output.icecast(%vorbis, mount=webradio.ogg,host="localhost", port=8000 , password=webradio,input.alsa(id=\"hw:$nombre,0\"))'" > direct_local.liq
-chmod +x direct_local.liq
-exec ./direct_local.liq
 
+liquidsoap 'output.icecast(%vorbis, mount=\"webradio.ogg\",host=\"localhost\", port=8000 , password=\"webradio\",input.alsa(device=\"hw:$nombre,0\"))'" > ~/Scripts/direct_local.liq
+cd ~/Scripts
+chmod +x direct_local.liq
+
+bash diff_locale.bash
 

@@ -118,7 +118,7 @@
 			</item>
 			<item label="Diffuser un flux radio dans l'établissement">
 				<action name="Execute">
-					<execute>lxterminal -e 'Scripts/direct_local.liq'</execute>
+					<execute>lxterminal -e 'Scripts/./diff_locale.bash'</execute>
 				</action>
 			</item>
 			<item label="Diffuser un flux radio sur internet">
