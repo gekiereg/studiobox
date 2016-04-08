@@ -51,7 +51,7 @@ LB_DEBIAN_INSTALLER_DISTRIBUTION="jessie"
 
 # $LB_DEBIAN_INSTALLER_PRESEEDFILE: set debian-installer preseed filename/url
 # (Default: )
-LB_DEBIAN_INSTALLER_PRESEEDFILE="preseedjessie.cfg"
+LB_DEBIAN_INSTALLER_PRESEEDFILE=""
 
 # $LB_DEBIAN_INSTALLER_GUI: toggle use of GUI debian-installer
 # (Default: true)
