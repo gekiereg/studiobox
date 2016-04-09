@@ -139,12 +139,12 @@
 			<menu id="diff-internet" label="Sur internet...">
 			<item label="Diffuser un flux radio sur internet">
 				<action name="Execute">
-					<execute>lxterminal -e 'Scripts/diff-internet/.diff_internet.bash diff'</execute>
+					<execute>lxterminal -e 'Scripts/diff-internet/./diff_internet.bash diff'</execute>
 				</action>
 			</item>
 			<item label="Diffuser et enregistrer un flux radio sur internet">
 				<action name="Execute">
-					<execute>lxterminal -e 'Scripts/diff-internet/.diff_internet.bash'</execute>
+					<execute>lxterminal -e 'Scripts/diff-internet/./diff_internet.bash'</execute>
 				</action>
 			</item>
 			<item label="Configurer le flux de diffusion radio vers internet">
