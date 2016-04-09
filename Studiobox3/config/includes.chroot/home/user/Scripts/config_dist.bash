@@ -52,7 +52,7 @@ echo "
 # par ALSA est envoyé sur le serveur Icecast défini dans le script
 #
 
-liquidsoap 'output.icecast(%vorbis, mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))'" > ~/Scripts/diff-internet/direct_dist.liq
+liquidsoap 'output.icecast(%vorbis(bitrate=128), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))'" > ~/Scripts/diff-internet/direct_dist.liq
 
 echo "
 #
@@ -60,7 +60,7 @@ echo "
 # par ALSA est envoyé sur le serveur Icecast défini dans le script
 #
 
-liquidsoap 's=output.icecast(%vorbis, mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))' 'output.file(%vorbis,\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",s)'" > ~/Scripts/diff-internet/direct-rec_dist.liq
+liquidsoap 's=output.icecast(%vorbis(bitrate=128), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))' 'output.file(%vorbis(bitrate=320),\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",s)'" > ~/Scripts/diff-internet/direct-rec_dist.liq
 
 chmod ugoa+x ~/Scripts/diff-internet/direct*
 
