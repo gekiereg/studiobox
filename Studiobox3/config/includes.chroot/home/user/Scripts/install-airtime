@@ -24,3 +24,6 @@ sudo service airtime-playout start
 sudo service airtime-liquidsoap start
 sudo service airtime-media-monitor start
 openbox --restart
+killall conky
+sleep 1
+conky
