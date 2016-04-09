@@ -51,7 +51,7 @@ echo "
 #
 
 
-liquidsoap 's=output.icecast(%vorbis(bitrate=256), mount=\"webradio.ogg\",host=\"localhost\", port=8000 , password=\"webradio\",input.alsa(device=\"hw:$nombre,0\"))' 'output.file(%vorbis(bitraite=320),\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",s)'" > ~/Scripts/diff-locale/direct-rec_local.liq
+liquidsoap 's=output.icecast(%vorbis(bitrate=256), mount=\"webradio.ogg\",host=\"localhost\", port=8000 , password=\"webradio\",input.alsa(device=\"hw:$nombre,0\"))' 'output.file(%vorbis(bitrate=320),\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",s)'" > ~/Scripts/diff-locale/direct-rec_local.liq
 
 echo "
 #
