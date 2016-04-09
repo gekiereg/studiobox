@@ -111,29 +111,20 @@
 		<menu id="webradio" label="Outils WebRadio-WebTV">
 
 
-			<item label="Programmer une diffusion radio">
+			<item label="Programmer une émission (Airtime)">
 				<action name="Execute">
 					<execute>iceweasel &quot;http://localhost/login&quot;</execute>
 				</action>
 			</item>
+			<menu id="diff_local" label="Dans l'établissement...">
 			<item label="Diffuser un flux radio dans l'établissement">
 				<action name="Execute">
-					<execute>lxterminal -e 'Scripts/./diff_locale.bash'</execute>
+					<execute>lxterminal -e 'Scripts/diff-locale/./diff_locale.bash diff'</execute>
 				</action>
 			</item>
-			<item label="Diffuser un flux radio sur internet">
+			<item label="Diffuser et enregistrer un flux radio dans l'établissement">
 				<action name="Execute">
-					<execute>lxterminal -e 'Scripts/direct_dist.liq'</execute>
-				</action>
-			</item>
-			<item label="Diffuser un flux TV (script)">
-				<action name="Execute">
-					<execute>lxterminal -e 'Scripts/diff-tv.bash'</execute>
-				</action>
-			</item>
-			<item label="Interface web du serveur de diffusion">
-				<action name="Execute">
-					<execute>iceweasel &quot;http://localhost:8000&quot;</execute>
+					<execute>lxterminal -e 'Scripts/diff-locale/./diff_locale.bash'</execute>
 				</action>
 			</item>
 			<item label="Reconfigurer la carte son du flux de diffusion radio dans l'établissement">
@@ -141,9 +132,37 @@
 					<execute>lxterminal -e 'Scripts/config_local.bash'</execute>
 				</action>
 			</item>
+			<item label="Interface web du serveur de diffusion radiophonique">
+				<action name="Execute">
+					<execute>iceweasel &quot;http://localhost:8000&quot;</execute>
+				</action>
+			</item>
+			</menu>
+			<menu id="diff-internet" label="Sur internet...">
+			<item label="Diffuser un flux radio sur internet">
+				<action name="Execute">
+					<execute>lxterminal -e 'Scripts/diff-internet/.diff_internet.bash diff'</execute>
+				</action>
+			</item>
+			<item label="Diffuser et enregistrer un flux radio sur internet">
+				<action name="Execute">
+					<execute>lxterminal -e 'Scripts/diff-internet/.diff_internet.bash'</execute>
+				</action>
+			</item>
 			<item label="Configurer le flux de diffusion radio vers internet">
 				<action name="Execute">
 					<execute>lxterminal -e 'Scripts/config_dist.bash'</execute>
+				</action>
+			</item>
+			<item label="Interface web du serveur de diffusion radiophonique académique">
+				<action name="Execute">
+					<execute>iceweasel &quot;http://webradio.ac-versailles.fr&quot;</execute>
+				</action>
+			</item>
+			</menu>
+			<item label="Diffuser un flux TV (script)">
+				<action name="Execute">
+					<execute>lxterminal -e 'Scripts/diff-tv.bash'</execute>
 				</action>
 			</item>
 		</menu>

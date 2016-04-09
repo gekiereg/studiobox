@@ -40,18 +40,11 @@ Le point de montage est : $point
 Le mot de passe est : $pass
 L'identifiant de la carte son est : $nombre
 "
-echo "Le direct va être lancé dans 5 secondes !
 
-"
-
-rm ~/Scripts/direct_dist.liq
-
-echo 	"Si cette configuration convient, il est inutile pour
-	la prochaine diffusion de reconfigurer le service. Il 
-	suffit de sélectionner 'Diffuser un flux radio sur internet' 
-        dans le menu 'Outils de Webradio-WebTV'"
+rm ~/Scripts/diff-internet/direct_dist.liq
+rm ~/Scripts/diff-internet/direct-rec_dist.liq
 	
-sleep 5
+sleep 1
 
 echo "
 #
@@ -59,9 +52,21 @@ echo "
 # par ALSA est envoyé sur le serveur Icecast défini dans le script
 #
 
-liquidsoap 'output.icecast(%vorbis, mount=\"$point\",host="webradio.ac-versailles.fr", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))'" > ~/Scripts/direct_dist.liq
-cd ~/Scripts
-chmod +x direct_dist.liq
-exec ./direct_dist.liq
+liquidsoap 'output.icecast(%vorbis, mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))'" > ~/Scripts/diff-internet/direct_dist.liq
 
+echo "
+#
+# En lançant ce script, tout ce qui entre sur la carte son gérée
+# par ALSA est envoyé sur le serveur Icecast défini dans le script
+#
 
+liquidsoap 's=output.icecast(%vorbis, mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))' 'output.file(%vorbis,\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",s)'" > ~/Scripts/diff-internet/direct-rec_dist.liq
+
+chmod ugoa+x ~/Scripts/diff-internet/direct*
+
+echo 	"La configuration est maintenant terminée.
+	Vous pouvez lancer une diffusion et/ou un
+	enregistrement en sélectionnant l'entrée 
+	adéquante dans le menu 'Outils Webradio-WebTV'"
+
+sleep 5

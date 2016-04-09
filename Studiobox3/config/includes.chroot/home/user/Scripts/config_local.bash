@@ -38,18 +38,11 @@ done
 echo "
 L'identifiant de la carte son est : $nombre
 "
-echo "Le direct va être lancé dans 5 secondes !
 
-"
+rm ~/Scripts/diff-locale/direct_local.liq
+rm ~/Scripts/diff-locale/direct-rec_local.liq
 
-rm ~/Scripts/direct_local.liq
-
-echo 	"Si cette configuration convient, il est inutile pour
-	la prochaine diffusion de reconfigurer le service. Il 
-	suffit de sélectionner l'entrée 'Diffuser un flux radio 
-        dans l'établissement' dans le menu 'Outils Webradio-WebTV'"
-	
-sleep 5
+sleep 1
 
 echo "
 #
@@ -58,9 +51,22 @@ echo "
 #
 
 
-liquidsoap 'output.icecast(%vorbis, mount=\"webradio.ogg\",host=\"localhost\", port=8000 , password=\"webradio\",input.alsa(device=\"hw:$nombre,0\"))'" > ~/Scripts/direct_local.liq
-cd ~/Scripts
-chmod +x direct_local.liq
+liquidsoap 's=output.icecast(%vorbis, mount=\"webradio.ogg\",host=\"localhost\", port=8000 , password=\"webradio\",input.alsa(device=\"hw:$nombre,0\"))' 'output.file(%vorbis,\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",s)'" > ~/Scripts/diff-locale/direct-rec_local.liq
 
-bash diff_locale.bash
+echo "
+#
+# En lançant ce script, tout ce qui entre sur la carte son gérée
+# par ALSA est envoyé sur le serveur Icecast défini dans le script
+#
 
+
+liquidsoap 'output.icecast(%vorbis, mount=\"webradio.ogg\",host=\"localhost\", port=8000 , password=\"webradio\",input.alsa(device=\"hw:$nombre,0\"))'" > ~/Scripts/diff-locale/direct_local.liq
+
+chmod ugoa+x ~/Scripts/diff-locale/direct*
+
+echo 	"La configuration est maintenant terminée.
+	Vous pouvez lancer une diffusion et/ou un 
+	enregistrement en sélectionnant l'entrée 
+	adéquate dans le menu 'Outils Webradio-WebTV'"
+	
+sleep 5
