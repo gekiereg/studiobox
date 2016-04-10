@@ -63,8 +63,8 @@ liquidsoap 'output.icecast(%vorbis(quality=0.6), mount=\"webradio.ogg\",host=\"l
 chmod ugoa+x ~/Scripts/diff-locale/direct*
 
 echo 	"La configuration est maintenant terminée.
-	Vous pouvez lancer une diffusion et/ou un 
-	enregistrement en sélectionnant l'entrée 
-	adéquate dans le menu 'Outils Webradio-WebTV'"
+Vous pouvez lancer une diffusion (et un 
+enregistrement simultané) en sélectionnant l'entrée 
+adéquate dans le menu 'Outils Webradio' > 'Dans l'établissement'"
 	
 sleep 5

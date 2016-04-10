@@ -81,8 +81,8 @@ fi
 chmod ugoa+x ~/Scripts/diff-internet/direct*
 
 echo 	"La configuration est maintenant terminée.
-	Vous pouvez lancer une diffusion et/ou un
-	enregistrement en sélectionnant l'entrée 
-	adéquante dans le menu 'Outils Webradio-WebTV'"
+Vous pouvez lancer une diffusion (et un
+enregistrement simultané) en sélectionnant l'entrée 
+adéquate dans le menu 'Outils Webradio' > 'Sur internet...'"
 
 sleep 5
