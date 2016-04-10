@@ -117,15 +117,15 @@
 			<menu id="diff_local" label="Dans l'établissement...">
 			<item label="Diffuser un flux radio dans l'établissement">
 				<action name="Execute">
-					<execute>lxterminal -e 'Scripts/diff-locale/./diff_locale.bash diff'</execute>
+					<execute>lxterminal -e 'Scripts/diff-locale/diff_locale.bash diff'</execute>
 				</action>
 			</item>
 			<item label="Diffuser et enregistrer un flux radio dans l'établissement">
 				<action name="Execute">
-					<execute>lxterminal -e 'Scripts/diff-locale/./diff_locale.bash'</execute>
+					<execute>lxterminal -e 'Scripts/diff-locale/diff_locale.bash'</execute>
 				</action>
 			</item>
-			<item label="Reconfigurer la carte son du flux de diffusion radio dans l'établissement">
+			<item label="Configurer la carte son du flux">
 				<action name="Execute">
 					<execute>lxterminal -e 'Scripts/config_local.bash'</execute>
 				</action>

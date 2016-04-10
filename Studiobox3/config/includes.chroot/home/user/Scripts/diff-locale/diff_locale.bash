@@ -1,6 +1,15 @@
 #!/bin/bash
 
+CONFIGURE=$(cat ~/Scripts/diff-locale/direct_local.liq)
 IP=$(sudo ifconfig  | grep 'inet adr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}')
+
+if [ "$CONFIGURE" = "configure" ]; then
+	zenity --info --title="Configurer le flux" --text="Il semblerait que vous n'ayez pas configuré votre flux de diffusion.
+Pas de panique! Il vous suffit de fermer cette fenêtre, puis de cliquer, depuis le menu principal, sur
+ 'Outils WebRadio' > 'Dans l'établissement' >
+ 'Configurer la carte son du flux'"
+	exit
+fi
 
 if [ "$1" = "diff" ] ; then
 	zenity --info --title="Pour vous écouter..." --text="Le direct se lancera quand vous fermerez cette fenêtre.
