@@ -111,7 +111,7 @@
 		<menu id="webradio" label="Outils WebRadio">
 		  <item label="Installer l'outil de programmation radio (Airtime)">
 		    <action name="Execute">
-		      <execute>lxterminal -e 'sudo bash Scripts/install-airtime'</execute>
+		      <execute>lxterminal -e 'bash Scripts/install-airtime'</execute>
 		    </action>
 		  </item>
 			<menu id="diff_local" label="Dans l'établissement...">
