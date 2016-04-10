@@ -108,9 +108,7 @@
 				</action>
 			</item>
 		</menu>
-		<menu id="webradio" label="Outils WebRadio-WebTV">
-
-
+		<menu id="webradio" label="Outils WebRadio">
 			<item label="Programmer une émission (Airtime)">
 				<action name="Execute">
 					<execute>iceweasel &quot;http://localhost/login&quot;</execute>
@@ -160,9 +158,16 @@
 				</action>
 			</item>
 			</menu>
-			<item label="Diffuser un flux TV (script)">
+		</menu>
+		<menu id="webTV" label="Outils WebTV">
+			<item label="Diffuser un flux vidéo DV">
 				<action name="Execute">
 					<execute>lxterminal -e 'Scripts/diff-tv.bash'</execute>
+				</action>
+			</item>
+			<item label="Diffuser un fichier vidéo">
+				<action name="Execute">
+					<execute>lxterminal -e 'Scripts/diff-video.bash'</execute>
 				</action>
 			</item>
 		</menu>
