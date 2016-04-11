@@ -2,7 +2,7 @@
 zenity --info --text="Le processus d'installation du logiciel de programmation radiophonique se lancera une fois que vous fermerez cette fenêtre.\\
 Notes: l'installation nécessite une connexion internet (connectez-vous maintenant si ce n'est déjà fait), et peut prendre un certain temps, soyez patient! :)" 
 cd /home/user/Documents/.airtime-airtime-2.5.2.1
-#sudo lxterminal -e './install -fpai' | tee >(zenity --progress --pulsate --auto-close --title="Installation d'Airtime" --text="Installation en cours, merci de patienter...")
+sudo lxterminal -e './install -fpai' | tee >(zenity --progress --pulsate --auto-close --title="Installation d'Airtime" --text="Installation en cours, merci de patienter...")
 zenity --info --text="Une fenêtre de votre navigateur va se lancer pour\\ 
 vous permettre de finaliser l'installation.\\
 Faites défiler les boîtes de dialogue en laissant\\
