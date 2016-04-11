@@ -1,8 +1,8 @@
 #!/bin/bash
 zenity --info --text="Le processus d'installation du logiciel de programmation radiophonique se lancera une fois que vous fermerez cette fenêtre.\\
-Notes: l'installation nécessite une connexion internet, et peut prendre un certain temps, soyez patient! :)" 
-cd Documents/.airtime-airtime-2.5.2.1
-lxterminal -e 'sudo ./install -fpai' | tee >(zenity --progress --pulsate --auto-close --title="Installation d'Airtime" --text="Installation en cours, merci de patienter...")
+Notes: l'installation nécessite une connexion internet (connectez-vous maintenant si ce n'est déjà fait), et peut prendre un certain temps, soyez patient! :)" 
+cd /home/user/Documents/.airtime-airtime-2.5.2.1
+sudo lxterminal -e './install -fpai' | tee >(zenity --progress --pulsate --auto-close --title="Installation d'Airtime" --text="Installation en cours, merci de patienter...")
 zenity --info --text="Une fenêtre de votre navigateur va se lancer pour\\ 
 vous permettre de finaliser l'installation.\\
 Faites défiler les boîtes de dialogue en laissant\\
@@ -25,5 +25,11 @@ sudo service airtime-liquidsoap start
 sudo service airtime-media-monitor start
 openbox --restart
 killall conky
-sleep 4
+sleep 2
 conky &
+CONKY=$(pgrep conky)
+if [ -z $CONKY ]; then
+	sleep 1
+	conky &
+	sleep 1
+fi
