@@ -25,6 +25,23 @@ if  [ "$CLE" = "" ] || [ "$2" = "" ];
 	then Erreur
 fi
 
+DISQUE=(`sudo fdisk -l | grep ^/dev/$CLE`)
+if [ "$DISQUE" = "" ]; then
+    Erreur
+else
+    MONTE=(`mount | grep ^/dev/$CLE | cut -b 1-9`)
+    if [ "$MONTE" != "" ]; then
+        NBPART=${#MONTE[@]}
+        let NBPART-=1
+        while  [ "$NBPART" -ge 0 ]; do
+	PART=${MONTE[$NBPART]}
+	sudo umount $PART
+	let NBPART-=1
+        done
+    fi
+fi
+
+
 echo "*** Effacement des deux partitions"
 sudo parted /dev/$CLE rm 1
 sudo parted /dev/$CLE rm 2
