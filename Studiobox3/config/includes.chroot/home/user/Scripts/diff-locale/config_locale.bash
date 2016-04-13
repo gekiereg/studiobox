@@ -63,7 +63,8 @@ echo "#
 
 liquidsoap 'output.icecast(%vorbis(quality=0.6), mount=\"webradio.ogg\",host=\"localhost\", port=8000 , password=\"webradio\",input.alsa(device=\"hw:$nombre,0\"))'" > $DIRECT
 
-chmod ugoa+x ~/Scripts/diff-locale/direct*
+chmod ugoa+x $DIRECT
+chmod ugoa+x $RECORD
 
 zenity --info --title="Fin de la configuration" --text="La configuration est maintenant terminée. Vous pouvez lancer une diffusion (et un 
 enregistrement simultané) en sélectionnant l'entrée 

@@ -84,9 +84,6 @@ fi
 chmod ugoa+x $DIRECT
 chmod ugoa+x $RECORD
 
-echo 	"La configuration est maintenant terminée.
-Vous pouvez lancer une diffusion (et un
+zenity --info --title="Fin de la configuration" --text="La configuration est maintenant terminée. Vous pouvez lancer une diffusion (et un 
 enregistrement simultané) en sélectionnant l'entrée 
 adéquate dans le menu 'Outils Webradio' > 'Sur internet...'"
-
-sleep 5

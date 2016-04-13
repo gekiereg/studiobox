@@ -84,5 +84,4 @@ fi
 chmod ugoa+x $DIRECT
 chmod ugoa+x $RECORD
 
-echo 	"La configuration est maintenant terminée.
-Pour relancer la diffusion, validez cette fenêtre!"
+zenity --info --title="Fin de la configuration" --text="La configuration est maintenant terminée. Validez cette fenêtre pour relancer le processus de diffusion."
