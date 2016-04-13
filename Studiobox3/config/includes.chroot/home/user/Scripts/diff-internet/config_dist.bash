@@ -1,5 +1,8 @@
 #!/bin/bash
 
+DIRECT='/home/user/Scripts/diff-internet/direc_dist.liq'
+RECORD='/home/user/Scripts/diff-internet/record_dist.liq'
+
 #Nommer le point de montage.Tant que la variable est vide attente de la saisie.
 while [ -z ${point[$i]} ]; do
 echo "Veuillez saisir le nom du point de montage :"
@@ -41,8 +44,8 @@ Le mot de passe est : $pass
 L'identifiant de la carte son est : $nombre
 "
 
-rm ~/Scripts/diff-internet/direct_dist.liq
-rm ~/Scripts/diff-internet/direct-rec_dist.liq
+rm $DIRECT
+rm $RECORD
 
 sleep 1
 
@@ -54,31 +57,32 @@ if [ "$TYPE" = "ogg" ]; then
 	# par ALSA est envoyé sur le serveur Icecast défini dans le script
 	#
 
-	liquidsoap 'output.icecast(%vorbis(quality=0.5), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))'" > ~/Scripts/diff-internet/direct_dist.liq
+	liquidsoap 'output.icecast(%vorbis(quality=0.5), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))'" > $DIRECT
 
 	echo "#
 	# En lançant ce script, tout ce qui entre sur la carte son gérée
 	# par ALSA est envoyé sur le serveur Icecast défini dans le script
 	#
 
-	liquidsoap 's=output.icecast(%vorbis(quality=0.5), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))' 'output.file(%vorbis(quality=0.9),\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",s)'" > ~/Scripts/diff-internet/direct-rec_dist.liq
+	liquidsoap 's=output.icecast(%vorbis(quality=0.5), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))' 'output.file(%vorbis(quality=0.9),\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",s)'" > $RECORD
 else
 	echo "#
 	# En lançant ce script, tout ce qui entre sur la carte son gérée
 	# par ALSA est envoyé sur le serveur Icecast défini dans le script
 	#
 
-	liquidsoap 'output.icecast(%mp3(bitrate=128), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))'" > ~/Scripts/diff-internet/direct_dist.liq
+	liquidsoap 'output.icecast(%mp3(bitrate=128), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))'" > $DIRECT
 
 	echo "#
 	# En lançant ce script, tout ce qui entre sur la carte son gérée
 	# par ALSA est envoyé sur le serveur Icecast défini dans le script
 	#
 
-	liquidsoap 's=output.icecast(%mp3(bitrate=128), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))' 'output.file(%vorbis(quality=0.9),\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",s)'" > ~/Scripts/diff-internet/direct-rec_dist.liq
+	liquidsoap 's=output.icecast(%mp3(bitrate=128), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))' 'output.file(%vorbis(quality=0.9),\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",s)'" > $RECORD
 fi
 
-chmod ugoa+x ~/Scripts/diff-internet/direct*
+chmod ugoa+x $DIRECT
+chmod ugoa+x $RECORD
 
 echo 	"La configuration est maintenant terminée.
 Vous pouvez lancer une diffusion (et un
