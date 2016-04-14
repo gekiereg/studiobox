@@ -1,19 +1,19 @@
 #!/bin/bash
 
-CONFIG='/home/user/Scripts/diff-locale/config_locale.bash'
-RECONFIG='/home/user/Scripts/diff-locale/reconfig_locale.bash'
+RECONFIG='/home/user/Scripts/diff-locale/reconfig_local.bash'
 DIRECT='/home/user/Scripts/diff-locale/direct_local.liq'
 RECORD='/home/user/Scripts/diff-locale/record_local.liq'
 IP=$(sudo ifconfig  | grep 'inet adr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}')
-CARTE=$(cat $DIRECT | grep ^liquid | cut -d":" -f2 | cut -d"," -f1)
-DISPO=$(aplay -l | grep ^"carte $CARTE")
 CONFIGURE=$(cat $DIRECT)
 
 if [ "$CONFIGURE" = "configure" ]; then
 	zenity --info --title="Configurer le flux" --text="Il semblerait que vous n'ayez pas configuré votre flux de diffusion.
 Pas de panique! Il vous suffit de valider cette fenêtre pour procéder à la configuration"
-	bash $CONFIG
+	bash $RECONFIG
 fi
+
+CARTE=$(cat $DIRECT | grep ^liquid | cut -d":" -f2 | cut -d"," -f1)
+DISPO=$(aplay -l | grep ^"carte $CARTE")
 
 while [ -z "$DISPO" ]; do
         zenity --info --title="Carte son indisponible" --text="Il semblerait que la carte son configurée soit indisponible.

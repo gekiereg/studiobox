@@ -109,25 +109,25 @@
 			</item>
 		</menu>
 		<menu id="webradio" label="Outils WebRadio">
-			<item label="Programmer une émission (Airtime)">
-				<action name="Execute">
-					<execute>iceweasel &quot;http://localhost/login&quot;</execute>
-				</action>
-			</item>
+		<item label="Programmer une émission (Airtime)">
+			<action name="Execute">
+				<execute>iceweasel &quot;http://localhost/login&quot;</execute>
+			</action>
+		</item>
 			<menu id="diff_local" label="Dans l'établissement...">
 			<item label="Diffuser un flux radio dans l'établissement">
 				<action name="Execute">
-					<execute>lxterminal -e 'Scripts/diff-locale/diff_locale.bash diff'</execute>
+					<execute>lxterminal -e 'Scripts/diff-locale/diff_local.bash diff'</execute>
 				</action>
 			</item>
 			<item label="Diffuser et enregistrer un flux radio dans l'établissement">
 				<action name="Execute">
-					<execute>lxterminal -e 'Scripts/diff-locale/diff_locale.bash'</execute>
+					<execute>lxterminal -e 'Scripts/diff-locale/diff_local.bash'</execute>
 				</action>
 			</item>
 			<item label="Configurer la carte son du flux">
 				<action name="Execute">
-					<execute>lxterminal -e 'Scripts/diff-locale/config_locale.bash'</execute>
+					<execute>lxterminal -e 'Scripts/diff-locale/config_local.bash'</execute>
 				</action>
 			</item>
 			<item label="Interface web du serveur de diffusion radiophonique">
@@ -139,12 +139,12 @@
 			<menu id="diff-internet" label="Sur internet...">
 			<item label="Diffuser un flux radio sur internet">
 				<action name="Execute">
-					<execute>lxterminal -e 'Scripts/diff-internet/diff_internet.bash diff'</execute>
+					<execute>lxterminal -e 'Scripts/diff-internet/diff_dist.bash diff'</execute>
 				</action>
 			</item>
 			<item label="Diffuser et enregistrer un flux radio sur internet">
 				<action name="Execute">
-					<execute>lxterminal -e 'Scripts/diff-internet/diff_internet.bash'</execute>
+					<execute>lxterminal -e 'Scripts/diff-internet/diff_dist.bash'</execute>
 				</action>
 			</item>
 			<item label="Configurer le flux de diffusion radio vers internet">

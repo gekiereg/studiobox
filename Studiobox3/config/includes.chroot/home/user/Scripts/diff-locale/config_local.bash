@@ -38,10 +38,6 @@ Quel est l'identifiant du périphérique à utiliser ? (0, 1, etc.)"
 read nombre
 done
 
-echo "
-L'identifiant de la carte son est : $nombre
-"
-
 rm $DIRECT
 rm $RECORD
 
