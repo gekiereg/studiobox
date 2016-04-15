@@ -1,8 +1,8 @@
 #!/bin/bash
 
-RECONFIG='/home/user/Scripts/diff-internet/reconfig_dist.bash'
-DIRECT='/home/user/Scripts/diff-internet/direct_dist.liq'
-RECORD='/home/user/Scripts/diff-internet/record_dist.liq'
+RECONFIG="/home/studiobox/Scripts/diff-internet/reconfig_dist.bash"
+DIRECT="/home/studiobox/Scripts/diff-internet/direct_dist.liq"
+RECORD="/home/studiobox/Scripts/diff-internet/record_dist.liq"
 IP=$(sudo ifconfig  | grep 'inet adr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}')
 CONFIGURE=$(cat $DIRECT)
 

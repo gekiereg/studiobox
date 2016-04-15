@@ -1,7 +1,7 @@
 #!/bin/bash
 
-DIRECT='/home/user/Scripts/diff-locale/direct_local.liq'
-RECORD='/home/user/Scripts/diff-locale/record_local.liq'
+DIRECT="$HOME/Scripts/diff-locale/direct_local.liq"
+RECORD="$HOME/Scripts/diff-locale/record_local.liq"
 
 #Nommer le point de montage.Tant que la variable est vide attente de la saisie.
 #while [ -z ${point[$i]} ]; do

@@ -10,7 +10,7 @@ LB_APT_INDICES="true"
 
 # $LB_BOOTAPPEND_LIVE: set boot parameters
 # (Default: empty)
-LB_BOOTAPPEND_LIVE="boot=live persistence timezone=Europe/Paris config quiet splash lang=fr_FR.UTF-8 locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variants=latin9 vga=791"
+LB_BOOTAPPEND_LIVE="boot=live components username=studiobox persistence timezone=Europe/Paris config quiet splash lang=fr_FR.UTF-8 locales=fr_FR.UTF-8 keyboard-layouts=fr keyboard-variants=latin9 vga=791"
 
 # $LB_BOOTAPPEND_INSTALL: set boot parameters
 # (Default: empty)

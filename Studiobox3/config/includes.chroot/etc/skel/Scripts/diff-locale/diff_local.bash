@@ -1,8 +1,8 @@
 #!/bin/bash
 
-RECONFIG='/home/user/Scripts/diff-locale/reconfig_local.bash'
-DIRECT='/home/user/Scripts/diff-locale/direct_local.liq'
-RECORD='/home/user/Scripts/diff-locale/record_local.liq'
+RECONFIG="$HOME/Scripts/diff-locale/reconfig_local.bash"
+DIRECT="$HOME/Scripts/diff-locale/direct_local.liq"
+RECORD="$HOME/Scripts/diff-locale/record_local.liq"
 IP=$(sudo ifconfig  | grep 'inet adr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}')
 CONFIGURE=$(cat $DIRECT)
 
