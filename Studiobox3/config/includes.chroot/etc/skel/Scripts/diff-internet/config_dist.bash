@@ -1,7 +1,7 @@
 #!/bin/bash
 
-DIRECT="/home/studiobox/Scripts/diff-internet/direct_dist.liq"
-RECORD="/home/studiobox/Scripts/diff-internet/record_dist.liq"
+DIRECT="$HOME/Scripts/diff-internet/direct_dist.liq"
+RECORD="$HOME/Scripts/diff-internet/record_dist.liq"
 
 #Nommer le point de montage.Tant que la variable est vide attente de la saisie.
 while [ -z ${point[$i]} ]; do

@@ -1,8 +1,7 @@
 #!/bin/bash
 
-REP="/home/studiobox"
-DIRECT="$REP/Scripts/diff-locale/direct_local.liq"
-RECORD="$REP/Scripts/diff-locale/record_local.liq"
+DIRECT="$HOME/Scripts/diff-locale/direct_local.liq"
+RECORD="$HOME/Scripts/diff-locale/record_local.liq"
 
 #Nommer le point de montage.Tant que la variable est vide attente de la saisie.
 #while [ -z ${point[$i]} ]; do
