@@ -1,0 +1,304 @@
+2
+1 "audio_tools/audioscope.plugin" "AudioScope" 3 1 0 0 1 0 1 1 0 0 -1
+1 "audio_tools/cdripper.plugin" "Extracteur de CD" 3 1 0 0 0 0 1 1 0 0 -1
+1 "audio_tools/compressor.plugin" "Compresseur" 3 1 0 0 1 0 1 1 0 0 -1
+1 "audio_tools/dcoffset.plugin" "Décalage DC" 3 1 0 0 1 0 1 0 0 0 -1
+1 "audio_tools/delayaudio.plugin" "Délai audio" 3 1 0 0 1 0 1 0 0 0 -1
+1 "audio_tools/denoise.plugin" "Enlever le bruit" 3 1 0 0 1 0 1 0 0 0 -1
+1 "audio_tools/denoisefft.plugin" "Suppression de bruit FFT" 3 1 0 0 1 0 1 0 0 0 -1
+1 "audio_tools/despike.plugin" "Déparasiter" 3 1 0 0 1 0 1 0 0 0 -1
+1 "audio_tools/downsample.plugin" "Sous-échantillonner" 3 0 1 0 1 0 1 0 0 0 -1
+1 "audio_tools/echo.plugin" "Echo" 3 1 0 0 1 0 1 1 0 0 -1
+1 "audio_tools/echocancel.plugin" "EchoCancel" 3 1 0 0 1 0 1 0 0 0 -1
+1 "audio_tools/freeverb.plugin" "Freeverb" 3 1 0 0 1 0 1 1 0 0 -1
+1 "audio_tools/gain.plugin" "Gain" 3 1 0 0 1 0 1 0 0 0 -1
+1 "audio_tools/graphic.plugin" "Graphic EQ" 3 1 0 0 1 0 1 0 0 0 -1
+1 "audio_tools/interpolateaudio.plugin" "Interpoler" 3 1 0 0 1 0 1 0 0 0 -1
+1 "audio_tools/invertaudio.plugin" "Inverser l'audio" 3 1 0 0 1 0 1 0 0 0 -1
+1 "audio_tools/leveleffect.plugin" "Niveau sonore" 3 1 0 0 1 0 1 0 0 0 -1
+1 "audio_tools/loopaudio.plugin" "Boucle audio" 3 1 0 0 1 0 1 0 1 0 -1
+1 "audio_tools/normalize.plugin" "Normaliser" 3 1 0 0 0 0 1 1 0 0 -1
+1 "audio_tools/overlayaudio.plugin" "Afficher les overlays" 3 1 0 0 1 0 1 1 0 0 -1
+1 "audio_tools/parametric.plugin" "Égaliseur paramétrique" 3 1 0 0 1 0 1 0 0 0 -1
+1 "audio_tools/pitch.plugin" "Décalage de hauteur" 3 1 0 0 1 0 1 0 0 0 -1
+1 "audio_tools/removegaps.plugin" "Supprimer lacunes" 3 1 0 0 1 0 1 0 0 0 -1
+1 "audio_tools/resample.plugin" "Rééchantillonner" 3 1 0 0 0 0 1 0 0 0 -1
+1 "audio_tools/resamplert.plugin" "ResampleRT" 3 1 0 0 1 0 1 0 1 0 -1
+1 "audio_tools/reverb.plugin" "Reverb" 3 1 0 0 1 0 1 1 1 0 -1
+1 "audio_tools/reverseaudio.plugin" "Audio en arrière" 3 1 0 0 1 0 1 0 0 0 -1
+1 "audio_tools/synthesizer.plugin" "Synthétiseur" 3 1 0 0 1 0 1 0 1 0 -1
+1 "audio_tools/timestretch.plugin" "Étirement du temps" 3 1 0 0 0 0 1 0 0 0 -1
+1 "audio_tools/timestretchrt.plugin" "Time Stretch RT" 3 1 0 0 1 0 1 0 1 0 -1
+1 "audio_tools/vocoder.plugin" "Vocoder" 3 1 0 0 1 0 1 1 0 0 -1
+1 "audio_transitions/crossfade.plugin" "Fondu enchaîné" 4 1 0 0 0 0 0 0 0 1 -1
+1 "blending/chromakey.plugin" "Clé chromatique" 5 0 1 0 1 0 1 0 0 0 -1
+1 "blending/chromakeyhsv.plugin" "Clé chromatique (TSV)" 5 0 1 0 1 0 1 0 0 0 -1
+1 "blending/diffkey.plugin" "Clé différence" 5 0 1 0 1 0 1 1 0 0 -1
+1 "colors/bluebanana.plugin" "Blue Banana" 6 0 1 0 1 0 1 0 0 0 -1
+1 "colors/brightness.plugin" "Luminosité/Contraste" 6 0 1 0 1 0 1 0 0 0 -1
+1 "colors/C41.plugin" "C41" 6 0 1 0 1 0 1 0 0 0 -1
+1 "colors/color3way.plugin" "Couleur 3 Way" 6 0 1 0 1 0 1 0 0 0 -1
+1 "colors/colorbalance.plugin" "Équilibre des couleurs (balance des couleurs)" 6 0 1 0 1 0 1 0 0 0 -1
+1 "colors/gamma.plugin" "Gamma" 6 0 1 0 1 0 1 0 0 0 -1
+1 "colors/gradient.plugin" "Dégradé" 6 0 1 0 1 0 1 0 1 0 -1
+1 "colors/histogram.plugin" "Histogramme" 6 0 1 0 1 0 1 0 0 0 -1
+1 "colors/huesaturation.plugin" "Saturation de la teinte" 6 0 1 0 1 0 1 0 0 0 -1
+1 "colors/threshold.plugin" "Seuil" 6 0 1 0 1 0 1 0 0 0 -1
+1 "exotic/aging.plugin" "AgingTV" 7 0 1 0 1 0 1 0 0 0 -1
+1 "exotic/burn.plugin" "BurningTV" 7 0 1 0 1 0 1 0 0 0 -1
+1 "exotic/dot.plugin" "DotTV" 7 0 1 0 1 0 1 0 0 0 -1
+1 "exotic/edge.plugin" "Edge" 7 0 1 0 1 0 1 0 0 0 -1
+1 "exotic/holo.plugin" "HolographicTV" 7 0 1 0 1 0 1 0 0 0 -1
+1 "exotic/oil.plugin" "Peinture à l'huile" 7 0 1 0 1 0 1 0 0 0 -1
+2 "ladspa/alias_1407.so" "Aliasing" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/allpass_1895.so" "Allpass delay line, noninterpolating" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/allpass_1895.so" "Allpass delay line, linear interpolation" 0 1 0 0 1 0 1 0 1 0 1
+2 "ladspa/allpass_1895.so" "Allpass delay line, cubic spline interpolation" 0 1 0 0 1 0 1 0 1 0 2
+2 "ladspa/am_pitchshift_1433.so" "AM pitchshifter" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/amp_1181.so" "Simple amplifier" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/analogue_osc_1416.so" "Analogue Oscillator" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/bandpass_a_iir_1893.so" "Glame Bandpass Analog Filter" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/bandpass_iir_1892.so" "Glame Bandpass Filter" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/bode_shifter_1431.so" "Bode frequency shifter" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/bode_shifter_cv_1432.so" "Bode frequency shifter (CV)" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/butterworth_1902.so" "Glame Butterworth X-over Filter" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/butterworth_1902.so" "GLAME Butterworth Lowpass" 0 1 0 0 1 0 1 0 1 0 1
+2 "ladspa/butterworth_1902.so" "GLAME Butterworth Highpass" 0 1 0 0 1 0 1 0 1 0 2
+2 "ladspa/chebstortion_1430.so" "Chebyshev distortion" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/comb_1190.so" "Comb Filter" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/comb_1887.so" "Comb delay line, noninterpolating" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/comb_1887.so" "Comb delay line, linear interpolation" 0 1 0 0 1 0 1 0 1 0 1
+2 "ladspa/comb_1887.so" "Comb delay line, cubic spline interpolation" 0 1 0 0 1 0 1 0 1 0 2
+2 "ladspa/comb_splitter_1411.so" "Comb Splitter" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/const_1909.so" "Constant Signal Generator" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/crossover_dist_1404.so" "Crossover distortion" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/dc_remove_1207.so" "DC Offset Remover" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/decay_1886.so" "Exponential signal decay" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/decimator_1202.so" "Decimator" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/declip_1195.so" "Declipper" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/delay_1898.so" "Simple delay line, noninterpolating" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/delay_1898.so" "Simple delay line, linear interpolation" 0 1 0 0 1 0 1 0 1 0 1
+2 "ladspa/delay_1898.so" "Simple delay line, cubic spline interpolation" 0 1 0 0 1 0 1 0 1 0 2
+2 "ladspa/delayorama_1402.so" "Delayorama" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/diode_1185.so" "Diode Processor" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/divider_1186.so" "Audio Divider (Suboctave Generator)" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/dj_eq_1901.so" "DJ EQ (mono)" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/dj_eq_1901.so" "DJ EQ" 0 1 0 0 1 0 1 1 1 0 1
+2 "ladspa/dj_flanger_1438.so" "DJ flanger" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/dyson_compress_1403.so" "Dyson compressor" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/fad_delay_1192.so" "Fractionally Addressed Delay Line" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/fast_lookahead_limiter_1913.so" "Fast Lookahead limiter" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/flanger_1191.so" "Flanger" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/fm_osc_1415.so" "FM Oscillator" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/foldover_1213.so" "Foldover distortion" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/foverdrive_1196.so" "Fast overdrive" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/freq_tracker_1418.so" "Frequency tracker" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/gate_1410.so" "Gate" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/giant_flange_1437.so" "Giant flange" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/gong_1424.so" "Gong model" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/gong_beater_1439.so" "Gong beater" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/gsm_1215.so" "GSM simulator" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/gverb_1216.so" "GVerb" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/hard_limiter_1413.so" "Hard Limiter" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/harmonic_gen_1220.so" "Harmonic generator" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/hermes_filter_1200.so" "Hermes Filter" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/highpass_iir_1890.so" "Glame Highpass Filter" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/hilbert_1440.so" "Hilbert transformer" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/imp_1199.so" "Impulse convolver" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/impulse_1885.so" "Nonbandlimited single-sample impulses (Frequency: Control)" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/inv_1429.so" "Inverter" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/karaoke_1409.so" "Karaoke" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/latency_1914.so" "Artificial latency" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/lcr_delay_1436.so" "L/C/R Delay" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/lowpass_iir_1891.so" "Glame Lowpass Filter" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/ls_filter_1908.so" "LS Filter" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/matrix_ms_st_1421.so" "Matrix: MS to Stereo" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/matrix_spatialiser_1422.so" "Matrix Spatialiser" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/matrix_st_ms_1420.so" "Matrix: Stereo to MS" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/mbeq_1197.so" "Multiband EQ" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/mod_delay_1419.so" "Modulatable delay" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/multivoice_chorus_1201.so" "Multivoice Chorus" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/notch_iir_1894.so" "Mag's Notch Filter" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/phasers_1217.so" "LFO Phaser" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/phasers_1217.so" "4 x 4 pole allpass" 0 1 0 0 1 0 1 0 1 0 1
+2 "ladspa/phasers_1217.so" "Auto phaser" 0 1 0 0 1 0 1 0 1 0 2
+2 "ladspa/pitch_scale_1193.so" "Pitch Scaler" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/pitch_scale_1194.so" "Higher Quality Pitch Scaler" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/plate_1423.so" "Plate reverb" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/pointer_cast_1910.so" "Pointer cast distortion" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/rate_shifter_1417.so" "Rate shifter" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/retro_flange_1208.so" "Retro Flanger" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/revdelay_1605.so" "Reverse Delay (5s max)" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/ringmod_1188.so" "Ringmod with two inputs" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/ringmod_1188.so" "Ringmod with LFO" 0 1 0 0 1 0 1 0 1 0 1
+2 "ladspa/satan_maximiser_1408.so" "Barry's Satan Maximiser" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/sc1_1425.so" "SC1" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/sc2_1426.so" "SC2" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/sc3_1427.so" "SC3" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/sc4_1882.so" "SC4" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/sc4m_1916.so" "SC4 mono" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/se4_1883.so" "SE4" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/shaper_1187.so" "Wave shaper" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/sifter_1210.so" "Signal sifter" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/sin_cos_1881.so" "Sine + cosine oscillator" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/single_para_1203.so" "Single band parametric" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/sinus_wavewrapper_1198.so" "Sinus wavewrapper" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/smooth_decimate_1414.so" "Smooth Decimator" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/split_1406.so" "Mono to Stereo splitter" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/step_muxer_1212.so" "Step Demuxer" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/surround_encoder_1401.so" "Surround matrix encoder" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/svf_1214.so" "State Variable Filter" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/tape_delay_1211.so" "Tape Delay Simulation" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/transient_1206.so" "Transient mangler" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/triple_para_1204.so" "Triple band parametric with shelves" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/valve_1209.so" "Valve saturation" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/valve_rect_1405.so" "Valve rectifier" 0 1 0 0 1 0 1 0 1 0 0
+2 "ladspa/vynil_1905.so" "VyNil (Vinyl Effect)" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/wave_terrain_1412.so" "Wave Terrain Oscillator" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/xfade_1915.so" "Crossfade" 0 1 0 0 1 0 1 1 1 0 0
+2 "ladspa/xfade_1915.so" "Crossfade (4 outs)" 0 1 0 0 1 0 1 1 1 0 1
+2 "ladspa/zm1_1428.so" "z-1" 0 1 0 0 1 0 1 0 1 0 0
+1 "themes/blondtheme.plugin" "Blond-cv" 9 0 0 1 0 0 1 0 0 0 -1
+1 "themes/bluedottheme.plugin" "Blue Dot" 9 0 0 1 0 0 1 0 0 0 -1
+1 "themes/brighttheme.plugin" "Bright" 9 0 0 1 0 0 1 0 0 0 -1
+1 "themes/suv.plugin" "S.U.V." 9 0 0 1 0 0 1 0 0 0 -1
+1 "transforms/1080to480.plugin" "1080-480" 10 0 1 0 1 0 1 0 0 0 -1
+1 "transforms/1080to540.plugin" "1080 vers 540" 10 0 1 0 1 0 1 0 0 0 -1
+1 "transforms/720to480.plugin" "720 vers 480" 10 0 1 0 0 0 1 0 0 0 -1
+1 "transforms/lens.plugin" "Lens" 10 0 1 0 1 0 1 0 0 0 -1
+1 "transforms/perspective.plugin" "Perspective" 10 0 1 0 1 0 1 0 0 0 -1
+1 "transforms/photoscale.plugin" "Scale Auto" 10 0 1 0 1 0 1 0 0 0 -1
+1 "transforms/polar.plugin" "Polaire" 10 0 1 0 1 0 1 0 0 0 -1
+1 "transforms/rotate.plugin" "Rotation" 10 0 1 0 1 0 1 0 0 0 -1
+1 "transforms/scale.plugin" "Mettre à l'échelle" 10 0 1 0 1 0 1 0 0 0 -1
+1 "transforms/translate.plugin" "Déplacer" 10 0 1 0 1 0 1 0 0 0 -1
+1 "transforms/whirl.plugin" "Tourbillon" 10 0 1 0 1 0 1 0 0 0 -1
+1 "tv_effects/deinterlace-cv.plugin" "Désentrelacement-CV" 11 0 1 0 1 0 1 0 0 0 -1
+1 "tv_effects/deinterlace.plugin" "Désentrelacer" 11 0 1 0 1 0 1 0 0 0 -1
+1 "tv_effects/ivtc.plugin" "Télécinéma inversé" 11 0 1 0 1 0 1 0 0 0 -1
+1 "tv_effects/liveaudio.plugin" "Live Audio" 11 1 0 0 1 0 1 1 1 0 -1
+1 "tv_effects/livevideo.plugin" "Live Vidéo" 11 0 1 0 1 0 1 0 1 0 -1
+1 "tv_effects/rgb601.plugin" "RVB - 601" 11 0 1 0 1 0 1 0 0 0 -1
+1 "tv_effects/rgbshift.plugin" "RGBShift" 11 0 1 0 1 0 1 0 0 0 -1
+1 "tv_effects/shiftinterlace.plugin" "ShiftInterlace" 11 0 1 0 1 0 1 0 0 0 -1
+1 "tv_effects/swapchannels.plugin" "Échanger les canaux" 11 0 1 0 1 0 1 0 1 0 -1
+1 "tv_effects/swapframes.plugin" "Cadres de swap" 11 0 1 0 1 0 1 0 0 0 -1
+1 "tv_effects/yuv.plugin" "YUV" 11 0 1 0 1 0 1 0 0 0 -1
+1 "tv_effects/yuvshift.plugin" "YUVShift" 11 0 1 0 1 0 1 0 0 0 -1
+1 "video_tools/blur.plugin" "Flou" 12 0 1 0 1 0 1 0 0 0 -1
+1 "video_tools/decimate.plugin" "Décimer" 12 0 1 0 1 0 1 0 0 0 -1
+1 "video_tools/delayvideo.plugin" "Délai vidéo" 12 0 1 0 1 0 1 0 0 0 -1
+1 "video_tools/denoisemjpeg.plugin" "Supprimer le bruit vidéo2" 12 0 1 0 1 0 1 0 0 0 -1
+1 "video_tools/denoisevideo.plugin" "Supprimer le bruit de la vidéo" 12 0 1 0 1 0 1 0 0 0 -1
+1 "video_tools/fieldframe.plugin" "Champs vers images" 12 0 1 0 1 0 1 0 0 0 -1
+1 "video_tools/flash.plugin" "Flash" 12 0 1 0 0 0 0 0 0 1 -1
+1 "video_tools/framefield.plugin" "Images vers champs" 12 0 1 0 1 0 1 0 0 0 -1
+1 "video_tools/freezeframe.plugin" "Figer l'image" 12 0 1 0 1 0 1 0 1 0 -1
+1 "video_tools/greycstoration.plugin" "GreyCStoration" 12 0 1 0 1 0 1 0 0 0 -1
+1 "video_tools/interpolatepixels.plugin" "Interpoler les pixels" 12 0 1 0 1 0 1 0 0 0 -1
+1 "video_tools/interpolatevideo.plugin" "Interpoler Vidéo" 12 0 1 0 1 0 1 0 0 0 -1
+1 "video_tools/invertvideo.plugin" "Inverser la vidéo" 12 0 1 0 1 0 1 0 0 0 -1
+1 "video_tools/linearblur.plugin" "Flou linéaire" 12 0 1 0 1 0 1 0 0 0 -1
+1 "video_tools/loopvideo.plugin" "Boucle vidéo" 12 0 1 0 1 0 1 0 1 0 -1
+1 "video_tools/motion.plugin" "Suivi de mouvement" 12 0 1 0 1 0 1 1 0 0 -1
+1 "video_tools/motion2.plugin" "Motion 2 Point" 12 0 1 0 1 0 1 1 0 0 -1
+1 "video_tools/motionblur.plugin" "Motion Blur" 12 0 1 0 1 0 1 0 0 0 -1
+1 "video_tools/overlay.plugin" "Afficher les overlays" 12 0 1 0 1 0 1 1 1 0 -1
+1 "video_tools/radialblur.plugin" "Flou radial" 12 0 1 0 1 0 1 0 0 0 -1
+1 "video_tools/reframe.plugin" "Reframe" 12 0 1 0 0 0 1 0 0 0 -1
+1 "video_tools/reframert.plugin" "ReframeRT" 12 0 1 0 1 0 1 0 1 0 -1
+1 "video_tools/reroute.plugin" "Recalcul" 12 0 1 0 1 0 1 1 0 0 -1
+1 "video_tools/reversevideo.plugin" "Vidéo en arrière" 12 0 1 0 1 0 1 0 0 0 -1
+1 "video_tools/seltempavg.plugin" "Moyenne temporelle sélective" 12 0 1 0 1 0 1 0 0 0 -1
+1 "video_tools/sharpen.plugin" "Augmenter la netteté" 12 0 1 0 1 0 1 0 0 0 -1
+1 "video_tools/spectrogram.plugin" "Spectrogramme" 12 1 0 0 1 0 1 0 0 0 -1
+1 "video_tools/svg.plugin" "SVG via Inkscape" 12 0 1 0 1 0 1 0 1 0 -1
+1 "video_tools/timeavg.plugin" "Moyenne du temps" 12 0 1 0 1 0 1 0 0 0 -1
+1 "video_tools/timefront.plugin" "TimeFront" 12 0 1 0 1 0 1 1 1 0 -1
+1 "video_tools/titler.plugin" "Titre" 12 0 1 0 1 0 1 0 1 0 -1
+1 "video_tools/unsharp.plugin" "Netteté" 12 0 1 0 1 0 1 0 0 0 -1
+1 "video_tools/videoscope.plugin" "VidéoScope" 12 0 1 0 1 0 1 0 0 0 -1
+1 "video_tools/wave.plugin" "Vagues" 12 0 1 0 1 0 1 0 0 0 -1
+1 "video_tools/zoomblur.plugin" "Flou de zoom" 12 0 1 0 1 0 1 0 0 0 -1
+1 "video_transitions/bandslide.plugin" "BandSlide" 13 0 1 0 0 0 1 0 0 1 -1
+1 "video_transitions/bandwipe.plugin" "BandWipe" 13 0 1 0 0 0 1 0 0 1 -1
+1 "video_transitions/dissolve.plugin" "Fondu enchaîné" 13 0 1 0 0 0 0 0 0 1 -1
+1 "video_transitions/flip.plugin" "Pivoter" 13 0 1 0 1 0 1 0 0 0 -1
+1 "video_transitions/irissquare.plugin" "Diaphragme carré" 13 0 1 0 0 0 1 0 0 1 -1
+1 "video_transitions/shapewipe.plugin" "Volet-forme" 13 0 1 0 0 0 1 0 0 1 -1
+1 "video_transitions/slide.plugin" "Volet" 13 0 1 0 0 0 1 0 0 1 -1
+1 "video_transitions/wipe.plugin" "Effacer" 13 0 1 0 0 0 1 0 0 1 -1
+1 "video_transitions/zoom.plugin" "Zoom" 13 0 1 0 0 0 1 0 0 1 -1
+3 "ff_adelay" "F_adelay" 1 1 0 0 1 0 1 1 1 0 -1
+3 "ff_aecho" "F_aecho" 1 1 0 0 1 0 1 1 1 0 -1
+3 "ff_aeval" "F_aeval" 1 1 0 0 1 0 1 1 1 0 -1
+3 "ff_afade" "F_afade" 1 1 0 0 1 0 1 1 1 0 -1
+3 "ff_allpass" "F_allpass" 1 1 0 0 1 0 1 1 1 0 -1
+3 "ff_aphaser" "F_aphaser" 1 1 0 0 1 0 1 1 1 0 -1
+3 "ff_aresample" "F_aresample" 1 1 0 0 1 0 1 1 1 0 -1
+3 "ff_bandpass" "F_bandpass" 1 1 0 0 1 0 1 1 1 0 -1
+3 "ff_bandreject" "F_bandreject" 1 1 0 0 1 0 1 1 1 0 -1
+3 "ff_bass" "F_bass" 1 1 0 0 1 0 1 1 1 0 -1
+3 "ff_biquad" "F_biquad" 1 1 0 0 1 0 1 1 1 0 -1
+3 "ff_chorus" "F_chorus" 1 1 0 0 1 0 1 1 1 0 -1
+3 "ff_compand" "F_compand" 1 1 0 0 1 0 1 1 1 0 -1
+3 "ff_dcshift" "F_dcshift" 1 1 0 0 1 0 1 1 1 0 -1
+3 "ff_earwax" "F_earwax" 1 1 0 0 1 0 1 1 1 0 -1
+3 "ff_equalizer" "F_equalizer" 1 1 0 0 1 0 1 1 1 0 -1
+3 "ff_flanger" "F_flanger" 1 1 0 0 1 0 1 1 1 0 -1
+3 "ff_highpass" "F_highpass" 1 1 0 0 1 0 1 1 1 0 -1
+3 "ff_lowpass" "F_lowpass" 1 1 0 0 1 0 1 1 1 0 -1
+3 "ff_treble" "F_treble" 1 1 0 0 1 0 1 1 1 0 -1
+3 "ff_boxblur" "F_boxblur" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_colorbalance" "F_colorbalance" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_colorchannelmixer" "F_colorchannelmixer" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_colorkey" "F_colorkey" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_colorlevels" "F_colorlevels" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_colormatrix" "F_colormatrix" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_crop" "F_crop" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_deband" "F_deband" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_deflate" "F_deflate" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_dejudder" "F_dejudder" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_delogo" "F_delogo" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_deshake" "F_deshake" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_dilation" "F_dilation" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_drawbox" "F_drawbox" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_drawgrid" "F_drawgrid" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_edgedetect" "F_edgedetect" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_eq" "F_eq" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_erosion" "F_erosion" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_fade" "F_fade" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_fspp" "F_fspp" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_gradfun" "F_gradfun" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_hflip" "F_hflip" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_histeq" "F_histeq" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_histogram" "F_histogram" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_hqdn3d" "F_hqdn3d" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_hqx" "F_hqx" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_il" "F_il" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_inflate" "F_inflate" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_kerndeint" "F_kerndeint" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_lenscorrection" "F_lenscorrection" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_mcdeint" "F_mcdeint" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_negate" "F_negate" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_noise" "F_noise" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_owdenoise" "F_owdenoise" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_perspective" "F_perspective" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_phase" "F_phase" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_pp" "F_pp" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_pp7" "F_pp7" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_removegrain" "F_removegrain" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_rotate" "F_rotate" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_sab" "F_sab" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_smartblur" "F_smartblur" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_spp" "F_spp" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_stereo3d" "F_stereo3d" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_super2xsai" "F_super2xsai" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_swapuv" "F_swapuv" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_transpose" "F_transpose" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_unsharp" "F_unsharp" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_uspp" "F_uspp" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_vflip" "F_vflip" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_vignette" "F_vignette" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_xbr" "F_xbr" 1 0 1 0 1 0 1 1 1 0 -1
+3 "ff_yadif" "F_yadif" 1 0 1 0 1 0 1 1 1 0 -1

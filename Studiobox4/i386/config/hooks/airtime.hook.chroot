@@ -1,0 +1,7 @@
+#!/bin/bash
+
+cd /home/user/Documents/
+tar zxvf airtime-airtime-2.5.2.1.tar.gz
+
+
+
