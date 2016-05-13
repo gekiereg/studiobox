@@ -1,6 +1,14 @@
 #!/bin/bash
 zenity --info --text="Le processus d'installation du logiciel de programmation radiophonique se lancera une fois que vous validerez cette fenêtre de dialogue.\\
 Notes: l'installation nécessite une connexion internet (connectez-vous maintenant si ce n'est déjà fait), et peut prendre un certain temps, soyez patient! :)" 
+wget -q --tries=20 --timeout=10 http://www.google.com -O /tmp/google.idx &> /dev/null
+if [ ! -s /tmp/google.idx ]
+then
+	zenity --info --text="Vous n'êtes pas connecté à internet. Merci de relancer l'installation d'Airtime quand ce sera le cas"
+	exit
+else
+	rm /tmp/google.idx
+fi
 cd $HOME/Documents/.airtime-airtime-2.5.2.1
 sudo lxterminal -e './install -fpai' | tee >(zenity --progress --pulsate --auto-close --title="Installation d'Airtime" --text="Installation en cours, merci de patienter...")
 zenity --info --text="Une fenêtre de votre navigateur va se lancer pour\\ 
