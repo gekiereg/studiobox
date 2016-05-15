@@ -172,7 +172,7 @@
 			</item>
 		</menu>
 		<menu id="graph" label="Graphisme">
-			<item label="Editeur d'images Gimp">
+			<item label="Éditeur d'images Gimp">
 				<action name="Execute">
 					<execute>
 						gimp
@@ -249,7 +249,7 @@
 					</execute>
 				</action>
 			</item>
-			<item label="Editeur de texte">
+			<item label="Éditeur de texte">
 				<action name="Execute">
 					<execute>
 						gedit
@@ -283,21 +283,21 @@
 				</item>
 				<separator/>
 				<menu id="openbox-64145" label="Fichiers de configuration">
-					<item label="Editer menu.xml">
+					<item label="Éditer menu.xml">
 						<action name="Execute">
 							<execute>
 								gedit ~/.config/openbox/menu.xml
 							</execute>
 						</action>
 					</item>
-					<item label="Editer rc.xml">
+					<item label="Éditer rc.xml">
 						<action name="Execute">
 							<execute>
 								gedit ~/.config/openbox/rc.xml
 							</execute>
 						</action>
 					</item>
-					<item label="Editer autostart.sh">
+					<item label="Éditer autostart.sh">
 						<action name="Execute">
 							<execute>
 								gedit ~/.config/openbox/autostart.sh
@@ -313,7 +313,7 @@
 				</item>
 			</menu>
 			<menu id="conky" label="Conky">
-				<item label="Editer .conkyrc">
+				<item label="Éditer .conkyrc">
 					<action name="Execute">
 						<execute>
 							gedit ~/.conkyrc
@@ -329,7 +329,7 @@
 				</item>
 			</menu>
 			<menu id="t" label="Tint2">
-				<item label="Editer tint2rc">
+				<item label="Éditer tint2rc">
 					<action name="Execute">
 						<execute>
 							gedit ~/.config/tint2/tint2rc
@@ -387,7 +387,7 @@
 					</execute>
 				</action>
 			</item>
-			<item label="Editeur de texte [root]">
+			<item label="Éditeur de texte [root]">
 				<action name="Execute">
 					<execute>
 						gksu gedit
@@ -397,6 +397,11 @@
 			<item label="Gestionnaire de partitions">
 				<action name="Execute">
 					<execute>gksudo gparted</execute>
+				</action>
+			</item>
+			<item label="Rendre la clé persistante">
+				<action name="Execute">
+					<execute>lxterminal -e 'Scripts/persistence.sh'</execute>
 				</action>
 			</item>
 		</menu>
@@ -421,7 +426,7 @@
 				</execute>
 			</action>
 		</item>
-		<item label="Eteindre">
+		<item label="Éteindre">
 			<action name="Execute">
 				<prompt>
 					Eteindre maintenant ?

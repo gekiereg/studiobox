@@ -22,12 +22,21 @@ VERIFPERSIST=$(ls / | grep persistence)
 if [ "$VERIFPERSIST" = "persistence.conf" ]; then
   echo "La persistance existe déjà"
   echo "Vous n'avez pas besoin de lancer ce script"
-  echo ""
-  echo "Fin du script"
   exit
 fi
 
-CLE=$1
+echo "Voici les disques disponibles, ainsi que leur taille:"
+
+sudo parted -l | grep ^'Disk /dev'
+#Jusqu'a ce que la reponse soit composée par sd puis une lettre, j'attends la saisie
+until [[ ${sd} =~ ^sd[a-z]$ ]]; do
+echo "
+
+Quel est l'identifiant de la clé USB utilisée pour StrabOS? (sda? sdb? sdc? etc.)"
+read nombre
+done
+
+CLE=$sd
 PART1="1"
 PART2="2"
 
