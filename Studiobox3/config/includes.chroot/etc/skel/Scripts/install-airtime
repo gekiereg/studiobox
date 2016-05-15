@@ -1,7 +1,5 @@
 #!/bin/bash
 
-VERSIONAIRTIME=$(ls .*.tar.gz | grep ^.airtime | cut -d"." -f2-5)
-
 zenity --info --text="Le processus d'installation du logiciel de programmation radiophonique se lancera une fois que vous validerez cette fenêtre de dialogue.\\
 Notes: l'installation nécessite une connexion internet (connectez-vous maintenant si ce n'est déjà fait), et peut prendre un certain temps, soyez patient! :)" 
 wget -q --tries=20 --timeout=10 http://www.google.com -O /tmp/google.idx &> /dev/null
@@ -13,6 +11,7 @@ else
 	rm /tmp/google.idx
 fi
 cd $HOME/Documents/
+VERSIONAIRTIME=$(ls .*.tar.gz | grep ^.airtime | cut -d"." -f2-5)
 tar zxvf .$VERSIONAIRTIME.tar.gz
 mv $VERSIONAIRTIME/ .$VERSIONAIRTIME/
 cd .$VERSIONAIRTIME
