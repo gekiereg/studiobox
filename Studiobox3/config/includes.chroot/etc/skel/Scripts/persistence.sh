@@ -32,7 +32,7 @@ sudo parted -l | grep ^'Disk /dev'
 until [[ ${sd} =~ ^sd[a-z]$ ]]; do
 echo "
 
-Quel est l'identifiant de la clé USB utilisée pour StrabOS? (sda? sdb? sdc? etc.)"
+Quel est l'identifiant de la clé USB utilisée pour studiobox? (sda? sdb? sdc? etc.)"
 read nombre
 done
 
