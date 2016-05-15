@@ -1,4 +1,7 @@
 #!/bin/bash
+
+VERSIONAIRTIME=$(ls .*.tar.gz | grep ^.airtime | cut -d"." -f2-5)
+
 zenity --info --text="Le processus d'installation du logiciel de programmation radiophonique se lancera une fois que vous validerez cette fenêtre de dialogue.\\
 Notes: l'installation nécessite une connexion internet (connectez-vous maintenant si ce n'est déjà fait), et peut prendre un certain temps, soyez patient! :)" 
 wget -q --tries=20 --timeout=10 http://www.google.com -O /tmp/google.idx &> /dev/null
@@ -9,7 +12,10 @@ then
 else
 	rm /tmp/google.idx
 fi
-cd $HOME/Documents/.airtime-airtime-2.5.2.1
+cd $HOME/Documents/
+tar zxvf .$VERSIONAIRTIME.tar.gz
+mv $VERSIONAIRTIME/ .$VERSIONAIRTIME/
+cd $VERSIONAIRTIME
 sudo lxterminal -e './install -fpai' | tee >(zenity --progress --pulsate --auto-close --title="Installation d'Airtime" --text="Installation en cours, merci de patienter...")
 zenity --info --text="Une fenêtre de votre navigateur va se lancer pour\\ 
 vous permettre de finaliser l'installation.\\
@@ -31,6 +37,7 @@ mv .config/openbox/menu2.xml .config/openbox/menu.xml
 sudo service airtime-playout start
 sudo service airtime-liquidsoap start
 sudo service airtime-media-monitor start
+rm -rf $HOME/Documents/.$VERSIONAIRTIME
 openbox --restart
 killall conky
 sleep 4
