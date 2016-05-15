@@ -33,7 +33,7 @@ until [[ ${sd} =~ ^sd[a-z]$ ]]; do
 echo "
 
 Quel est l'identifiant de la clé USB utilisée pour studiobox? (sda? sdb? sdc? etc.)"
-read nombre
+read sd
 done
 
 CLE=$sd
