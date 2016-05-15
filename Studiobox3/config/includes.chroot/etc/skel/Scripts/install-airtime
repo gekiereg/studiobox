@@ -15,7 +15,7 @@ fi
 cd $HOME/Documents/
 tar zxvf .$VERSIONAIRTIME.tar.gz
 mv $VERSIONAIRTIME/ .$VERSIONAIRTIME/
-cd $VERSIONAIRTIME
+cd .$VERSIONAIRTIME
 sudo lxterminal -e './install -fpai' | tee >(zenity --progress --pulsate --auto-close --title="Installation d'Airtime" --text="Installation en cours, merci de patienter...")
 zenity --info --text="Une fenêtre de votre navigateur va se lancer pour\\ 
 vous permettre de finaliser l'installation.\\
