@@ -22,6 +22,7 @@ VERIFPERSIST=$(ls / | grep persistence)
 if [ "$VERIFPERSIST" = "persistence.conf" ]; then
   echo "La persistance existe déjà"
   echo "Vous n'avez pas besoin de lancer ce script"
+  sleep 5
   exit
 fi
 
@@ -64,3 +65,4 @@ sudo umount /dev/$CLE$PART2
 echo "Votre clé est désormais persistante"
 echo "Cela signifie que les modifications et réglages que vous effectuerez"
 echo "à partir de maintenant ne seront pas effacés au reboot"
+sleep 10

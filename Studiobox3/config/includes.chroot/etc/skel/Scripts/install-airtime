@@ -31,18 +31,27 @@ manipulations seront réalisées automatiquement quand vous fermerez votre navig
 sleep 2
 iceweasel http://localhost/login | tee >(zenity --progress --pulsate --auto-close --title="Finalisation de l'installation" --text="Lancement du navigateur web")
 cd ../../
-rm .config/openbox/menu.xml
-mv .config/openbox/menu2.xml .config/openbox/menu.xml
 sudo service airtime-playout start
 sudo service airtime-liquidsoap start
 sudo service airtime-media-monitor start
 rm -rf $HOME/Documents/.$VERSIONAIRTIME
+sleep 5 | tee >(zenity --progress --pulsate --auto-close --title="Vérifications" --text="Vérification de l'installation d'Airtime en cours")
+OK=$(pgrep airtime-liquids)
+if [ -z "$OK" ]; then
+	zenity --info --text="Aïe :( \\
+Il semblerait qu'il y ait eu un problème durant le processus d'installation.\\
+Nous vous conseillons de retenter une installation."
+	exit
+else
+rm .config/openbox/menu.xml
+mv .config/openbox/menu2.xml .config/openbox/menu.xml
 openbox --restart
 killall conky
 sleep 4
 while [ -z $CONKY ]; do
-CONKY=$(pgrep conky)
+	CONKY=$(pgrep conky)
 	sleep 2
 	conky &
 	sleep 1
 done
+fi
