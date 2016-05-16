@@ -36,7 +36,7 @@ sudo service airtime-liquidsoap start
 sudo service airtime-media-monitor start
 rm -rf $HOME/Documents/.$VERSIONAIRTIME
 sleep 5 | tee >(zenity --progress --pulsate --auto-close --title="Vérifications" --text="Vérification de l'installation d'Airtime en cours")
-OK=$(pgrep airtime-liquids)
+OK=$(pgrep airtime)
 if [ -z "$OK" ]; then
 	zenity --info --text="Aïe :( \\
 Il semblerait qu'il y ait eu un problème durant le processus d'installation.\\
