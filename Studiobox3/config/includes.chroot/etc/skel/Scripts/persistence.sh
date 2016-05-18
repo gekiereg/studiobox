@@ -26,10 +26,19 @@ if [ "$VERIFPERSIST" = "persistence.conf" ]; then
   exit
 fi
 
-echo "Voici les disques disponibles, ainsi que leur taille:"
+echo "Voici les disques USB disponibles, ainsi que leur taille:"
 
-sudo parted -l | grep ^'Disk /dev'
-#Jusqu'a ce que la reponse soit composée par sd puis une lettre, j'attends la saisie
+USB_DISK_ID=$(ls /dev/disk/by-id/ | grep ^usb | grep ':0'$)
+
+for i in $USB_DISK_ID
+do
+	USB_DISK_DEV=$(readlink -e /dev/disk/by-id/$i)
+	SIZE=$(sudo parted -l | grep $USB_DISK_DEV | cut -d":" -f2)
+	USBNAME=$(echo $USB_DISK_DEV | cut -d'/' -f3)
+	echo "Disque $USBNAME, taille:$SIZE"
+done
+
+#Jusqu'à ce que la réponse soit composée par sd puis une lettre, j'attends la saisie
 until [[ ${sd} =~ ^sd[a-z]$ ]]; do
 echo "
 
