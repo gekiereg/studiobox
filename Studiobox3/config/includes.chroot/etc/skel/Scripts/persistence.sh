@@ -73,5 +73,11 @@ rm $PERSIST
 sudo umount /dev/$CLE$PART2
 echo "Votre clé est désormais persistante"
 echo "Cela signifie que les modifications et réglages que vous effectuerez"
-echo "à partir de maintenant ne seront pas effacés au reboot"
+echo "à partir du prochain redémarrage ne seront pas effacés à chaque extinction du système."
+echo ""
+echo "Souhaitez-vous redémarrer dès maintenant? (oui / non)"
+read reboot
+if [ "$reboot" = 'oui' ]; then
+	sudo reboot
+fi
 sleep 10
