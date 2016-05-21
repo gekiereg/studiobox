@@ -1,6 +1,0 @@
-#!/bin/bash
-
-killall -9 conky
-sleep 2
-conky
-exit 0
