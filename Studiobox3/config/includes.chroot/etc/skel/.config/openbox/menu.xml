@@ -111,23 +111,23 @@
 		<menu id="webradio" label="Outils WebRadio">
 		  <item label="Installer l'outil de programmation radio (Airtime)">
 		    <action name="Execute">
-		      <execute>lxterminal -e 'bash Scripts/install-airtime'</execute>
+		      <execute>lxterminal -e 'bash .Scripts/install-airtime'</execute>
 		    </action>
 		  </item>
 			<menu id="diff_local" label="Dans l'établissement...">
 			<item label="Diffuser un flux radio dans l'établissement">
 				<action name="Execute">
-					<execute>lxterminal -e 'Scripts/diff-locale/diff_local.bash diff'</execute>
+					<execute>lxterminal -e '.Scripts/diff-locale/diff_local.bash diff'</execute>
 				</action>
 			</item>
 			<item label="Diffuser et enregistrer un flux radio dans l'établissement">
 				<action name="Execute">
-					<execute>lxterminal -e 'Scripts/diff-locale/diff_local.bash'</execute>
+					<execute>lxterminal -e '.Scripts/diff-locale/diff_local.bash'</execute>
 				</action>
 			</item>
 			<item label="Configurer la carte son du flux">
 				<action name="Execute">
-					<execute>lxterminal -e 'Scripts/diff-locale/config_local.bash'</execute>
+					<execute>lxterminal -e '.Scripts/diff-locale/config_local.bash'</execute>
 				</action>
 			</item>
 			<item label="Interface web du serveur de diffusion radiophonique">
@@ -139,17 +139,17 @@
 			<menu id="diff-internet" label="Sur internet...">
 			<item label="Diffuser un flux radio sur internet">
 				<action name="Execute">
-					<execute>lxterminal -e 'Scripts/diff-internet/diff_dist.bash diff'</execute>
+					<execute>lxterminal -e '.Scripts/diff-internet/diff_dist.bash diff'</execute>
 				</action>
 			</item>
 			<item label="Diffuser et enregistrer un flux radio sur internet">
 				<action name="Execute">
-					<execute>lxterminal -e 'Scripts/diff-internet/diff_dist.bash'</execute>
+					<execute>lxterminal -e '.Scripts/diff-internet/diff_dist.bash'</execute>
 				</action>
 			</item>
 			<item label="Configurer le flux de diffusion radio vers internet">
 				<action name="Execute">
-					<execute>lxterminal -e 'Scripts/diff-internet/config_dist.bash'</execute>
+					<execute>lxterminal -e '.Scripts/diff-internet/config_dist.bash'</execute>
 				</action>
 			</item>
 			<item label="Interface web du serveur de diffusion radiophonique académique">
@@ -162,12 +162,12 @@
 		<menu id="webTV" label="Outils WebTV">
 			<item label="Diffuser un flux vidéo DV">
 				<action name="Execute">
-					<execute>lxterminal -e 'Scripts/diff-tv.bash'</execute>
+					<execute>lxterminal -e '.Scripts/diff-tv.bash'</execute>
 				</action>
 			</item>
 			<item label="Diffuser un fichier vidéo">
 				<action name="Execute">
-					<execute>lxterminal -e 'Scripts/diff-video.bash'</execute>
+					<execute>lxterminal -e '.Scripts/diff-video.bash'</execute>
 				</action>
 			</item>
 		</menu>
@@ -323,7 +323,7 @@
 				<item label="Relancer Conky">
 					<action name="Execute">
 						<execute>
-							~/Scripts/conky-reload
+							~/.Scripts/conky-reload
 						</execute>
 					</action>
 				</item>
@@ -339,7 +339,7 @@
 				<item label="Relancer Tint2">
 					<action name="Execute">
 						<execute>
-							~/Scripts/tint2-reload
+							~/.Scripts/tint2-reload
 						</execute>
 					</action>
 				</item>
@@ -401,7 +401,7 @@
 			</item>
 			<item label="Rendre la clé persistante">
 				<action name="Execute">
-					<execute>lxterminal -e 'Scripts/persistence.sh'</execute>
+					<execute>lxterminal -e '.Scripts/persistence.sh'</execute>
 				</action>
 			</item>
 		</menu>

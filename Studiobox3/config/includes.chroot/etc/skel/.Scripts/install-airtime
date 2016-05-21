@@ -1,0 +1,57 @@
+#!/bin/bash
+
+zenity --info --text="Le processus d'installation du logiciel de programmation radiophonique se lancera une fois que vous validerez cette fenêtre de dialogue.\\
+Notes: l'installation nécessite une connexion internet (connectez-vous maintenant si ce n'est déjà fait), et peut prendre un certain temps, soyez patient! :)" 
+wget -q --tries=20 --timeout=10 http://www.google.com -O /tmp/google.idx &> /dev/null
+if [ ! -s /tmp/google.idx ]
+then
+	zenity --info --text="Vous n'êtes pas connecté à internet. Merci de relancer l'installation d'Airtime quand ce sera le cas"
+	exit
+else
+	rm /tmp/google.idx
+fi
+cd $HOME/Documents/
+VERSIONAIRTIME=$(ls .*.tar.gz | grep ^.airtime | cut -d"." -f2-5)
+tar zxvf .$VERSIONAIRTIME.tar.gz
+mv $VERSIONAIRTIME/ .$VERSIONAIRTIME/
+cd .$VERSIONAIRTIME
+sudo lxterminal -e './install -fpai' | tee >(zenity --progress --pulsate --auto-close --title="Installation d'Airtime" --text="Installation en cours, merci de patienter...")
+zenity --info --text="Une fenêtre de votre navigateur va se lancer pour\\ 
+vous permettre de finaliser l'installation.\\
+Faites défiler les boîtes de dialogue en laissant\\
+les données par défaut.\\
+À l'avenir, vous pourrez accéder à Airtime en cliquant\\ 
+sur «Outils Webradio» →\\
+ «Programmer une diffusion radio»\\
+(identifiant: admin, mot de passe: admin)"
+zenity --info --text="Une dernière chose :)
+Ne tenez pas compte des demandes concernant des commandes à renseigner 
+dans le terminal et du message d'erreur sur la dernière page: ces 
+manipulations seront réalisées automatiquement quand vous fermerez votre navigateur..."
+sleep 2
+iceweasel http://localhost/login | tee >(zenity --progress --pulsate --auto-close --title="Finalisation de l'installation" --text="Lancement du navigateur web")
+cd ../../
+sudo service airtime-playout start
+sudo service airtime-liquidsoap start
+sudo service airtime-media-monitor start
+rm -rf $HOME/Documents/.$VERSIONAIRTIME
+sleep 5 | tee >(zenity --progress --pulsate --auto-close --title="Vérifications" --text="Vérification de l'installation d'Airtime en cours")
+OK=$(pgrep airtime)
+if [ -z "$OK" ]; then
+	zenity --info --text="Aïe :( \\
+Il semblerait qu'il y ait eu un problème durant le processus d'installation.\\
+Nous vous conseillons de retenter une installation."
+	exit
+else
+rm .config/openbox/menu.xml
+mv .config/openbox/menu2.xml .config/openbox/menu.xml
+openbox --restart
+killall conky
+sleep 4
+while [ -z $CONKY ]; do
+	CONKY=$(pgrep conky)
+	sleep 2
+	conky &
+	sleep 1
+done
+fi
