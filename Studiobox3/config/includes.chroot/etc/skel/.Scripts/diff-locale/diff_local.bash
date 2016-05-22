@@ -3,6 +3,7 @@
 RECONFIG="$HOME/.Scripts/diff-locale/reconfig_local.bash"
 DIRECT="$HOME/.Scripts/diff-locale/direct_local.liq"
 RECORD="$HOME/.Scripts/diff-locale/record_local.liq"
+REC="$HOME/.Scripts/diff-locale/rec_local.liq"
 IP=$(sudo ifconfig  | grep 'inet adr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}')
 CONFIGURE=$(cat $DIRECT)
 
@@ -28,6 +29,11 @@ if [ "$1" = "diff" ] ; then
 	Pour vous écouter sur le réseau de l'établissement, ouvrir un navigateur web et y indiquer l'url suivante:
 	http://$IP:8000/webradio.ogg" 
 	bash $DIRECT
+elif [ "$1" = "rec" ] ; then
+	zenity --info --title="Enregistrement" --text="L'enregistrement se lancera quand vous fermerez cette fenêtre.
+	Vous retrouverez l'enregistrement de votre émission dans
+	le répertoire 'Musique' (fichier .ogg horodaté)" 
+	bash $REC
 else
 	zenity --info --title="Pour vous écouter..." --text="Le direct se lancera quand vous fermerez cette fenêtre.
 	Pour vous écouter sur le réseau de l'établissement, ouvrir un navigateur web et y indiquer l'url suivante:

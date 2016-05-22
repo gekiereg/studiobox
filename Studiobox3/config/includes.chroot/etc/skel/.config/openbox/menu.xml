@@ -120,6 +120,11 @@
 					<execute>lxterminal -e '.Scripts/diff-locale/diff_local.bash diff'</execute>
 				</action>
 			</item>
+			<item label="Enregistrer une émission">
+				<action name="Execute">
+					<execute>lxterminal -e '.Scripts/diff-locale/diff_local.bash rec'</execute>
+				</action>
+			</item>
 			<item label="Diffuser et enregistrer un flux radio dans l'établissement">
 				<action name="Execute">
 					<execute>lxterminal -e '.Scripts/diff-locale/diff_local.bash'</execute>

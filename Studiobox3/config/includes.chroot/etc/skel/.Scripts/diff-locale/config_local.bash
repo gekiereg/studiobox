@@ -2,6 +2,7 @@
 
 DIRECT="$HOME/.Scripts/diff-locale/direct_local.liq"
 RECORD="$HOME/.Scripts/diff-locale/record_local.liq"
+REC="$HOME/.Scripts/diff-locale/rec_local.liq"
 
 #Nommer le point de montage.Tant que la variable est vide attente de la saisie.
 #while [ -z ${point[$i]} ]; do
@@ -42,6 +43,14 @@ rm $DIRECT
 rm $RECORD
 
 sleep 1
+
+echo "#
+# En lançant ce script, tout ce qui entre sur la carte son gérée
+# par ALSA est envoyé sur le serveur Icecast défini dans le script
+#
+
+
+liquidsoap 'output.file(%vorbis(quality=0.9),\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",input.alsa(device=\"hw:$nombre,0\"))'" > $REC
 
 echo "#
 # En lançant ce script, tout ce qui entre sur la carte son gérée
