@@ -2,6 +2,7 @@
 
 DIRECT="$HOME/.Scripts/diff-locale/direct_local.liq"
 RECORD="$HOME/.Scripts/diff-locale/record_local.liq"
+REC="$HOME/.Scripts/diff-locale/rec_local.liq"
 
 #Nommer le point de montage.Tant que la variable est vide attente de la saisie.
 #while [ -z ${point[$i]} ]; do
@@ -40,8 +41,17 @@ done
 
 rm $DIRECT
 rm $RECORD
+rm $REC
 
 sleep 1
+
+echo "#
+# En lançant ce script, tout ce qui entre sur la carte son gérée
+# par ALSA est envoyé sur le serveur Icecast défini dans le script
+#
+
+
+liquidsoap 'output.file(%vorbis(quality=0.9),\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",input.alsa(device=\"hw:$nombre,0\"))'" > $REC
 
 echo "#
 # En lançant ce script, tout ce qui entre sur la carte son gérée
@@ -60,6 +70,7 @@ echo "#
 liquidsoap 'output.icecast(%vorbis(quality=0.6), mount=\"webradio.ogg\",host=\"localhost\", port=8000 , password=\"webradio\",input.alsa(device=\"hw:$nombre,0\"))'" > $DIRECT
 
 chmod ugoa+x $RECORD
+chmod ugoa+x $REC
 chmod ugoa+x $DIRECT
 
 zenity --info --title="Fin de la configuration" --text="La configuration est maintenant terminée. Validez cette fenêtre pour relancer le processus de diffusion."
