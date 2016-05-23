@@ -41,6 +41,7 @@ done
 
 rm $DIRECT
 rm $RECORD
+rm $REC
 
 sleep 1
 
@@ -70,6 +71,7 @@ liquidsoap 'output.icecast(%vorbis(quality=0.6), mount=\"webradio.ogg\",host=\"l
 
 chmod ugoa+x $DIRECT
 chmod ugoa+x $RECORD
+chmod ugoa+x $REC
 
 zenity --info --title="Fin de la configuration" --text="La configuration est maintenant terminée. Vous pouvez lancer une diffusion (et un 
 enregistrement simultané) en sélectionnant l'entrée 
