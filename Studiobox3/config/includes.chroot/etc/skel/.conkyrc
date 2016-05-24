@@ -82,16 +82,21 @@ use_spacer none
 
 TEXT
 ${alignc}${font Sans:size=9,weight:bold}Système${font} 
-${font Sans:size=11,weight:bold}${alignc}.:: Studiobox 3 ::.${font}
+${font Sans:size=11,weight:bold}${alignc}.:: Studiobox3 ::.${font}
 ${hr}
 ${font Sans:size=11,weight:bold}${alignc}${time %a %d %b %Y}${font}
 ${font Sans:size=18,weight:bold}${alignc}${time %H:%M}${font}
-${hr}${color}
-Freq & Temp CPU : ${alignr}${color 9D9D9D}${freq_g}GHz${color} - ${color 9D9D9D}${acpitemp}°C${color}
-${alignc}${cpugraph 6,200 FF7881 D20B18}
+${hr}
+
+${font Sans:size=9,weight:bold}Matériel${font} ${hr 2}
+#Freq & Temp CPU : ${alignr}${color 9D9D9D}${freq_g}GHz${color} - ${color 9D9D9D}${acpitemp}°C${color}
+#${alignc}${cpugraph 6,200 FF7881 D20B18}
+
 CPU : ${alignr}${color 9D9D9D}${cpu cpu0}%${color} ${cpugauge cpu0 10,25}
 RAM : ${alignr}${color 9D9D9D}${mem} - ${memperc}%${color} ${memgauge 10,25}
-${hr}
+
+${font Sans:size=9,weight:bold}Processus${font} ${hr 2}
+
 Process ${goto 145}${alignr}CPU
 ${color 9D9D9D}${top name 1} ${goto 140}${alignr}${top cpu 1}
 ${top name 2} ${goto 140}${alignr}${top cpu 2}
@@ -99,7 +104,8 @@ ${top name 3} ${goto 140}${alignr}${top cpu 3}
 ${top name 4} ${goto 140}${alignr}${top cpu 4}
 ${top name 5} ${goto 140}${alignr}${top cpu 5}${color}
 
-${font Sans:size=10,weight:bold}Réseau${font} ${hr 2}
+${font Sans:size=9,weight:bold}Réseau${font} ${hr 2}
+
 ${if_existing /proc/net/route eth0}${font sans-serif:normal:size=8}IP filaire : $alignr${color 9D9D9D} ${addr eth0}${color}${endif}
 ${if_existing /proc/net/route wlan0}${font sans-serif:normal:size=8}IP WiFi: $alignr${color 9D9D9D} ${addr wlan0}${color}${endif}
 ${font sans-serif:normal:size=8}IP publique : $alignr ${color 9D9D9D}${execi 1800 $HOME/.Scripts/ip_publique.sh}${color}${if_existing /proc/net/route eth0}
@@ -107,16 +113,18 @@ ${font sans-serif:normal:size=8}IP publique : $alignr ${color 9D9D9D}${execi 180
 Filaire
 ${color}Down:${color 9D9D9D} ${totaldown eth0}${goto 120}${downspeedf eth0}k/s
 ${color}Up:${color 9D9D9D} ${totalup eth0}${goto 120}${upspeedf eth0}k/s
-${downspeedgraph eth0 25,120 FF7881 D20B18}$alignr${upspeedgraph eth0 25,120 FF7881 D20B18}
-${voffset -28}${goto 50}DOWN${goto 190}UP
+#${downspeedgraph eth0 25,120 FF7881 D20B18}$alignr${upspeedgraph eth0 25,120 FF7881 D20B18}
+#${voffset -28}${goto 50}DOWN${goto 190}UP
 
 ${color}Wifi
 ${color}Down:${color 9D9D9D} ${totaldown wlan0}${goto 120}${downspeedf wlan0}k/s
 ${color}Up:${color 9D9D9D} ${totalup wlan0}${goto 120}${upspeedf wlan0}k/s
-${downspeedgraph wlan0 25,120 FF7881 D20B18}$alignr${upspeedgraph wlan0 25,120 FF7881 D20B18}
-${voffset -28}${goto 50}DOWN${goto 190}UP
-${if_existing /proc/net/route eth0}
-${if_existing /proc/net/route wlan0}
+#${downspeedgraph wlan0 25,120 FF7881 D20B18}$alignr${upspeedgraph wlan0 25,120 FF7881 D20B18}
+#${voffset -28}${goto 50}DOWN${goto 190}UP
+#${if_existing /proc/net/route eth0}
+#${if_existing /proc/net/route wlan0}
+#${endif}
 
-${endif}
+${color}${font Sans:size=9,weight:bold}Stockage${font} ${hr}
 
+${color}Espace disponible: $alignr ${color 9D9D9D}${fs_free /}
