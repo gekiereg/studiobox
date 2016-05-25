@@ -28,7 +28,6 @@ if [ "$1" = "diff" ] ; then
 	bash $DIRECT
 else
 	zenity --info --title="Pour vous écouter..." --text="Le direct se lancera quand vous fermerez cette fenêtre.
-	Vous retrouverez l'enregistrement de votre émission dans
-	le répertoire 'Musique' (fichier .ogg horodaté)" 
+Vous retrouverez l'enregistrement de votre émission dans le répertoire 'Musique' (fichier .ogg horodaté)" 
 	bash $RECORD
 fi

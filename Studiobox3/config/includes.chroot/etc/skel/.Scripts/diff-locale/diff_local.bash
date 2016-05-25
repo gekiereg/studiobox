@@ -24,21 +24,26 @@ Pas de panique! Validez cette fenêtre pour procéder à la reconfiguration!"
 	DISPO=$(aplay -l | grep ^"carte $CARTE")
 done
 
+if [ "$1" != "rec" ] && [ -z "$IP" ]; then
+	zenity --info --title="Diffusion impossible" --text="Studiobox ne possède pas d'adresse sur le réseau de 
+l'établissement: il est donc impossible de procéder à une diffusion. Vous pouvez par contre lancer un enregistrement."
+	exit
+fi
+
 if [ "$1" = "diff" ] ; then
 	zenity --info --title="Pour vous écouter..." --text="Le direct se lancera quand vous fermerez cette fenêtre.
-	Pour vous écouter sur le réseau de l'établissement, ouvrir un navigateur web et y indiquer l'url suivante:
-	http://$IP:8000/webradio.ogg" 
+Pour vous écouter sur le réseau de l'établissement, ouvrir un navigateur web et y indiquer l'url suivante:
+http://$IP:8000/webradio.ogg" 
 	bash $DIRECT
 elif [ "$1" = "rec" ] ; then
 	zenity --info --title="Enregistrement" --text="L'enregistrement se lancera quand vous fermerez cette fenêtre.
-	Vous retrouverez l'enregistrement de votre émission dans
-	le répertoire 'Musique' (fichier .ogg horodaté)" 
+Vous retrouverez l'enregistrement de votre émission dans
+le répertoire 'Musique' (fichier .ogg horodaté)" 
 	bash $REC
 else
 	zenity --info --title="Pour vous écouter..." --text="Le direct se lancera quand vous fermerez cette fenêtre.
-	Pour vous écouter sur le réseau de l'établissement, ouvrir un navigateur web et y indiquer l'url suivante:
-	http://$IP:8000/webradio.ogg
-	Vous retrouverez l'enregistrement de votre émission dans
-	le répertoire 'Musique' (fichier .ogg horodaté)" 
+Pour vous écouter sur le réseau de l'établissement, ouvrir un navigateur web et y indiquer l'url suivante:
+http://$IP:8000/webradio.ogg
+Vous retrouverez l'enregistrement de votre émission dans le répertoire 'Musique' (fichier .ogg horodaté)" 
 	bash $RECORD
 fi
