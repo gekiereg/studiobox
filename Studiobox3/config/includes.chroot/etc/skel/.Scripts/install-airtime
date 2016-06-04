@@ -61,5 +61,6 @@ else
 	zenity --info --text="L'installation d'Airtime s'est bien déroulée. Nous vous 
 	recommandons très fortement de procéder dès maintenant à la configuration de votre station 
 	radio. La documentation va s'afficher: lisez attentivement la rubrique 'Configurer Airtime'"
+	sleep 5
 	evince '$HOME/Documents/.memento_airtime.pdf'
 fi
