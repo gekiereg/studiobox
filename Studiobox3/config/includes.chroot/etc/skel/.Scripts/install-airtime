@@ -45,7 +45,6 @@ Nous vous conseillons de retenter une installation."
 else
 sudo mkdir -p /usr/lib/airtime/pypo/bin/liquidsoap_scripts/
 sudo ln -s /usr/local/lib/python2.7/dist-packages/airtime_playout-1.0-py2.7.egg/liquidsoap/liquidsoap_auth.py /usr/lib/airtime/pypo/bin/liquidsoap_scripts/liquidsoap_auth.py
-sudo cp 
 sudo service airtime-liquidsoap restart
 rm .config/openbox/menu.xml
 mv .config/openbox/menu2.xml .config/openbox/menu.xml
