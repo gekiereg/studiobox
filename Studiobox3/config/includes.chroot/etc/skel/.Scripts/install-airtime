@@ -43,19 +43,23 @@ Il semblerait qu'il y ait eu un problème durant le processus d'installation.\\
 Nous vous conseillons de retenter une installation."
 	exit
 else
-sudo mkdir -p /usr/lib/airtime/pypo/bin/liquidsoap_scripts/
-sudo ln -s /usr/local/lib/python2.7/dist-packages/airtime_playout-1.0-py2.7.egg/liquidsoap/liquidsoap_auth.py /usr/lib/airtime/pypo/bin/liquidsoap_scripts/liquidsoap_auth.py
-sudo cp 
-sudo service airtime-liquidsoap restart
-rm .config/openbox/menu.xml
-mv .config/openbox/menu2.xml .config/openbox/menu.xml
-openbox --restart
-killall conky
-sleep 4
-while [ -z $CONKY ]; do
-	CONKY=$(pgrep conky)
-	sleep 2
-	conky &
-	sleep 1
-done
+	sudo mkdir -p /usr/lib/airtime/pypo/bin/liquidsoap_scripts/
+	sudo ln -s /usr/local/lib/python2.7/dist-packages/airtime_playout-1.0-py2.7.egg/liquidsoap/liquidsoap_auth.py /usr/lib/airtime/pypo/bin/liquidsoap_scripts/liquidsoap_auth.py
+	sudo cp 
+	sudo service airtime-liquidsoap restart
+	rm .config/openbox/menu.xml
+	mv .config/openbox/menu2.xml .config/openbox/menu.xml
+	openbox --restart
+	killall conky
+	sleep 4
+	while [ -z $CONKY ]; do
+		CONKY=$(pgrep conky)
+		sleep 2
+		conky &
+		sleep 1
+	done
+	zenity --info --text="L'installation d'Airtime s'est bien déroulée. Nous vous 
+	recommandons très fortement de procéder dès maintenant à la configuration de votre station 
+	radio. La documentation va s'afficher: lisez attentivement la rubrique 'Configurer Airtime'"
+	evince '$HOME/Documents/.memento_airtime.pdf'
 fi

@@ -109,11 +109,36 @@
 			</item>
 		</menu>
 		<menu id="webradio" label="Outils WebRadio">
- 		<item label="Programmer une émission (Airtime)">
- 			<action name="Execute">
- 				<execute>iceweasel &quot;http://localhost/login&quot;</execute>
- 			</action>
- 		</item>
+			<menu id="diff_airtime" label="Airtime">
+			<item label="Programmer une émission (Airtime)">
+				<action name="Execute">
+					<execute>iceweasel &quot;http://localhost/login&quot;</execute>
+				</action>
+			</item>
+			<item label="Diffuser un flux vers le serveur Airtime">
+				<action name="Execute">
+					<execute>lxterminal -e '.Scripts/diff-airtime/diff_airtime.bash diff'</execute>
+				</action>
+			</item>
+			<item label="Diffuser et enregistrer un flux vers le serveur Airtime">
+				<action name="Execute">
+					<execute>lxterminal -e '.Scripts/diff-airtime/diff_airtime.bash diff'</execute>
+				</action>
+			</item>
+			<item label="Configurer le flux vers le serveur Airtime">
+				<action name="Execute">
+					<execute>lxterminal -e '.Scripts/diff-airtime/config_airtime.bash'</execute>
+				</action>
+			</item>
+			<separator/>
+			<item label="Documentation Airtime">
+				<action name="Execute">
+					<execute>
+						evince 'Documents/.memento_airtime.pdf'
+					</execute>
+				</action>
+			</item>
+			</menu>
 			<menu id="diff_local" label="Dans l'établissement...">
 			<item label="Diffuser un flux radio dans l'établissement">
 				<action name="Execute">
