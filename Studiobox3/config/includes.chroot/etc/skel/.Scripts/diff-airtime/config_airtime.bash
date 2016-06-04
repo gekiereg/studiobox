@@ -2,30 +2,16 @@
 
 DIRECT="$HOME/.Scripts/diff-airtime/direct_airtime.liq"
 RECORD="$HOME/.Scripts/diff-airtime/record_airtime.liq"
+CONFIGAIRTIME=$(cat /etc/airtime/liquidsoap.cfg | grep airtime.ogg)
 
-#Nommer le point de montage.Tant que la variable est vide attente de la saisie.
-#while [ -z ${point[$i]} ]; do
-#echo "Veuillez saisir le nom du point de montage :"
-#read point
-#done
-
-#Nommer le serveur de montage.Tant que la variable est vide attente de la saisie.
-#while [ -z ${hote[$i]} ]; do
-#echo "Veuillez saisir le nom complet (FQHN) du serveur icecast :"
-#read hote
-#done
-
-#Tant que la variable est vide, j'attends la saisie
-#while [ -z ${port[$i]} ]; do
-#echo "Veuillez saisir le port :"
-#read port
-#done
-
-#Tant que la variable est vide, j'attends la saisie
-#while [ -z ${pass[$i]} ]; do
-#echo "Veuillez saisir le mot de passe:"
-#read pass
-#done
+if [ -z "$CONFIGAIRTIME" ]; then
+	echo "Airtime n'est pas configuré pour être utilisé avec cette méthode de diffusion."
+	echo "La rubrique 'Configurer Airtime' du document 'memento_airtime.pdf'"
+	echo "(dans le répertoire 'Documents') vous explique la marche à suivre"
+	echo "pour réaliser cette configuration"
+	sleep 7
+	exit
+fi
 
 echo "Les cartes son suivantes sont installées sur votre système :"
 
@@ -44,18 +30,10 @@ rm $RECORD
 sleep 1
 
 echo "#
-# En lançant ce script, tout ce qui entre sur la carte son gérée
-# par ALSA est envoyé sur le serveur Icecast défini dans le script
-#
-
 
 liquidsoap 's=output.icecast(%vorbis(quality=0.9), mount=\"webradio.ogg\",host=\"localhost\",port=8001,user=\"source\",password=\"webradio\",input.alsa(device=\"hw:$nombre,0\"))' 'output.file(%vorbis(quality=0.9),\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",s)'" > $RECORD
 
 echo "#
-# En lançant ce script, tout ce qui entre sur la carte son gérée
-# par ALSA est envoyé sur le serveur Icecast défini dans le script
-#
-
 
 liquidsoap 'output.icecast(%vorbis(quality=0.9), mount=\"webradio.ogg\",host=\"localhost\",port=8001,user=\"source\",password=\"webradio\",input.alsa(device=\"hw:$nombre,0\"))'" > $DIRECT
 
@@ -64,4 +42,4 @@ chmod ugoa+x $RECORD
 
 zenity --info --title="Fin de la configuration" --text="La configuration est maintenant terminée. Vous pouvez lancer une diffusion (et un 
 enregistrement simultané) en sélectionnant l'entrée 
-adéquate dans le menu 'Outils Webradio' > 'Diffuser avec Airtime'"
+adéquate dans le menu 'Outils Webradio' > 'Airtime'"

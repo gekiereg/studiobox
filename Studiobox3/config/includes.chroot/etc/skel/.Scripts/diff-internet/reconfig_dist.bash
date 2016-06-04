@@ -9,18 +9,6 @@ echo "Veuillez saisir le nom du point de montage :"
 read point
 done
 
-#Nommer le serveur de montage.Tant que la variable est vide attente de la saisie.
-#while [ -z ${hote[$i]} ]; do
-#echo "Veuillez saisir le nom complet (FQHN) du serveur icecast :"
-#read hote
-#done
-
-#Tant que la variable est vide, j'attends la saisie
-#while [ -z ${port[$i]} ]; do
-#echo "Veuillez saisir le port :"
-#read port
-#done
-
 #Tant que la variable est vide, j'attends la saisie
 while [ -z ${pass[$i]} ]; do
 echo "Veuillez saisir le mot de passe:"
@@ -53,30 +41,18 @@ TYPE=$(echo $point | cut -d"." -f2)
 
 if [ "$TYPE" = "ogg" ]; then
 	echo "#
-# En lançant ce script, tout ce qui entre sur la carte son gérée
-# par ALSA est envoyé sur le serveur Icecast défini dans le script
-#
 
 liquidsoap 'output.icecast(%vorbis(quality=0.5), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))'" > $DIRECT
 
 	echo "#
-# En lançant ce script, tout ce qui entre sur la carte son gérée
-# par ALSA est envoyé sur le serveur Icecast défini dans le script
-#
 
 liquidsoap 's=output.icecast(%vorbis(quality=0.5), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))' 'output.file(%vorbis(quality=0.9),\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",s)'" > $RECORD
 else
 	echo "#
-# En lançant ce script, tout ce qui entre sur la carte son gérée
-# par ALSA est envoyé sur le serveur Icecast défini dans le script
-#
 
 liquidsoap 'output.icecast(%mp3(bitrate=128), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))'" > $DIRECT
 
 	echo "#
-# En lançant ce script, tout ce qui entre sur la carte son gérée
-# par ALSA est envoyé sur le serveur Icecast défini dans le script
-#
 
 liquidsoap 's=output.icecast(%mp3(bitrate=128), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))' 'output.file(%vorbis(quality=0.9),\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",s)'" > $RECORD
 fi

@@ -4,30 +4,6 @@ DIRECT="$HOME/.Scripts/diff-locale/direct_local.liq"
 RECORD="$HOME/.Scripts/diff-locale/record_local.liq"
 REC="$HOME/.Scripts/diff-locale/rec_local.liq"
 
-#Nommer le point de montage.Tant que la variable est vide attente de la saisie.
-#while [ -z ${point[$i]} ]; do
-#echo "Veuillez saisir le nom du point de montage :"
-#read point
-#done
-
-#Nommer le serveur de montage.Tant que la variable est vide attente de la saisie.
-#while [ -z ${hote[$i]} ]; do
-#echo "Veuillez saisir le nom complet (FQHN) du serveur icecast :"
-#read hote
-#done
-
-#Tant que la variable est vide, j'attends la saisie
-#while [ -z ${port[$i]} ]; do
-#echo "Veuillez saisir le port :"
-#read port
-#done
-
-#Tant que la variable est vide, j'attends la saisie
-#while [ -z ${pass[$i]} ]; do
-#echo "Veuillez saisir le mot de passe:"
-#read pass
-#done
-
 echo "Les cartes son suivantes sont installées sur votre système :"
 
 aplay -l
@@ -46,26 +22,14 @@ rm $REC
 sleep 1
 
 echo "#
-# En lançant ce script, tout ce qui entre sur la carte son gérée
-# par ALSA est envoyé sur le serveur Icecast défini dans le script
-#
-
 
 liquidsoap 'output.file(%vorbis(quality=0.9),\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",input.alsa(device=\"hw:$nombre,0\"))'" > $REC
 
 echo "#
-# En lançant ce script, tout ce qui entre sur la carte son gérée
-# par ALSA est envoyé sur le serveur Icecast défini dans le script
-#
-
 
 liquidsoap 's=output.icecast(%vorbis(quality=0.6), mount=\"webradio.ogg\",host=\"localhost\", port=8000 , password=\"webradio\",input.alsa(device=\"hw:$nombre,0\"))' 'output.file(%vorbis(quality=0.9),\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",s)'" > $RECORD
 
 echo "#
-# En lançant ce script, tout ce qui entre sur la carte son gérée
-# par ALSA est envoyé sur le serveur Icecast défini dans le script
-#
-
 
 liquidsoap 'output.icecast(%vorbis(quality=0.6), mount=\"webradio.ogg\",host=\"localhost\", port=8000 , password=\"webradio\",input.alsa(device=\"hw:$nombre,0\"))'" > $DIRECT
 
