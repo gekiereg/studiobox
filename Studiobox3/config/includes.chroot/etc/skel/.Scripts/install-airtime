@@ -1,7 +1,7 @@
 #!/bin/bash
 
-zenity --info --text="Le processus d'installation du logiciel de programmation radiophonique se lancera une fois que vous validerez cette fenêtre de dialogue.\\
-Notes: l'installation nécessite une connexion internet (connectez-vous maintenant si ce n'est déjà fait), et peut prendre un certain temps, soyez patient! :)" 
+zenity --info --text="Le processus d'installation du logiciel de programmation radiophonique Airtime se lancera une fois que vous validerez cette fenêtre de dialogue.\\
+Notes: l'installation et la configuration durent une dizaine de minutes et nécessitent une connexion internet (connectez-vous maintenant si ce n'est déjà fait)" 
 wget -q --tries=20 --timeout=10 http://www.google.com -O /tmp/google.idx &> /dev/null
 if [ ! -s /tmp/google.idx ]
 then
@@ -19,11 +19,7 @@ sudo lxterminal -e './install -fpai' | tee >(zenity --progress --pulsate --auto-
 zenity --info --text="Une fenêtre de votre navigateur va se lancer pour\\ 
 vous permettre de finaliser l'installation.\\
 Faites défiler les boîtes de dialogue en laissant\\
-les données par défaut.\\
-À l'avenir, vous pourrez accéder à Airtime en cliquant\\ 
-sur «Outils Webradio» →\\
- «Programmer une diffusion radio»\\
-(identifiant: admin, mot de passe: admin)"
+les données par défaut."
 zenity --info --text="Une dernière chose :)
 Ne tenez pas compte des demandes concernant des commandes à renseigner 
 dans le terminal et du message d'erreur sur la dernière page: ces 
@@ -40,13 +36,44 @@ OK=$(pgrep airtime)
 if [ -z "$OK" ]; then
 	zenity --info --text="Aïe :( \\
 Il semblerait qu'il y ait eu un problème durant le processus d'installation.\\
-Nous vous conseillons de retenter une installation."
+Nous vous conseillons de retenter une installation après avoir vérifié votre configuration réseau."
 	exit
 else
 	sudo mkdir -p /usr/lib/airtime/pypo/bin/liquidsoap_scripts/
 	sudo ln -s /usr/local/lib/python2.7/dist-packages/airtime_playout-1.0-py2.7.egg/liquidsoap/liquidsoap_auth.py /usr/lib/airtime/pypo/bin/liquidsoap_scripts/liquidsoap_auth.py
-	sudo cp 
 	sudo service airtime-liquidsoap restart
+	zenity --info --text="Airtime est désormais installé.\\
+Vous pourrez y accéder avec l'identifiant 'admin' et le mot de passe 'admin'\\
+Le script va maintenant rechercher l'existence d'un flux de diffusion, et le cas échéant,\\
+vous proposer de l'utiliser dans Airtime (voir le contenu de la fenêtre de Terminal)." 
+	FICHIERDIRECT="$HOME/.Scripts/diff-internet/direct_dist.liq"
+	POINTMONTAGE=$(cat $FICHIERDIRECT | cut -d"," -f2 | cut -d"=" -f2)
+	if [ -n "$POINTMONTAGE" ]; then
+		PASSPOINTMONTAGE=$(cat $FICHIERDIRECT | cut -d"," -f5 | cut -d"=" -f2)
+		TYPEFLUX=$(cat $FICHIERDIRECT | cut -d"," -f2 | cut -d"." -f2 | cut -d'"' -f1)
+		echo "Le flux de diffusion suivant a déjà été utilisé: "
+		echo "- point de montage: $POINTMONTAGE"
+		echo "- mot de passe: $PASSPOINTMONAGE"
+		read -p "Souhaitez-vous utiliser ce flux dans Airtime? (oui, non) " reponse
+		if [ "$reponse" = 'oui' ]; then
+			CONFAIRTIME='/etc/airtime/liquidsoap.cfg'
+			sudo sed -i "s/^s1_mount.*$/s1_mount = $POINTMONTAGE/" $CONFAIRTIME
+			sudo sed -i "s/^s1_pass.*$/s1_pass = $PASSPOINTMONTAGE/" $CONFAIRTIME
+			sudo sed -i "s/^s1_host.*$/s1_host = \"webradio.ac-versailles.fr\"/" $CONFAIRTIME
+			sudo sed -i "s/^s1_type.*$/s1_type = \"$TYPEFLUX\"/" $CONFAIRTIME
+			sudo sed -i "s/^master_live_stream_port.*$/master_live_stream_port = 8001/" $CONFAIRTIME
+			sudo sed -i "s/^master_live_stream_mp.*$/master_live_stream_mp = \"webradio.ogg\"/" $CONFAIRTIME
+		else
+			sudo sed -i "s/^master_live_stream_port.*$/master_live_stream_port = 8001/" $CONFAIRTIME
+			sudo sed -i "s/^master_live_stream_mp.*$/master_live_stream_mp = \"webradio.ogg\"/" $CONFAIRTIME
+		fi
+		sudo service airtime-playout restart
+		sudo service airtime-liquidsoap restart
+		sudo service airtime-media-monitor restart
+	else
+		echo "Pas de flux de diffusion repéré. Suite et fin de la configuration."
+		sleep 5	
+	fi
 	rm .config/openbox/menu.xml
 	mv .config/openbox/menu2.xml .config/openbox/menu.xml
 	openbox --restart
@@ -58,9 +85,9 @@ else
 		conky &
 		sleep 1
 	done
-	zenity --info --text="L'installation d'Airtime s'est bien déroulée. Nous vous 
-	recommandons très fortement de procéder dès maintenant à la configuration de votre station 
-	radio. La documentation va s'afficher: lisez attentivement la rubrique 'Configurer Airtime'"
-	sleep 5
-	evince '$HOME/Documents/.memento_airtime.pdf'
+	echo "L'installation et la configuration d'Airtime se sont bien déroulées."
+	read -p "Souhaitez-vous lire dès maintenant la documentation? (oui, non) " reponse2
+	if [ "$reponse2" = 'oui' ]; then
+		evince 'Documents/.memento_airtime.pdf'
+	fi
 fi
