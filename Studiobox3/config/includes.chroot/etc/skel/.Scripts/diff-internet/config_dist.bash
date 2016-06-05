@@ -5,25 +5,20 @@ RECORD="$HOME/.Scripts/diff-internet/record_dist.liq"
 
 #Nommer le point de montage.Tant que la variable est vide attente de la saisie.
 while [ -z ${point[$i]} ]; do
-echo "Veuillez saisir le nom du point de montage :"
-read point
+read -p "Veuillez saisir le nom du point de montage :" point
 done
 
 #Tant que la variable est vide, j'attends la saisie
 while [ -z ${pass[$i]} ]; do
-echo "Veuillez saisir le mot de passe:"
-read pass
+read -p  "Veuillez saisir le mot de passe: " pass
 done
 
-echo "Les cartes son suivantes sont installées sur votre système :"
+echo "Les cartes sons suivantes sont installées sur votre système :"
 
 aplay -l
 #Jusqu'a ce que la reponse soit composée par un nombre, j'attends la saisie
 until [[ ${nombre} =~ ^[0-9]+$ ]]; do
-echo "
-
-Quel est l'identifiant du périphérique à utiliser ? (0, 1, etc.)"
-read nombre
+read -p "Quel est l'identifiant du périphérique à utiliser (0, 1, etc.): " nombre
 done
 
 echo "
@@ -40,21 +35,13 @@ sleep 1
 TYPE=$(echo $point | cut -d"." -f2)
 
 if [ "$TYPE" = "ogg" ]; then
-	echo "#
+	echo "liquidsoap 'output.icecast(%vorbis(quality=0.5), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))'" > $DIRECT
 
-liquidsoap 'output.icecast(%vorbis(quality=0.5), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))'" > $DIRECT
-
-	echo "#
-
-liquidsoap 's=output.icecast(%vorbis(quality=0.5), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))' 'output.file(%vorbis(quality=0.9),\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",s)'" > $RECORD
+	echo "liquidsoap 's=output.icecast(%vorbis(quality=0.5), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))' 'output.file(%vorbis(quality=0.9),\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",s)'" > $RECORD
 else
-	echo "#
+	echo "liquidsoap 'output.icecast(%mp3(bitrate=128), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))'" > $DIRECT
 
-liquidsoap 'output.icecast(%mp3(bitrate=128), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))'" > $DIRECT
-
-	echo "#
-
-liquidsoap 's=output.icecast(%mp3(bitrate=128), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))' 'output.file(%vorbis(quality=0.9),\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",s)'" > $RECORD
+	echo "liquidsoap 's=output.icecast(%mp3(bitrate=128), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,0\"))' 'output.file(%vorbis(quality=0.9),\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",s)'" > $RECORD
 fi
 
 chmod ugoa+x $DIRECT
