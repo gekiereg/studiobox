@@ -42,38 +42,50 @@ else
 	sudo mkdir -p /usr/lib/airtime/pypo/bin/liquidsoap_scripts/
 	sudo ln -s /usr/local/lib/python2.7/dist-packages/airtime_playout-1.0-py2.7.egg/liquidsoap/liquidsoap_auth.py /usr/lib/airtime/pypo/bin/liquidsoap_scripts/liquidsoap_auth.py
 	sudo service airtime-liquidsoap restart
-	zenity --info --text="Airtime est désormais installé.\\
-Vous pourrez y accéder avec l'identifiant 'admin' et le mot de passe 'admin'\\
-Le script va maintenant rechercher l'existence d'un flux de diffusion, et le cas échéant,\\
-vous proposer de l'utiliser dans Airtime (voir le contenu de la fenêtre de Terminal)." 
-	FICHIERDIRECT="$HOME/.Scripts/diff-internet/direct_dist.liq"
-	POINTMONTAGE=$(cat $FICHIERDIRECT | cut -d"," -f2 | cut -d"=" -f2)
-	if [ -n "$POINTMONTAGE" ]; then
-		PASSPOINTMONTAGE=$(cat $FICHIERDIRECT | cut -d"," -f5 | cut -d"=" -f2)
-		TYPEFLUX=$(cat $FICHIERDIRECT | cut -d"," -f2 | cut -d"." -f2 | cut -d'"' -f1)
-		echo "Le flux de diffusion suivant a déjà été utilisé: "
-		echo "- point de montage: $POINTMONTAGE"
-		echo "- mot de passe: $PASSPOINTMONAGE"
-		read -p "Souhaitez-vous utiliser ce flux dans Airtime? (oui, non) " reponse
-		if [ "$reponse" = 'oui' ]; then
-			CONFAIRTIME='/etc/airtime/liquidsoap.cfg'
-			sudo sed -i "s/^s1_mount.*$/s1_mount = $POINTMONTAGE/" $CONFAIRTIME
-			sudo sed -i "s/^s1_pass.*$/s1_pass = $PASSPOINTMONTAGE/" $CONFAIRTIME
-			sudo sed -i "s/^s1_host.*$/s1_host = \"webradio.ac-versailles.fr\"/" $CONFAIRTIME
-			sudo sed -i "s/^s1_type.*$/s1_type = \"$TYPEFLUX\"/" $CONFAIRTIME
-			sudo sed -i "s/^master_live_stream_port.*$/master_live_stream_port = 8001/" $CONFAIRTIME
-			sudo sed -i "s/^master_live_stream_mp.*$/master_live_stream_mp = \"webradio.ogg\"/" $CONFAIRTIME
-		else
-			sudo sed -i "s/^master_live_stream_port.*$/master_live_stream_port = 8001/" $CONFAIRTIME
-			sudo sed -i "s/^master_live_stream_mp.*$/master_live_stream_mp = \"webradio.ogg\"/" $CONFAIRTIME
-		fi
-		sudo service airtime-playout restart
-		sudo service airtime-liquidsoap restart
-		sudo service airtime-media-monitor restart
-	else
-		echo "Pas de flux de diffusion repéré. Suite et fin de la configuration."
-		sleep 5	
-	fi
+##la partie ci-dessous fonctionne sur le principe, mais airtime écrase le fichier /etc/airtime/liquidsoap.cfg en redémarrant ses services
+##à décommenter quand le problème sera résolu
+#	zenity --info --text="Airtime est désormais installé.\\
+#Vous pourrez y accéder avec l'identifiant 'admin' et le mot de passe 'admin'\\
+#Le script va maintenant rechercher l'existence d'un flux de diffusion, et le cas échéant,\\
+#vous proposer de l'utiliser dans Airtime (voir le contenu de la fenêtre de Terminal)." 
+#FICHIERDIRECT="$HOME/.Scripts/diff-internet/direct_dist.liq"
+#POINTMONTAGE=$(cat $FICHIERDIRECT | cut -d"," -f2 | cut -d"=" -f2)
+#PASSPOINTMONTAGE=$(cat $FICHIERDIRECT | cut -d"," -f5 | cut -d"=" -f2)
+#TYPEFLUX=$(cat $FICHIERDIRECT | cut -d"," -f2 | cut -d"." -f2 | cut -d'"' -f1)
+#if [ -n "$POINTMONTAGE" ]; then
+#	echo "Le flux de diffusion suivant a déjà été utilisé: "
+#	echo "- point de montage: $POINTMONTAGE"
+#	echo "- mot de passe: $PASSPOINTMONTAGE"
+#	echo "- format: $TYPEFLUX"
+#	read -p "Souhaitez-vous utiliser ce flux dans Airtime? (oui, non) " reponse
+#	if [ "$reponse" = oui ]; then
+#		echo "Arrêt des services d'Airtime"
+#		sudo service airtime-playout stop
+#		sudo service airtime-liquidsoap stop
+#		sudo service airtime-media-monitor stop
+#		CONFAIRTIME='/etc/airtime/liquidsoap.cfg'
+#		echo "Modification du fichier de configuration d'airtime $CONFAIRTIME"
+#		echo "- point de montage: $POINTMONTAGE"
+#		echo "- mot de passe: $PASSPOINTMONTAGE"
+#		echo "- format: $TYPEFLUX"
+#		sudo sed -i "s/^s1_mount.*$/s1_mount = $POINTMONTAGE/" $CONFAIRTIME
+#		sudo sed -i "s/^s1_pass.*$/s1_pass = $PASSPOINTMONTAGE/" $CONFAIRTIME
+#		sudo sed -i "s/^s1_host.*$/s1_host = \"webradio.ac-versailles.fr\"/" $CONFAIRTIME
+#		sudo sed -i "s/^s1_type.*$/s1_type = \"$TYPEFLUX\"/" $CONFAIRTIME
+#		sudo sed -i "s/^master_live_stream_port.*$/master_live_stream_port = 8001/" $CONFAIRTIME
+#		sudo sed -i "s/^master_live_stream_mp.*$/master_live_stream_mp = \"webradio.ogg\"/" $CONFAIRTIME
+#	else
+#		sudo sed -i "s/^master_live_stream_port.*$/master_live_stream_port = 8001/" $CONFAIRTIME
+#		sudo sed -i "s/^master_live_stream_mp.*$/master_live_stream_mp = \"webradio.ogg\"/" $CONFAIRTIME
+#	fi
+##	echo "Redémarrage des services d'Airtime"
+#	sudo service airtime-playout start
+#	sudo service airtime-liquidsoap start
+#	sudo service airtime-media-monitor start
+#else
+#	echo "Pas de flux de diffusion repéré. Suite et fin de la configuration."
+#	sleep 5	
+#fi
 	rm .config/openbox/menu.xml
 	mv .config/openbox/menu2.xml .config/openbox/menu.xml
 	openbox --restart
@@ -86,6 +98,8 @@ vous proposer de l'utiliser dans Airtime (voir le contenu de la fenêtre de Term
 		sleep 1
 	done
 	echo "L'installation et la configuration d'Airtime se sont bien déroulées."
+	echo "Nous vous conseillons fortement de procéder dès maintenant à la configuration"
+	echo "des flux de diffusion (procédure décrite dans la documentation)."
 	read -p "Souhaitez-vous lire dès maintenant la documentation? (oui, non) " reponse2
 	if [ "$reponse2" = 'oui' ]; then
 		evince 'Documents/.memento_airtime.pdf'
