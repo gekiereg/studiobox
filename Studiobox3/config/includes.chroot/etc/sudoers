@@ -21,7 +21,8 @@ root	ALL=(ALL:ALL) ALL
 
 # Allow members of group sudo to execute any command
 %sudo	ALL=(ALL:ALL) ALL
-studiobox ALL=NOPASSWD:/sbin/shutdown
+studiobox ALL=NOPASSWD:/usr/local/bin/arret1
+studiobox ALL=NOPASSWD:/usr/local/bin/arret2
 studiobox ALL=NOPASSWD:/sbin/ifconfig
 
 # See sudoers(5) for more information on "#include" directives:
