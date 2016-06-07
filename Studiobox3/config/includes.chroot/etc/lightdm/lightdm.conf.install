@@ -50,7 +50,7 @@
 # session-cleanup-script = Script to run when quitting a user session (runs as root)
 # autologin-guest = True to log in as guest by default
 # autologin-user = User to log in with by default (overrides autologin-guest)
-autologin-user = studiobox
+# autologin-user = studiobox
 # autologin-user-timeout = Number of seconds to wait before loading default user
 # autologin-session = Session to load for automatic login (overrides user-session)
 # exit-on-failure = True if the daemon should exit if this seat fails
@@ -76,7 +76,7 @@ session-wrapper=/etc/X11/Xsession
 #session-setup-script=
 #session-cleanup-script=
 #autologin-guest=false
-autologin-user=webradio
+autologin-user=studiobox
 #autologin-user-timeout=0
 #autologin-session=UNIMPLEMENTED
 #exit-on-failure=false
