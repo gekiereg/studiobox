@@ -1,7 +1,10 @@
 #!/bin/bash
 
-zenity --info --text="Le processus d'installation du logiciel de programmation radiophonique Airtime se lancera une fois que vous validerez cette fenêtre de dialogue.\\
-Notes: l'installation et la configuration durent une dizaine de minutes et nécessitent une connexion internet (connectez-vous maintenant si ce n'est déjà fait)" 
+echo "Le processus d'installation du logiciel de programmation radiophonique Airtime"
+echo "se lancera une fois que vous validerez cette fenêtre de dialogue."
+echo "Note: l'installation et la configuration durent une dizaine de minutes"
+echo "et nécessitent une connexion internet (connectez-vous maintenant si ce n'est déjà fait)" 
+read -p "Pour lancer l'installation, apuuyez sur une touche."
 wget -q --tries=20 --timeout=10 http://www.google.com -O /tmp/google.idx &> /dev/null
 if [ ! -s /tmp/google.idx ]
 then
@@ -19,28 +22,30 @@ fi
 tar zxvf .$VERSIONAIRTIME.tar.gz
 mv $VERSIONAIRTIME/ .$VERSIONAIRTIME/
 cd .$VERSIONAIRTIME
-sudo lxterminal -e './install -fpai' | tee >(zenity --progress --pulsate --auto-close --title="Installation d'Airtime" --text="Installation en cours, merci de patienter...")
-zenity --info --text="Une fenêtre de votre navigateur va se lancer pour\\ 
-vous permettre de finaliser l'installation.\\
-Faites défiler les boîtes de dialogue en laissant\\
-les données par défaut."
-zenity --info --text="Une dernière chose :)
-Ne tenez pas compte des demandes concernant des commandes à renseigner 
-dans le terminal et du message d'erreur sur la dernière page: ces 
-manipulations seront réalisées automatiquement quand vous fermerez votre navigateur..."
-sleep 2
-iceweasel http://localhost/login | tee >(zenity --progress --pulsate --auto-close --title="Finalisation de l'installation" --text="Lancement du navigateur web")
+sudo ./install -fpai
+echo "Une fenêtre de votre navigateur va se lancer pour"
+echo "vous permettre de finaliser l'installation."
+echo "Faites défiler les boîtes de dialogue en laissant"
+echo "les données par défaut."
+echo "Une dernière chose :)"
+echo "Ne tenez pas compte des demandes concernant des commandes à renseigner"
+echo "dans le terminal et du message d'erreur sur la dernière page: ces"
+echo "manipulations seront réalisées automatiquement quand vous fermerez votre navigateur..."
+read -p "Appuyez sur une touche pour lancer le navigateur et finaliser l'installation"
+iceweasel http://localhost/login
+read -p "Une fois la configuration terminée, appuyez sur une touche pour vérifier l'installation d'Airtime"
 cd ../../
 sudo service airtime-playout start
 sudo service airtime-liquidsoap start
 sudo service airtime-media-monitor start
 # L'install se termine si ce qui précède s'est déroulé sans problème
-sleep 5 | tee >(zenity --progress --pulsate --auto-close --title="Vérifications" --text="Vérification de l'installation d'Airtime en cours")
+echo "Vérification de l'installation d'Airtime en cours"
 OK=$(pgrep airtime)
 if [ -z "$OK" ]; then
-	zenity --info --text="Aïe :( \\
-Il semblerait qu'il y ait eu un problème durant le processus d'installation.\\
-Nous vous conseillons de retenter une installation après avoir vérifié votre configuration réseau."
+	echo "Aïe :("
+	echo "Il semblerait qu'il y ait eu un problème durant le processus d'installation."
+	echo "Nous vous conseillons de retenter une installation après avoir vérifié votre configuration réseau."
+	sleep 8
 	exit
 else
 # correction du bug d'airtime 2.5.2 - à surveiller en cas de nouvelle version
@@ -107,6 +112,6 @@ else
 	echo "des flux de diffusion (procédure décrite dans la documentation)."
 	read -p "Souhaitez-vous lire dès maintenant la documentation? (oui, non) " reponse2
 	if [ "$reponse2" = 'oui' ]; then
-		evince 'Documents/.memento_airtime.pdf'
+		evince 'Documents/.memento_airtime.pdf' &
 	fi
 fi
