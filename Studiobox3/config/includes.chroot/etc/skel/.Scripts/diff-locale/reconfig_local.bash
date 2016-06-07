@@ -15,7 +15,7 @@ done
 NBRECARTES=$(aplay -l | grep ^"carte $nombre" | wc -l)
 
 #si plusieurs cartes ont le même identifiant, on choisit par le numéro de périphérique
-if [ $NBRECARTES -ge 1 ]; then
+if [ $NBRECARTES -ge 2 ]; then
 	echo "Plusieurs cartes sont identifiées par le chiffre $nombre"
 	echo "Indiquez le numéro de 'périphérique' de la carte à utiliser"
 	echo "(en cas de doute, indiquez '0')"

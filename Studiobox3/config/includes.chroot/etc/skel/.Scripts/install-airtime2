@@ -1,14 +1,13 @@
 #!/bin/bash
 
 echo "Le processus d'installation du logiciel de programmation radiophonique Airtime"
-echo "se lancera une fois que vous validerez cette fenêtre de dialogue."
-echo "Note: l'installation et la configuration durent une dizaine de minutes"
-echo "et nécessitent une connexion internet (connectez-vous maintenant si ce n'est déjà fait)" 
-read -p "Pour lancer l'installation, apuuyez sur une touche."
+echo "durent une dizaine de minutes et nécessitent une connexion internet (connectez-vous maintenant si ce n'est déjà fait)" 
+read -p "Pour lancer l'installation, appuyez sur une touche."
 wget -q --tries=20 --timeout=10 http://www.google.com -O /tmp/google.idx &> /dev/null
 if [ ! -s /tmp/google.idx ]
 then
-	zenity --info --text="Vous n'êtes pas connecté à internet. Merci de relancer l'installation d'Airtime quand ce sera le cas"
+	echo "Vous n'êtes pas connecté à internet. Merci de relancer l'installation d'Airtime quand ce sera le cas"
+	sleep 5
 	exit
 else
 	rm /tmp/google.idx
