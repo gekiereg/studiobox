@@ -17,6 +17,8 @@ done
 
 echo "pm,$point
 pass,$pass" > $FICHIERPM
+zenity --info --title="Point de diffusion configuré" --text="Le point de diffusion qui sera utilisé est $point.
+Les auditeurs pourront vous écouter à l'adresse suivante: http://webradio.ac-versailles.fr/$point"
 }
 
 function configCS {
@@ -44,14 +46,6 @@ fi
 
 echo "$nombre,$nombre1" > $FICHIERCS
 CARTEOK=$(aplay -l | grep ^"carte $nombre" | grep "périphérique $nombre1")
-}
-
-function annonceconfigPM {
-	zenity --info --title="Point de diffusion configuré" --text="Le point de diffusion qui sera utilisé est $point.
-Les auditeurs pourront vous écouter à l'adresse suivante: http://webradio.ac-versailles.fr/$point"
-}
-
-function annonceconfigCS {
 	zenity --info --title="Carte son configurée" --text="La configuration est maintenant terminée. Au prochain enregistrement ou à la prochaine diffusion, la carte suivante sera utilisée:
 $CARTEOK"
 }
@@ -70,7 +64,7 @@ nombre1=$(cat $FICHIERCS | cut -d"," -f2)
 DISPO=$(aplay -l | grep ^"carte $nombre" |  grep "périphérique $nombre1")
 
 if [ -z "$DISPO" ]; then
-        zenity --info --title="Carte son indisponible" --text="Il semblerait que la carte son configurée soit indisponible. Veuillez la reconfigurer (menu 'Outils WebRadio' > 'Configurer la carte son')"
+        zenity --info --title="Carte son indisponible" --text="Il semblerait que la carte son configurée soit indisponible. Veuillez la reconfigurer (menu 'Outils WebRadio' > 'Configurer la WebRadio' > 'Configurer la carte son des flux')"
 	exit
 fi
 }
@@ -78,7 +72,7 @@ fi
 function verifPM {
 TYPEPM=$(cat $FICHIERPM | grep ^pm | cut -d"," -f2 | cut -d"." -f2)
 if [ "$TYPEPM" != ogg ] && [ "$TYPEPM" != mp3 ]; then
-	zenity --info --text="Votre point de diffusion est mal ou non configuré (il doit être de forme 'type-nom-ville.mp3' ou 'type-nom-ville.ogg'. Veuillez le reconfigurer (menu 'Outils WebRadio' > 'Configurer le point de diffusion')"
+	zenity --info --text="Votre point de diffusion est mal ou non configuré (il doit être de forme 'type-nom-ville.mp3' ou 'type-nom-ville.ogg'. Veuillez le reconfigurer (menu 'Outils WebRadio' > 'Configurer la WebRadio' > 'Configurer le point de diffusion radio')"
 	exit
 fi
 point=$(cat $FICHIERPM | grep ^pm | cut -d"," -f2)
@@ -155,10 +149,8 @@ liquidsoap "s=output.icecast(%vorbis(quality=0.9), mount=\"webradio.ogg\",host=\
 
 if [ "$1" = configureCS ]; then
 	configCS
-	annonceconfigCS
 elif [ "$1" = configurePM ]; then
 	configPM
-	annonceconfigPM
 elif [ "$1" = local ] && [ -z "$2" ]; then
 	verifIP
 	verifCS
@@ -169,7 +161,6 @@ elif [ "$1" = local ] && [ "$2" = rec ]; then
 	difflocalrec
 elif [ "$1" = rec ]; then
 	verifCS
-	recupCS
 	localrec
 elif [ "$1" = internet ] && [ -z "$2" ]; then
 	verifINT
