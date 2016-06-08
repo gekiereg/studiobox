@@ -62,9 +62,9 @@ function verifCS {
 nombre=$(cat $FICHIERCS | cut -d"," -f1)
 nombre1=$(cat $FICHIERCS | cut -d"," -f2)
 DISPO=$(aplay -l | grep ^"carte $nombre" |  grep "périphérique $nombre1")
-
 if [ -z "$DISPO" ]; then
-        zenity --info --title="Carte son indisponible" --text="Il semblerait que la carte son configurée soit indisponible. Veuillez la reconfigurer (menu 'Outils WebRadio' > 'Configurer la WebRadio' > 'Configurer la carte son des flux')"
+        zenity --info --title="Carte son indisponible" --text="Il semblerait que la carte son configurée soit indisponible.
+Veuillez la reconfigurer (menu 'Outils WebRadio' > 'Configurer la WebRadio' > 'Configurer la carte son des flux')"
 	exit
 fi
 }
@@ -72,14 +72,15 @@ fi
 function verifPM {
 TYPEPM=$(cat $FICHIERPM | grep ^pm | cut -d"," -f2 | cut -d"." -f2)
 if [ "$TYPEPM" != ogg ] && [ "$TYPEPM" != mp3 ]; then
-	zenity --info --text="Votre point de diffusion est mal ou non configuré (il doit être de forme 'type-nom-ville.mp3' ou 'type-nom-ville.ogg'. Veuillez le reconfigurer (menu 'Outils WebRadio' > 'Configurer la WebRadio' > 'Configurer le point de diffusion radio')"
+	zenity --info --text="Votre point de diffusion est mal ou non configuré (il doit être de forme 'type-nom-ville.mp3' ou 'type-nom-ville.ogg'.
+Veuillez le reconfigurer (menu 'Outils WebRadio' > 'Configurer la WebRadio' > 'Configurer le point de diffusion radio')"
 	exit
 fi
 point=$(cat $FICHIERPM | grep ^pm | cut -d"," -f2)
 pass=$(cat $FICHIERPM | grep ^pass | cut -d"," -f2)
 }
 
-function verifint {
+function verifINT {
 wget -q --tries=20 --timeout=10 http://www.google.com -O /tmp/google.idx &> /dev/null
 if [ ! -s /tmp/google.idx ]
 then
@@ -87,6 +88,16 @@ then
 	exit
 else
 	rm /tmp/google.idx
+fi
+}
+
+function verifAIR {
+CONFAIR=$(cat /etc/airtime/liquidsoap.cfg | grep ^master_live_stream_mp | grep webradio)
+if [ -z "$CONFAIR" ]; then
+	zenity --info --title="Configurer Airtime" --text="Pour diffuser un flux vers Airtime, celui-ci doit être configuré.
+	Vous trouverez une description précise de la configuration à effectuer dans 'Documents/memento_airtime.pdf'
+	(rubrique 'Configurer Airtime > Configuration des flux')"
+	exit
 fi
 }
 
@@ -175,10 +186,12 @@ elif [ "$1" = internet ] && [ "$2" = rec ]; then
 elif [ "$1" = airtime ] && [ -z "$2" ]; then
 	verifINT
 	verifCS
+	verifAIR
 	diffairtime
 elif [ "$1" = airtime ] && [ "$2" = rec ]; then
 	verifINT
 	verifCS
+	verifAIR
 	diffairtimerec
 else
 	echo "Ce script nécessite des arguments pour fonctionner!"
