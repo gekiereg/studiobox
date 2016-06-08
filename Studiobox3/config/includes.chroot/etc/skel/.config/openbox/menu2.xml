@@ -117,17 +117,12 @@
 			</item>
 			<item label="Diffuser un flux vers le serveur Airtime">
 				<action name="Execute">
-					<execute>lxterminal -e '.Scripts/diff-airtime/diff_airtime.bash diff'</execute>
+					<execute>lxterminal -e '.Scripts/diffrec-LS.bash airtime'</execute>
 				</action>
 			</item>
 			<item label="Diffuser et enregistrer un flux vers le serveur Airtime">
 				<action name="Execute">
-					<execute>lxterminal -e '.Scripts/diff-airtime/diff_airtime.bash diff'</execute>
-				</action>
-			</item>
-			<item label="Configurer le flux vers le serveur Airtime">
-				<action name="Execute">
-					<execute>lxterminal -e '.Scripts/diff-airtime/config_airtime.bash'</execute>
+					<execute>lxterminal -e '.Scripts/diffrec-LS.bash airtime rec''</execute>
 				</action>
 			</item>
 			<separator/>
@@ -140,27 +135,23 @@
 			</item>
 			</menu>
 			<menu id="diff_local" label="Dans l'établissement...">
-			<item label="Diffuser un flux radio dans l'établissement">
-				<action name="Execute">
-					<execute>lxterminal -e '.Scripts/diff-locale/diff_local.bash diff'</execute>
-				</action>
-			</item>
 			<item label="Enregistrer une émission">
 				<action name="Execute">
-					<execute>lxterminal -e '.Scripts/diff-locale/diff_local.bash rec'</execute>
+					<execute>lxterminal -e '.Scripts/diffrec-LS.bash rec'</execute>
+				</action>
+			</item>
+			<item label="Diffuser un flux radio dans l'établissement">
+				<action name="Execute">
+					<execute>lxterminal -e '.Scripts/diffrec-LS.bash local'</execute>
 				</action>
 			</item>
 			<item label="Diffuser et enregistrer un flux radio dans l'établissement">
 				<action name="Execute">
-					<execute>lxterminal -e '.Scripts/diff-locale/diff_local.bash'</execute>
+					<execute>lxterminal -e '.Scripts/diffrec-LS.bash local rec'</execute>
 				</action>
 			</item>
-			<item label="Configurer la carte son du flux">
-				<action name="Execute">
-					<execute>lxterminal -e '.Scripts/diff-locale/config_local.bash'</execute>
-				</action>
-			</item>
-			<item label="Interface web du serveur de diffusion radiophonique">
+			<separator/>
+			<item label="Interface web du serveur de diffusion radiophonique local">
 				<action name="Execute">
 					<execute>iceweasel &quot;http://localhost:8000&quot;</execute>
 				</action>
@@ -169,22 +160,30 @@
 			<menu id="diff-internet" label="Sur internet...">
 			<item label="Diffuser un flux radio sur internet">
 				<action name="Execute">
-					<execute>lxterminal -e '.Scripts/diff-internet/diff_dist.bash diff'</execute>
+					<execute>lxterminal -e '.Scripts/diffrec-LS.bash internet'</execute>
 				</action>
 			</item>
 			<item label="Diffuser et enregistrer un flux radio sur internet">
 				<action name="Execute">
-					<execute>lxterminal -e '.Scripts/diff-internet/diff_dist.bash'</execute>
+					<execute>lxterminal -e '.Scripts/diffrec-LS.bash internet rec'</execute>
 				</action>
 			</item>
-			<item label="Configurer le flux de diffusion radio vers internet">
-				<action name="Execute">
-					<execute>lxterminal -e '.Scripts/diff-internet/config_dist.bash'</execute>
-				</action>
-			</item>
+			<separator/>
 			<item label="Interface web du serveur de diffusion radiophonique académique">
 				<action name="Execute">
 					<execute>iceweasel &quot;http://webradio.ac-versailles.fr&quot;</execute>
+				</action>
+			</item>
+			</menu>
+			<menu id="configurePM_CS" label="Configurer la WebRadio">
+			<item label="Configurer le point de diffusion radio">
+				<action name="Execute">
+					<execute>lxterminal -e '.Scripts/diffrec-LS.bash configurePM'</execute>
+				</action>
+			</item>
+			<item label="Configurer la carte son des flux">
+				<action name="Execute">
+					<execute>lxterminal -e '.Scripts/diffrec-LS.bash configureCS'</execute>
 				</action>
 			</item>
 			</menu>
