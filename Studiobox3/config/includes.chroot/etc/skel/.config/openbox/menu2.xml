@@ -122,7 +122,7 @@
 			</item>
 			<item label="Diffuser et enregistrer un flux vers le serveur Airtime">
 				<action name="Execute">
-					<execute>lxterminal -e '.Scripts/diffrec-LS.bash airtime rec''</execute>
+					<execute>lxterminal -e '.Scripts/diffrec-LS.bash airtime rec'</execute>
 				</action>
 			</item>
 			<separator/>
