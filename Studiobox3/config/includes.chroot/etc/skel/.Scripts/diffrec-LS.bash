@@ -1,8 +1,24 @@
 #!/bin/bash
 
+# variables générales
 FICHIERCS='.Scripts/config/cs'
 FICHIERPM='.Scripts/config/pm'
 IP=$(sudo ifconfig  | grep 'inet adr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}')
+# variables liquidsoap
+PORTICECAST='8000'
+PORTAIRTIME='8001'
+PMLOCAL='webradio.ogg'
+PMAIRTIME='webradio.ogg'
+PASSLOCAL='webradio'
+PASSAIRTIME='webradio'
+USERAIRTIME='source'
+SERVEURACAD='webradio.ac-versailles.fr'
+SERVEURLOCAL='localhost'
+QUALITEVORBISDIFF='quality=0.6'
+QUALITEVORBISREC='quality=0.9'
+QUALITEMP3DIFF='bitrate=128'
+REPREC='Enregistrements'
+FICHIERREC='%Y-%m-%d-%H_%M_%S.ogg'
 
 function configPM {
 #Nommer le point de montage.Tant que la variable est vide attente de la saisie.
@@ -64,7 +80,7 @@ nombre1=$(cat $FICHIERCS | cut -d"," -f2)
 DISPO=$(aplay -l | grep ^"carte $nombre" |  grep "périphérique $nombre1")
 if [ -z "$DISPO" ]; then
         zenity --info --title="Carte son indisponible" --text="Il semblerait que la carte son configurée soit indisponible.
-Veuillez la reconfigurer (menu 'Outils WebRadio' > 'Configurer la WebRadio' > 'Configurer la carte son des flux')"
+Veuillez la reconfigurer (menu 'Outils WebRadio' > 'Configurer la webradio' > 'Configurer la carte son des flux')"
 	exit
 fi
 }
@@ -73,7 +89,7 @@ function verifPM {
 TYPEPM=$(cat $FICHIERPM | grep ^pm | cut -d"," -f2 | cut -d"." -f2)
 if [ "$TYPEPM" != ogg ] && [ "$TYPEPM" != mp3 ]; then
 	zenity --info --text="Votre point de diffusion est mal ou non configuré (il doit être de forme 'type-nom-ville.mp3' ou 'type-nom-ville.ogg'.
-Veuillez le reconfigurer (menu 'Outils WebRadio' > 'Configurer la WebRadio' > 'Configurer le point de diffusion radio')"
+Veuillez le reconfigurer (menu 'Outils WebRadio' > 'Configurer la webradio' > 'Configurer le point de diffusion radio')"
 	exit
 fi
 point=$(cat $FICHIERPM | grep ^pm | cut -d"," -f2)
@@ -92,7 +108,7 @@ fi
 }
 
 function verifAIR {
-CONFAIR=$(cat /etc/airtime/liquidsoap.cfg | grep ^master_live_stream_mp | grep webradio)
+CONFAIR=$(cat /etc/airtime/liquidsoap.cfg | grep ^master_live_stream_mp | grep $PMAIRTIME)
 if [ -z "$CONFAIR" ]; then
 	zenity --info --title="Configurer Airtime" --text="Pour diffuser un flux vers Airtime, celui-ci doit être configuré.
 	Vous trouverez une description précise de la configuration à effectuer dans 'Documents/memento_airtime.pdf'
@@ -101,61 +117,61 @@ if [ -z "$CONFAIR" ]; then
 fi
 }
 
-function difflocal {
-zenity --info --title="Pour vous écouter..." --text="Le direct se lancera quand vous fermerez cette fenêtre.
+# variables zenity
+TEXTEZENREC="Vous retrouverez l'enregistrement dans le répertoire '$REPREC' (fichier .ogg horodaté)"
+TEXTEZENDIFFLOCAL="Le direct se lancera quand vous fermerez cette fenêtre.
 Pour vous écouter sur le réseau de l'établissement, ouvrir un navigateur web et y indiquer l'url suivante:
-http://$IP:8000/webradio.ogg"
-liquidsoap "output.icecast(%vorbis(quality=0.6), mount=\"webradio.ogg\",host=\"localhost\", port=8000 , password=\"webradio\",input.alsa(device=\"hw:$nombre,$nombre1\"))"
+http://$IP:$PORTICECAST/$PMLOCAL"
+TEXTEZENDIFFINT="La diffusion commencera quand vous validerez cette boîte de dialogue.
+Les auditeurs pourront vous écouter à l'adresse suivante: http://$SERVEURACAD/$point"
+TEXTEZENAIR="Le flux radio est désormais envoyé vers le serveur Airtime.
+Pour diffuser ce flux sur internet, ouvrez Airtime et basculez la source de flux sur 'Source Maître'"
+
+function difflocal {
+zenity --info --title="Diffusion en direct" --text="$TEXTEZENDIFFLOCAL"
+liquidsoap "output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMLOCAL\",host=\"$SERVEURLOCAL\", port=$PORTICECAST , password=\"$PASSLOCAL\",input.alsa(device=\"hw:$nombre,$nombre1\"))"
 }
 
 function difflocalrec {
-zenity --info --title="Pour vous écouter..." --text="Le direct se lancera quand vous fermerez cette fenêtre.
-Pour vous écouter sur le réseau de l'établissement, ouvrir un navigateur web et y indiquer l'url suivante:
-http://$IP:8000/webradio.ogg
-Vous retrouverez l'enregistrement de votre émission dans le répertoire 'Musique' (fichier .ogg horodaté)"
-liquidsoap "s=output.icecast(%vorbis(quality=0.6), mount=\"webradio.ogg\",host=\"localhost\", port=8000 , password=\"webradio\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis(quality=0.9),\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",s)"
+zenity --info --title="Diffusion et enregistrement" --text="$TEXTEZENDIFFLOCAL
+$TEXTEZENREC"
+liquidsoap "s=output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMLOCAL\",host=\"$SERVEURLOCAL\", port=$PORTICECAST , password=\"$PASSLOCAL\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",s)"
 }
 
 function localrec {
 zenity --info --title="Enregistrement" --text="L'enregistrement se lancera quand vous fermerez cette fenêtre.
-Vous retrouverez l'enregistrement de votre émission dans
-le répertoire 'Musique' (fichier .ogg horodaté)" 
-liquidsoap "output.file(%vorbis(quality=0.9),\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",input.alsa(device=\"hw:$nombre,$nombre1\"))"
+$TEXTEZENREC" 
+liquidsoap "output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",input.alsa(device=\"hw:$nombre,$nombre1\"))"
 }
 
 function diffinternet {
-zenity --info --title="Diffusion en direct sur internet" --text="La diffusion commencera quand vous validerez cette boîte de dialogue.
-Les auditeurs pourront vous écouter à l'adresse suivante: http://webradio.ac-versailles.fr/$point"
+zenity --info --title="Diffusion en direct sur internet" --text="$TEXTEZENDIFFINT"
 if [ "$TYPEPM" = "ogg" ]; then
-liquidsoap "output.icecast(%vorbis(quality=0.5), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,$nombre1\"))"
+liquidsoap "output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$point\",host=\"$SERVEURACAD\", port=$PORTICECAST , password=\"$pass\",input.alsa(device=\"hw:$nombre,$nombre1\"))"
 else
-liquidsoap "output.icecast(%mp3(bitrate=128), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,$nombre1\"))"
+liquidsoap "output.icecast(%mp3($QUALITEMP3DIFF), mount=\"$point\",host=\"$SERVEURACAD\", port=$PORTICECAST , password=\"$pass\",input.alsa(device=\"hw:$nombre,$nombre1\"))"
 fi
 }
 
 function diffinternetrec {
-zenity --info --title="Diffusion en direct sur internet" --text="La diffusion commencera quand vous validerez cette boîte de dialogue.
-Les auditeurs pourront vous écouter à l'adresse suivante: http://webradio.ac-versailles.fr/$point
-Vous retrouverez l'enregistrement de votre émission dans
-le répertoire 'Musique' (fichier .ogg horodaté)" 
+zenity --info --title="Diffusion en direct sur internet" --text="$TEXTEZENDIFFINT
+$TEXTEZENREC" 
 if [ "$TYPEPM" = "ogg" ]; then
-	liquidsoap "s=output.icecast(%vorbis(quality=0.5), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis(quality=0.9),\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",s)"
+	liquidsoap "s=output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$point\",host=\"$SERVEURACAD\", port=$PORTICECAST , password=\"$pass\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",s)"
 else
-	liquidsoap "s=output.icecast(%mp3(bitrate=128), mount=\"$point\",host=\"webradio.ac-versailles.fr\", port=8000 , password=\"$pass\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis(quality=0.9),\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",s)"
+	liquidsoap "s=output.icecast(%mp3($QUALITEMP3DIFF), mount=\"$point\",host=\"$SERVEURACAD\", port=$PORTICECAST , password=\"$pass\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",s)"
 fi
 }
 
 function diffairtime {
-	zenity --info --title="Lancement de la diffusion" --text="Le flux radio est désormais envoyé vers le serveur Airtime.
-Pour diffuser ce flux sur internet, ouvrez Airtime et basculez la source de flux sur 'Source Maître'" 
-liquidsoap "output.icecast(%vorbis(quality=0.9), mount=\"webradio.ogg\",host=\"localhost\",port=8001,user=\"source\",password=\"webradio\",input.alsa(device=\"hw:$nombre,$nombre1\"))"
+	zenity --info --title="Lancement de la diffusion" --text="$TEXTEZENAIR" 
+liquidsoap "output.icecast(%vorbis($QUALITEVORBISREC), mount=\"$PMAIRTIME\",host=\"$SERVEURLOCAL\",port=$PORTAIRTIME,user=\"$USERAIRTIME\",password=\"$PASSAIRTIME\",input.alsa(device=\"hw:$nombre,$nombre1\"))"
 }
 
 function diffairtimerec {
-	zenity --info --title="Lancement de la diffusion et de l'enregistrement" --text="Le flux radio est désormais envoyé vers le serveur Airtime.
-Pour diffuser ce flux sur internet, ouvrez Airtime et basculez la source de flux sur 'Source Maître' 
-Vous retrouverez l'enregistrement de votre émission dans le répertoire 'Musique' (fichier .ogg horodaté)" 
-liquidsoap "s=output.icecast(%vorbis(quality=0.9), mount=\"webradio.ogg\",host=\"localhost\",port=8001,user=\"source\",password=\"webradio\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis(quality=0.9),\"~/Musique/%Y-%m-%d-%H_%M_%S.ogg\",s)"
+	zenity --info --title="Lancement de la diffusion et de l'enregistrement" --text="$TEXTEZENAIR
+$TEXTEZENREC" 
+liquidsoap "s=output.icecast(%vorbis($QUALITEVORBISREC), mount=\"$PMAIRTIME\",host=\"$SERVEURLOCAL\",port=$PORTAIRTIME,user=\"$USERAIRTIME\",password=\"$PASSAIRTIME\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",s)"
 }
 
 if [ "$1" = configureCS ]; then
