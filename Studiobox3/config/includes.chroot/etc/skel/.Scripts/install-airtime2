@@ -31,7 +31,7 @@ echo "Ne tenez pas compte des demandes concernant des commandes à renseigner"
 echo "dans le terminal et du message d'erreur sur la dernière page: ces"
 echo "manipulations seront réalisées automatiquement quand vous fermerez votre navigateur..."
 read -p "Appuyez sur une touche pour lancer le navigateur et finaliser l'installation"
-iceweasel http://localhost/login
+iceweasel http://localhost/login 2>/dev/null
 read -p "Une fois la configuration terminée, appuyez sur une touche pour vérifier l'installation d'Airtime"
 cd ../../
 sudo service airtime-playout start
@@ -111,6 +111,6 @@ else
 	echo "des flux de diffusion (procédure décrite dans la documentation)."
 	read -p "Souhaitez-vous lire dès maintenant la documentation? (oui, non) " reponse2
 	if [ "$reponse2" = 'oui' ]; then
-		evince 'Documents/.memento_airtime.pdf' &
+		evince 'Documents/.memento_airtime.pdf'
 	fi
 fi
