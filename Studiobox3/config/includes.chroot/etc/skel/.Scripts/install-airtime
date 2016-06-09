@@ -107,6 +107,6 @@ else
 	echo "des flux de diffusion (procédure décrite dans la documentation)."
 	read -p "Souhaitez-vous lire dès maintenant la documentation? (oui, non) " reponse2
 	if [ "$reponse2" = 'oui' ]; then
-		evince 'Documents/.memento_airtime.pdf'
+		evince 'Documents/.memento_airtime.pdf' &
 	fi
 fi
