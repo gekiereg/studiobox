@@ -1,21 +1,8 @@
 #!/bin/bash
 # Script de création de la persistance de la clé studiobox
 # Utilisation du script
-#	/bin/bash persistence.sh device_de_la_clé 
+#	sudo /bin/bash persistence.sh device_de_la_clé 
 #	* Spécifier sur quel « device » créer la clé, sdb, sdc ou...
-
-# Erreur de syntaxe
-function Erreur
-{
-  echo "Il manque un paramètre"
-  echo ""
-  echo "*** Utilisation du script"
-  echo "	/bin/bash persistence.sh device_de_la_clé"
-  echo ""
-  echo "		* Spécifier sur quel « device » créer la clé, sdb, sdc ou..."
-  exit
-}
-
 
 VERIFPERSIST=$(ls / | grep persistence)
 
@@ -26,7 +13,9 @@ if [ "$VERIFPERSIST" = "persistence.conf" ]; then
   exit
 fi
 
+echo ""
 echo "Voici les disques USB disponibles, ainsi que leur taille:"
+echo ""
 
 USB_DISK_ID=$(ls /dev/disk/by-id/ | grep ^usb | grep ':0'$)
 
@@ -41,8 +30,7 @@ done
 #Jusqu'à ce que la réponse soit composée par sd puis une lettre, j'attends la saisie
 until [[ ${sd} =~ ^sd[a-z]$ ]]; do
 echo "
-
-Quel est l'identifiant de la clé USB utilisée pour studiobox? (sda? sdb? sdc? etc.)"
+Quel est l'identifiant de la clé USB utilisée pour studiobox? (sdb? sdc? etc.)"
 read sd
 done
 
