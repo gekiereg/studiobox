@@ -1,0 +1,7 @@
+ssl.google-analytics.com:HSTS	0	16962	1476423595305,1,1
+addons.mozilla.org:HSTS	0	16962	1497073212472,1,0
+services.addons.mozilla.org:HSTS	0	16962	1497073247011,1,0
+self-repair.mozilla.org:HSTS	0	16962	1465540795146,1,1
+addons.cdn.mozilla.net:HSTS	0	16962	1497073194879,1,0
+easylist-downloads.adblockplus.org:HSTS	0	16962	1497073227991,1,0
+notification.adblockplus.org:HSTS	0	16962	1497073282007,1,0
