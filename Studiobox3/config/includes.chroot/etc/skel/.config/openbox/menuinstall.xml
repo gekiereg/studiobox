@@ -158,12 +158,22 @@
 			<menu id="configurePM_CS" label="Configurer la WebRadio">
 			<item label="Configurer le point de diffusion radio">
 				<action name="Execute">
-					<execute>lxterminal -e '.Scripts/diffrec-LS.bash configurePM'</execute>
+					<execute>bash .Scripts/diffrec-LS.bash configurePM</execute>
 				</action>
 			</item>
 			<item label="Configurer la carte son des flux">
 				<action name="Execute">
-					<execute>lxterminal -e '.Scripts/diffrec-LS.bash configureCS'</execute>
+					<execute>bash .Scripts/diffrec-LS.bash configureCS</execute>
+				</action>
+			</item>
+			<item label="Configurer la qualité de l'enregistrement">
+				<action name="Execute">
+					<execute>bash .Scripts/diffrec-LS.bash configureQREC</execute>
+				</action>
+			</item>
+			<item label="Configurer la qualité de la diffusion">
+				<action name="Execute">
+					<execute>bash .Scripts/diffrec-LS.bash configureQDIFF</execute>
 				</action>
 			</item>
 			</menu>
