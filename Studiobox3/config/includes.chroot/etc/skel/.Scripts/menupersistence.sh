@@ -6,6 +6,10 @@ if [ -e /persistence.conf ] && [ -e "$HOME/.config/openbox/menupersistence.xml" 
 	sed -i '/menupersistence/d' .config/openbox/autostart.sh
 	openbox --restart
 elif [ ! -e /persistence.conf ] && [ ! -e "$HOME/.config/openbox/menupersistence.xml" ]; then
+	zenity --info --title="Bienvenue sur Studiobox3" --text="Bienvenue sur le système d'exploitation Studiobox3.
+Pour mémoire:
+- votre nom d'utilisateur est 'studiobox'
+- votre mot de passe est 'studiobox'"
 	sed -i '/menupersistence/d' .config/openbox/autostart.sh
 else
 	zenity --info --title="Bienvenue sur Studiobox3" --text="Studiobox fonctionne actuellement en mode 'non-persistent'.
