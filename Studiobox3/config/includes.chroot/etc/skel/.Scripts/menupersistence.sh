@@ -5,6 +5,8 @@ if [ -e /persistence.conf ] && [ -e "$HOME/.config/openbox/menupersistence.xml" 
 	mv $HOME/.config/openbox/menupersistence2.xml $HOME/.config/openbox/menu2.xml
 	sed -i '/menupersistence/d' .config/openbox/autostart.sh
 	openbox --restart
+elif [ ! -e /persistence.conf ] && [ ! -e "$HOME/.config/openbox/menupersistence.xml" ]; then
+	sed -i '/menupersistence/d' .config/openbox/autostart.sh
 else
 	zenity --info --title="Bienvenue sur Studiobox3" --text="Studiobox fonctionne actuellement en mode 'non-persistent'.
 Cela signifie que tous les réglages que vous effectuez et fichiers que vous créez sont effacés à chaque redémarrage.
