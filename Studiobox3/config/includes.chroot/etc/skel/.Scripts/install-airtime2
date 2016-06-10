@@ -107,6 +107,8 @@ else
 		sleep 1
 	done
 	echo "L'installation et la configuration d'Airtime se sont bien déroulées."
+	echo "Pour se connecter, l'identifiant par défaut est 'admin'"
+	echo "et le mot de passe par défaut est 'admin'"
 	echo "Nous vous conseillons fortement de procéder dès maintenant à la configuration"
 	echo "des flux de diffusion (procédure décrite dans la documentation)."
 	read -p "Souhaitez-vous lire dès maintenant la documentation? (oui, non) " reponse2

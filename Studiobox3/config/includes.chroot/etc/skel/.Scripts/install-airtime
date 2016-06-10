@@ -101,6 +101,8 @@ else
 		sleep 2
 		conky &
 		sleep 1
+	zenity --info --text="L'installation est terminée: pour se connecter à Airtime, l'identifiant par défaut est 'admin' et 
+le mot de passe est 'admin'" 2>/dev/null
 	done
 	echo "L'installation et la configuration d'Airtime se sont bien déroulées."
 	echo "Nous vous conseillons fortement de procéder dès maintenant à la configuration"
