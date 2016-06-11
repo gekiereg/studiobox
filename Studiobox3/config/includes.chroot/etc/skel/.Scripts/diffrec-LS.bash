@@ -153,7 +153,7 @@ echo $QDIFF > $FICHIERQDIFF
 
 function verifQREC {
 CHIFFREVORBISREC=$(cat $FICHIERQREC 2>/dev/null)
-if [ -n $CHIFFREVORBIS ]; then
+if [ ! -z $CHIFFREVORBIS ]; then
 	QUALITEVORBISREC="quality=0.$CHIFFREVORBISREC"
 else
 	QUALITEVORBISREC="quality=0.9"
@@ -165,7 +165,7 @@ function verifQDIFF {
 # de la qualité de diffusion en valeur lisible par liquidsoap
 if [ "$1" = local ] || [ "$1" = airtime ] ; then
 	CHIFFREVORBISDIFF=$(cat $FICHIERQDIFF 2>/dev/null)
-	if [ -n $CHIFFREVORBISDIFF ]; then
+	if [ ! -z $CHIFFREVORBISDIFF ]; then
 		QUALITEVORBISDIFF="quality=0.$CHIFFREVORBISDIFF"
 	else
 		QUALITEVORBISDIFF="quality=0.7"
@@ -173,14 +173,14 @@ if [ "$1" = local ] || [ "$1" = airtime ] ; then
 else
 	if [ "$TYPEPM" = ogg ]; then
 		CHIFFREVORBISDIFF=$(cat $FICHIERQDIFF 2>/dev/null)
-		if [ -n $CHIFFREVORBISDIFF ]; then
+		if [ ! -z $CHIFFREVORBISDIFF ]; then
 			QUALITEVORBISDIFF="quality=0.$CHIFFREVORBISDIFF"
 		else
 			QUALITEVORBISDIFF="quality=0.5"
 		fi
 	else
 		CHIFFREMP3DIFF=$(cat $FICHIERQDIFF 2>/dev/null)
-		if [ -n $CHIFFREMP3DIFF ]; then
+		if [ ! -z $CHIFFREMP3DIFF ]; then
 			case $CHIFFREMP3DIFF in
 				'1' | '2')
 				QUALITEMP3DIFF='bitrate=64'
