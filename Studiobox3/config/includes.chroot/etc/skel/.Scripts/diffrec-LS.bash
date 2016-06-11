@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# variables générales
+# variables générales: fichiers qui stockent les réglages et test de l'existence d'une IP
 FICHIERCS='.Scripts/config/cs'
 FICHIERPM='.Scripts/config/pm'
 FICHIERQDIFF='.Scripts/config/qdiff'
@@ -21,13 +21,13 @@ if [ "$?" -eq 1 ]; then
     exit
 fi
 
-# récupération des valeurs
+# récupération des valeurs (amélioration possible: regex sur le point de montage pour tester cohérence)
 point=$(echo $CFPM | cut -d"|" -f1)
 pass=$(echo $CFPM | cut -d"|" -f2)
 pass1=$(echo $CFPM | cut -d"|" -f3)
 while [ "$pass" !=  "$pass1" ] || [ -z "$pass" ]; do
 zenity --info --title="Mot de passe?" --text="Les mots de passe ne coïncident pas. Relance 
-de la configuration du point de diffusion."
+de la configuration du mot de passe"
 CFPASS=$(zenity --forms \
     --title="Configuration du mot de passe" \
     --text="Définition du mot de passe" \
@@ -38,6 +38,7 @@ pass=$(echo $CFPASS | cut -d"|" -f1)
 pass1=$(echo $CFPASS | cut -d"|" -f2)
 done
 
+# ancienne version: passage par le terminal pour la saisie des valeurs
 ##Nommer le point de montage.Tant que la variable est vide attente de la saisie.
 #while [ -z ${point[$i]} ]; do
 #read -p "Veuillez saisir le nom du point de montage : " point
@@ -56,10 +57,10 @@ Les auditeurs pourront vous écouter à l'adresse suivante: http://webradio.ac-v
 
 function configCS {
 FICHIERCS='.Scripts/config/cs'
-FICHIERCS2='.Scripts/config/cs2'
 
 CARTES=$(aplay -l | grep ^carte)
 aplay -l | grep ^carte > $FICHIERCS
+# zenity n'aime pas les espaces pour la fonction 'entry', donc suppression des espaces dans le nom des cartes
 sed -i 's/ /_/g' $FICHIERCS
 
 LISTECARTES=$(cat $FICHIERCS)
@@ -69,6 +70,7 @@ CARTE=$(zenity --entry --title="Configuration de la carte son" --text="Veuillez 
 nombre=$(echo $CARTE | cut -d":" -f1 | tail -c2)
 nombre1=$(echo $CARTE | cut -d":" -f2 | tail -c2)
 
+# ancienne version: saisie des numéros de carte et de périphérique par le terminal
 ##Jusqu'a ce que la reponse soit composée par un nombre, j'attends la saisie
 #until [[ ${nombre} =~ ^[0-9]+$ ]]; do
 #read -p "Quel est l'identifiant de la carte à utiliser ? (0, 1, etc.): " nombre
@@ -129,22 +131,24 @@ echo $QREC > $FICHIERQREC
 }
 
 function configQDIFF {
-QDIFF=$(zenity --scale --min-value=1 --max-value=10 --value=5 --title="Qualité de la diffusion" --text="Choisissez la qualité de la diffusion. (1 = très faible, 9 = excellente)")
+QDIFF=$(zenity --scale --min-value=1 --max-value=9 --value=5 --title="Qualité de la diffusion" --text="Choisissez la qualité de la diffusion. (1 = très faible, 9 = excellente)")
 echo $QDIFF > $FICHIERQDIFF
 }
 
 function verifQREC {
-CHIFFREVORBISREC=$(cat $FICHIERQREC)
+CHIFFREVORBISREC=$(cat $FICHIERQREC 2>/dev/null)
 if [ -n $CHIFFREVORBIS ]; then
 	QUALITEVORBISREC="quality=0.$CHIFFREVORBISREC"
 else
-	QUALITEVORBISREC="quality=0.6"
+	QUALITEVORBISREC="quality=0.9"
 fi
 }
 
 function verifQDIFF {
+# en fonction du mode de diffusion et du format du point de montage, transformation du choix
+# de la qualité de diffusion en valeur lisible par liquidsoap
 if [ "$1" = local ] || [ "$1" = airtime ] ; then
-	CHIFFREVORBISDIFF=$(cat $FICHIERQDIFF)
+	CHIFFREVORBISDIFF=$(cat $FICHIERQDIFF 2>/dev/null)
 	if [ -n $CHIFFREVORBISDIFF ]; then
 		QUALITEVORBISDIFF="quality=0.$CHIFFREVORBISDIFF"
 	else
@@ -152,14 +156,14 @@ if [ "$1" = local ] || [ "$1" = airtime ] ; then
 	fi
 else
 	if [ "$TYPEPM" = ogg ]; then
-		CHIFFREVORBISDIFF=$(cat $FICHIERQDIFF)
+		CHIFFREVORBISDIFF=$(cat $FICHIERQDIFF 2>/dev/null)
 		if [ -n $CHIFFREVORBISDIFF ]; then
 			QUALITEVORBISDIFF="quality=0.$CHIFFREVORBISDIFF"
 		else
 			QUALITEVORBISDIFF="quality=0.5"
 		fi
 	else
-		CHIFFREMP3DIFF=$(cat $FICHIERQDIFF)
+		CHIFFREMP3DIFF=$(cat $FICHIERQDIFF 2>/dev/null)
 		if [ -n $CHIFFREMP3DIFF ]; then
 			case $CHIFFREMP3DIFF in
 				'1' | '2')
@@ -197,6 +201,7 @@ fi
 }
 
 function verifAIR {
+# on vérifie que le flux source maître est bien configuré dans airtime avant de permettre une diffusion vers celui-ci
 CONFAIR=$(cat /etc/airtime/liquidsoap.cfg | grep ^master_live_stream_mp | grep $PMAIRTIME)
 if [ -z "$CONFAIR" ]; then
 	zenity --info --title="Configurer Airtime" --text="Pour diffuser un flux vers Airtime, celui-ci doit être configuré.
@@ -230,6 +235,9 @@ Les auditeurs pourront vous écouter à l'adresse suivante:
 http://$SERVEURACAD/$PMACAD"
 TEXTEZENAIR="Le flux radio sera envoyé vers le serveur Airtime quand vous validerez cette boîte de dialogue.
 Pour diffuser ce flux sur internet, ouvrez Airtime et basculez la source de flux sur 'Source Maître'"
+
+# amélioration possible sur toutes les fonctions de diffusion et d'enregistrement: effectuer un test 
+# pour vérifier que la diffusion et / ou l'enregistrement se déroulent correctement
 
 function difflocal {
 zenity --info --title="Diffusion en direct" --text="$TEXTEZENDIFFLOCAL" 2>/dev/null
