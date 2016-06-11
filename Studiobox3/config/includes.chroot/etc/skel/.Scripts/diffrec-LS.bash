@@ -34,6 +34,10 @@ CFPASS=$(zenity --forms \
     --add-password="Mot de passe" \
     --add-password="Confirmer le mot de passe" \
     --separator="|" 2>/dev/null)
+# possibilité d'annuler la config en cliquant sur annuler
+if [ "$?" -eq 1 ]; then
+    exit
+fi
 pass=$(echo $CFPASS | cut -d"|" -f1)
 pass1=$(echo $CFPASS | cut -d"|" -f2)
 done
@@ -66,6 +70,10 @@ sed -i 's/ /_/g' $FICHIERCS
 LISTECARTES=$(cat $FICHIERCS)
 
 CARTE=$(zenity --entry --title="Configuration de la carte son" --text="Veuillez indiquer la carte son à utiliser" $LISTECARTES 2>/dev/null)
+# possibilité d'annuler la config en cliquant sur annuler
+if [ "$?" -eq 1 ]; then
+    exit
+fi
 
 nombre=$(echo $CARTE | cut -d":" -f1 | tail -c2)
 nombre1=$(echo $CARTE | cut -d":" -f2 | tail -c2)
@@ -127,11 +135,19 @@ fi
 
 function configQREC {
 QREC=$(zenity --scale --min-value=1 --max-value=9 --value=9 --title="Qualité de l'enregistrement" --text="Choisissez la qualité de l'enregistrement. (1 = très faible, 9 = excellente)")
+# possibilité d'annuler la config en cliquant sur annuler
+if [ "$?" -eq 1 ]; then
+    exit
+fi
 echo $QREC > $FICHIERQREC
 }
 
 function configQDIFF {
 QDIFF=$(zenity --scale --min-value=1 --max-value=9 --value=5 --title="Qualité de la diffusion" --text="Choisissez la qualité de la diffusion. (1 = très faible, 9 = excellente)")
+# possibilité d'annuler la config en cliquant sur annuler
+if [ "$?" -eq 1 ]; then
+    exit
+fi
 echo $QDIFF > $FICHIERQDIFF
 }
 
