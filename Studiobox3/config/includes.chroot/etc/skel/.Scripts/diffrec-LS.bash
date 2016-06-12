@@ -42,17 +42,6 @@ pass=$(echo $CFPASS | cut -d"|" -f1)
 pass1=$(echo $CFPASS | cut -d"|" -f2)
 done
 
-# ancienne version: passage par le terminal pour la saisie des valeurs
-##Nommer le point de montage.Tant que la variable est vide attente de la saisie.
-#while [ -z ${point[$i]} ]; do
-#read -p "Veuillez saisir le nom du point de montage : " point
-#done
-#
-##Tant que la variable est vide, j'attends la saisie
-#while [ -z ${pass[$i]} ]; do
-#read -p "Veuillez saisir le mot de passe: " pass
-#done
-
 echo "pm,$point
 pass,$pass" > $FICHIERPM
 zenity --info --title="Point de diffusion configuré" --text="Le point de diffusion qui sera utilisé est $point.
@@ -77,27 +66,6 @@ fi
 
 nombre=$(echo $CARTE | cut -d":" -f1 | tail -c2)
 nombre1=$(echo $CARTE | cut -d":" -f2 | tail -c2)
-
-# ancienne version: saisie des numéros de carte et de périphérique par le terminal
-##Jusqu'a ce que la reponse soit composée par un nombre, j'attends la saisie
-#until [[ ${nombre} =~ ^[0-9]+$ ]]; do
-#read -p "Quel est l'identifiant de la carte à utiliser ? (0, 1, etc.): " nombre
-#done
-#
-#NBRECARTES=$(aplay -l | grep ^"carte $nombre" | wc -l)
-#
-##si plusieurs cartes ont le même identifiant, on choisit par le numéro de périphérique
-#if [ $NBRECARTES -ge 2 ]; then
-#	echo "Plusieurs cartes sont identifiées par le chiffre $nombre"
-#	echo "Indiquez le numéro de 'périphérique' de la carte à utiliser"
-#	echo "(en cas de doute, indiquez '0')"
-#	aplay -l | grep ^"carte $nombre"
-#	until [[ ${nombre1} =~ ^[0-9]+$ ]]; do
-#		read -p "Quel est l'identifiant du périphérique de la carte à utiliser ? (0, 1, etc.): " nombre1
-#	done
-#else
-#	nombre1="0"
-#fi
 
 echo "$nombre,$nombre1" > $FICHIERCS
 CARTEOK=$(aplay -l | grep ^"carte $nombre" | grep "périphérique $nombre1")
@@ -182,16 +150,28 @@ else
 		CHIFFREMP3DIFF=$(cat $FICHIERQDIFF 2>/dev/null)
 		if [ ! -z $CHIFFREMP3DIFF ]; then
 			case $CHIFFREMP3DIFF in
-				'1' | '2')
+				'1')
+				QUALITEMP3DIFF='bitrate=48'
+				;;
+				'2')
 				QUALITEMP3DIFF='bitrate=64'
 				;;
-				'3' | '4')
+				'3')
 				QUALITEMP3DIFF='bitrate=96'
 				;;
-				'5' | '6')
+				'4')
 				QUALITEMP3DIFF='bitrate=128'
 				;;
-				'7' | '8')
+				'5')
+				QUALITEMP3DIFF='bitrate=160'
+				;;
+				'6')
+				QUALITEMP3DIFF='bitrate=192'
+				;;
+				'7')
+				QUALITEMP3DIFF='bitrate=224'
+				;;
+				'8')
 				QUALITEMP3DIFF='bitrate=256'
 				;;
 				'9')
@@ -302,55 +282,69 @@ $TEXTEZENREC" 2>/dev/null
 liquidsoap "s=output.icecast(%vorbis($QUALITEVORBISREC), mount=\"$PMAIRTIME\",host=\"$SERVEURLOCAL\",port=$PORTAIRTIME,user=\"$USERAIRTIME\",password=\"$PASSAIRTIME\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",s)"
 }
 
-if [ "$1" = configureCS ]; then
+
+case $1 in
+	'configureCS')
 	configCS
-elif [ "$1" = configurePM ]; then
+	;;
+	'configurePM')
 	configPM
-elif [ "$1" = configureQDIFF ]; then
+	;;
+	'configureQDIFF')
 	configQDIFF
-elif [ "$1" = configureQREC ]; then
+	;;
+	'configureQREC')
 	configQREC
-elif [ "$1" = local ] && [ -z "$2" ]; then
-	verifIP
-	verifCS
-	verifQDIFF $1
-	difflocal
-elif [ "$1" = local ] && [ "$2" = rec ]; then
-	verifIP
-	verifCS
-	verifQDIFF $1
-	verifQREC
-	difflocalrec
-elif [ "$1" = rec ]; then
+	;;
+	'rec')
 	verifCS
 	verifQREC
 	localrec
-elif [ "$1" = internet ] && [ -z "$2" ]; then
-	verifINT
-	verifPM
-	verifCS
-	verifQDIFF $1
-	diffinternet
-elif [ "$1" = internet ] && [ "$2" = rec ]; then
-	verifINT
-	verifPM
-	verifCS
-	verifQDIFF $1
-	verifQREC
-	diffinternetrec
-elif [ "$1" = airtime ] && [ -z "$2" ]; then
-	verifINT
-	verifCS
-	verifAIR
-	verifQDIFF $1
-	diffairtime
-elif [ "$1" = airtime ] && [ "$2" = rec ]; then
-	verifINT
-	verifCS
-	verifAIR
-	verifQDIFF $1
-	verifQREC
-	diffairtimerec
-else
-	echo "Ce script nécessite des arguments pour fonctionner!"
-fi 
+	;;
+	'local')
+	if [ -z "$2" ]; then
+		verifIP
+		verifCS
+		verifQDIFF $1
+		difflocal
+	else
+		verifIP
+		verifCS
+		verifQDIFF $1
+		verifQREC
+		difflocalrec
+	fi
+	;;
+	'internet')
+	if [ -z "$2" ]; then
+		verifINT
+		verifPM
+		verifCS
+		verifQDIFF $1
+		diffinternet
+	else
+		verifINT
+		verifPM
+		verifCS
+		verifQDIFF $1
+		verifQREC
+		diffinternetrec
+	fi
+	;;
+	'airtime')
+	if [ -z "$2" ]; then
+		verifINT
+		verifCS
+		verifAIR
+		verifQDIFF $1
+		diffairtime
+	else
+		verifINT
+		verifCS
+		verifAIR
+		verifQDIFF $1
+		verifQREC
+		diffairtimerec
+	fi
+	;;	
+esac
