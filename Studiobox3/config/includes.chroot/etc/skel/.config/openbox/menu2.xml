@@ -13,7 +13,7 @@
 		<item label="Navigateur internet">
 			<action name="Execute">
 				<execute>
-					iceweasel
+					firefox
 				</execute>
 			</action>
 		</item>
@@ -112,7 +112,7 @@
 			<menu id="diff_airtime" label="Airtime">
 			<item label="Programmer une émission (Airtime)">
 				<action name="Execute">
-					<execute>iceweasel &quot;http://localhost/login&quot;</execute>
+					<execute>firefox &quot;http://localhost/login&quot;</execute>
 				</action>
 			</item>
 			<item label="Diffuser un flux vers le serveur Airtime">
@@ -153,7 +153,7 @@
 			<separator/>
 			<item label="Interface web du serveur de diffusion radiophonique local">
 				<action name="Execute">
-					<execute>iceweasel &quot;http://localhost:8000&quot;</execute>
+					<execute>firefox &quot;http://localhost:8000&quot;</execute>
 				</action>
 			</item>
 			</menu>
@@ -171,7 +171,7 @@
 			<separator/>
 			<item label="Interface web du serveur de diffusion radiophonique académique">
 				<action name="Execute">
-					<execute>iceweasel &quot;http://webradio.ac-versailles.fr&quot;</execute>
+					<execute>firefox &quot;http://webradio.ac-versailles.fr&quot;</execute>
 				</action>
 			</item>
 			</menu>

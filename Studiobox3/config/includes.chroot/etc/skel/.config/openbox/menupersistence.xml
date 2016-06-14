@@ -13,7 +13,7 @@
 		<item label="Navigateur internet">
 			<action name="Execute">
 				<execute>
-					iceweasel
+					firefox
 				</execute>
 			</action>
 		</item>
@@ -133,7 +133,7 @@
 			<separator/>
 			<item label="Interface web du serveur de diffusion radiophonique local">
 				<action name="Execute">
-					<execute>iceweasel &quot;http://localhost:8000&quot;</execute>
+					<execute>firefox &quot;http://localhost:8000&quot;</execute>
 				</action>
 			</item>
 			</menu>
@@ -151,7 +151,7 @@
 			<separator/>
 			<item label="Interface web du serveur de diffusion radiophonique académique">
 				<action name="Execute">
-					<execute>iceweasel &quot;http://webradio.ac-versailles.fr&quot;</execute>
+					<execute>firefox &quot;http://webradio.ac-versailles.fr&quot;</execute>
 				</action>
 			</item>
 			</menu>
