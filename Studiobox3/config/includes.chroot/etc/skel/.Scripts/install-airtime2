@@ -1,17 +1,5 @@
 #!/bin/bash
 
-echo "Le processus d'installation du logiciel de programmation radiophonique Airtime"
-echo "durent une dizaine de minutes et nécessitent une connexion internet (connectez-vous maintenant si ce n'est déjà fait)" 
-read -p "Pour lancer l'installation, appuyez sur une touche."
-wget -q --tries=20 --timeout=10 http://www.google.com -O /tmp/google.idx &> /dev/null
-if [ ! -s /tmp/google.idx ]
-then
-	echo "Vous n'êtes pas connecté à internet. Merci de relancer l'installation d'Airtime quand ce sera le cas"
-	sleep 5
-	exit
-else
-	rm /tmp/google.idx
-fi
 cd $HOME/Documents/
 VERSIONAIRTIME=$(ls .*.tar.gz | grep ^.airtime | cut -d"." -f2-5)
 # ménage en cas de réinstallation
@@ -21,7 +9,14 @@ fi
 tar zxvf .$VERSIONAIRTIME.tar.gz
 mv $VERSIONAIRTIME/ .$VERSIONAIRTIME/
 cd .$VERSIONAIRTIME
-sudo ./install -fpai
+sudo ./install -fpaid
+FIREFOX=$(pgrep firefox)
+if [ -n "$FIREFOX" ]; then
+	kill $FIREFOX
+fi
+sed -i 's/5434/5432/' /etc/postgresql/9.4/main/postgresql.conf
+echo "Redémarrage de postgresql"
+sudo /etc/init.d/postgresql restart
 echo "Une fenêtre de votre navigateur va se lancer pour"
 echo "vous permettre de finaliser l'installation."
 echo "Faites défiler les boîtes de dialogue en laissant"
@@ -31,7 +26,7 @@ echo "Ne tenez pas compte des demandes concernant des commandes à renseigner"
 echo "dans le terminal et du message d'erreur sur la dernière page: ces"
 echo "manipulations seront réalisées automatiquement quand vous fermerez votre navigateur..."
 read -p "Appuyez sur une touche pour lancer le navigateur et finaliser l'installation"
-iceweasel http://localhost/login 2>/dev/null
+firefox http://localhost/login 2>/dev/null
 read -p "Une fois la configuration terminée, appuyez sur une touche pour vérifier l'installation d'Airtime"
 cd ../../
 sudo service airtime-playout start

@@ -1,15 +1,5 @@
 #!/bin/bash
 
-zenity --info --text="Le processus d'installation du logiciel de programmation radiophonique Airtime se lancera une fois que vous validerez cette fenêtre de dialogue.\\
-Notes: l'installation et la configuration durent une dizaine de minutes et nécessitent une connexion internet (connectez-vous maintenant si ce n'est déjà fait)" 2>/dev/null
-wget -q --tries=20 --timeout=10 http://www.google.com -O /tmp/google.idx &> /dev/null
-if [ ! -s /tmp/google.idx ]
-then
-	zenity --info --text="Vous n'êtes pas connecté à internet. Merci de relancer l'installation d'Airtime quand ce sera le cas" 2>/dev/null
-	exit
-else
-	rm /tmp/google.idx
-fi
 cd $HOME/Documents/
 VERSIONAIRTIME=$(ls .*.tar.gz | grep ^.airtime | cut -d"." -f2-5)
 # ménage en cas de réinstallation
@@ -19,7 +9,7 @@ fi
 tar zxvf .$VERSIONAIRTIME.tar.gz
 mv $VERSIONAIRTIME/ .$VERSIONAIRTIME/
 cd .$VERSIONAIRTIME
-sudo lxterminal -e './install -fpai' | tee >(zenity --no-cancel --progress --pulsate --auto-close --title="Installation d'Airtime" --text="Installation en cours, merci de patienter..." 2>/dev/null)
+sudo lxterminal -e './install -fpaid' | tee >(zenity --no-cancel --progress --pulsate --auto-close --title="Installation d'Airtime" --text="Installation en cours, merci de patienter..." 2>/dev/null)
 zenity --info --text="Une fenêtre de votre navigateur va se lancer pour\\ 
 vous permettre de finaliser l'installation.\\
 Faites défiler les boîtes de dialogue en laissant\\
@@ -28,8 +18,15 @@ zenity --info --text="Une dernière chose :)
 Ne tenez pas compte des demandes concernant des commandes à renseigner 
 dans le terminal et du message d'erreur sur la dernière page: ces 
 manipulations seront réalisées automatiquement quand vous fermerez votre navigateur..." 2>/dev/null
+sudo sed -i 's/5434/5432/' /etc/postgresql/9.4/main/postgresql.conf
+sudo /etc/init.d/postgresql restart
 sleep 2
-iceweasel http://localhost/login 2>/dev/null | tee >(zenity --no-cancel --progress --pulsate --auto-close --title="Finalisation de l'installation" --text="Lancement du navigateur web" 2>/dev/null)
+FIREFOX=$(pgrep firefox)
+if [ -n "$FIREFOX" ]; then
+	kill $FIREFOX
+	sleep 2
+fi
+firefox http://localhost/login 2>/dev/null | tee >(zenity --no-cancel --progress --pulsate --auto-close --title="Finalisation de l'installation" --text="Lancement du navigateur web" 2>/dev/null)
 cd ../../
 sudo service airtime-playout start
 sudo service airtime-liquidsoap start
@@ -39,8 +36,7 @@ sleep 5 | tee >(zenity --no-cancel --progress --pulsate --auto-close --title="V�
 OK=$(pgrep airtime)
 if [ -z "$OK" ]; then
 	zenity --info --text="Aïe :( \\
-Il semblerait qu'il y ait eu un problème durant le processus d'installation.\\
-Nous vous conseillons de retenter une installation après avoir vérifié votre configuration réseau." 2>/dev/null
+Il semblerait qu'il y ait eu un problème durant le processus d'installation." 2>/dev/null
 	exit
 else
 # correction du bug d'airtime 2.5.2 - à surveiller en cas de nouvelle version
