@@ -12,12 +12,9 @@ echo "ou d'abandonner."
 sleep 3
 
 function saveoldproxy {
-cp /etc/profile /etc/profile.old
-if [ -e /etc/apt/apt.conf.d/99HttpProxy ]; then
-	mv /etc/apt/apt.conf.d/99HttpProxy /etc/apt/apt.conf.d/99HttpProxy.old
-fi
+sudo cp /etc/profile /etc/profile.old
 if [ -e /etc/environment ]; then
-	cp /etc/environment /etc/environment.old
+	sudo cp /etc/environment /etc/environment.old
 fi
 if [ -e $DIR1/.wgetrc ]; then
 	mv $DIR1/.wgetrc $DIR1/.wgetrc.old
@@ -25,12 +22,9 @@ fi
 }
 
 function restoreoldproxy {
-cp /etc/profile.old /etc/profile
-if [ -e /etc/apt/apt.conf.d/99HttpProxy.old ]; then
-	mv /etc/apt/apt.conf.d/99HttpProxy.old /etc/apt/apt.conf.d/99HttpProxy
-fi
+sudo cp /etc/profile.old /etc/profile
 if [ -e /etc/environment ]; then
-	mv /etc/environment.old /etc/environment
+	sudo mv /etc/environment.old /etc/environment
 fi
 if [ -e $DIR1/.wgetrc.old ]; then
 	mv $DIR1/.wgetrc.old $DIR1/.wgetrc
@@ -38,59 +32,48 @@ fi
 }
 
 function supprimerproxy {
-rm /etc/apt/apt.conf.d/99HttpProxy
 rm $DIR1/.wgetrc
-sed -i '/^HTTP/d' /etc/environment
-sed -i '/^FTP/d' /etc/environment
-sed -i '/MY_PROXY_URL/d' /etc/profile
+sudo sed -i '/^HTTP/d' /etc/environment
+sudo sed -i '/^FTP/d' /etc/environment
+sudo sed -i '/MY_PROXY_URL/d' /etc/profile
 }
 
 function confproxyauth {
-echo "MY_PROXY_URL=\"http://$idproxy:$passproxy@$urlproxy:$portproxy/\"
-HTTP_PROXY=$MY_PROXY_URL
-HTTPS_PROXY=$MY_PROXY_URL
-FTP_PROXY=$MY_PROXY_URL
-http_proxy=$MY_PROXY_URL
-https_proxy=$MY_PROXY_URL
-ftp_proxy=$MY_PROXY_URL
+sudo echo "HTTP_PROXY=\"http://$idproxy:$passproxy@$urlproxy:$portproxy/\"
+HTTPS_PROXY=\"http://$idproxy:$passproxy@$urlproxy:$portproxy/\"
+FTP_PROXY=\"http://$idproxy:$passproxy@$urlproxy:$portproxy/\"
+http_proxy=\"http://$idproxy:$passproxy@$urlproxy:$portproxy/\"
+https_proxy=\"http://$idproxy:$passproxy@$urlproxy:$portproxy/\"
+ftp_proxy=\"http://$idproxy:$passproxy@$urlproxy:$portproxy/\"
 export HTTP_PROXY HTTPS_PROXY FTP_PROXY http_proxy https_proxy ftp_proxy" >> /etc/profile 
-source /etc/profile
-echo "Acquire::http::Proxy \"http://$idproxy:$passproxy@$urlproxy:$portproxy\";" > /etc/apt/apt.conf.d/99HttpProxy
-#echo "Acquire::ftp::Proxy "http://$idproxy:$passproxy@$urlproxy:$portproxy";;" >> /etc/apt/apt.conf.d/99HttpProxy
-echo "http_proxy = http://$urlproxy:$portproxy/" > $DIR1/.wgetrc
-echo "https_proxy = http://$urlproxy:$portproxy/" >> $DIR1/.wgetrc
-echo "ftp = http://$urlproxy:$portproxy/" >> $DIR1/.wgetrc
-echo "proxy_user = $idproxy" >> $DIR1/.wgetrc
-echo "proxy_password = $passproxy" >> $DIR1/.wgetrc
-echo "use_proxy = on" >> $DIR1/.wgetrc
-chmod u+rw $DIR1/.wgetrc
-echo "HTTP_PROXY=\"http://$idproxy:$passproxy@$urlproxy:$portproxy/\";" > /etc/environment
-echo "HTTPS_PROXY=\"http://$idproxy:$passproxy@$urlproxy:$portproxy/\";" >> /etc/environment
-echo "FTP_PROXY=\"http://$idproxy:$passproxy@$urlproxy:$portproxy/\";" >> /etc/environment
+echo "http_proxy = http://$urlproxy:$portproxy/
+https_proxy = http://$urlproxy:$portproxy/
+ftp_proxy = http://$urlproxy:$portproxy/
+proxy_user = $idproxy
+proxy_password = $passproxy
+use_proxy = on" > $DIR1/.wgetrc
+sudo echo "HTTP_PROXY=\"http://$idproxy:$passproxy@$urlproxy:$portproxy/\";" > /etc/environment
+sudo echo "HTTPS_PROXY=\"http://$idproxy:$passproxy@$urlproxy:$portproxy/\";" >> /etc/environment
+sudo echo "FTP_PROXY=\"http://$idproxy:$passproxy@$urlproxy:$portproxy/\";" >> /etc/environment
 }
 
 function confproxynonauth {
-echo "MY_PROXY_URL=\"http://$urlproxy:$portproxy/\"
-HTTP_PROXY=$MY_PROXY_URL
-HTTPS_PROXY=$MY_PROXY_URL
-FTP_PROXY=$MY_PROXY_URL
-http_proxy=$MY_PROXY_URL
-https_proxy=$MY_PROXY_URL
-ftp_proxy=$MY_PROXY_URL
+sudo echo "HTTP_PROXY=\"http://$urlproxy:$portproxy/\"
+HTTPS_PROXY=\"http://$urlproxy:$portproxy/\"
+FTP_PROXY=\"http://$urlproxy:$portproxy/\"
+http_proxy=\"http://$urlproxy:$portproxy/\"
+https_proxy=\"http://$urlproxy:$portproxy/\"
+ftp_proxy=\"http://$urlproxy:$portproxy/\"
 export HTTP_PROXY HTTPS_PROXY FTP_PROXY http_proxy https_proxy ftp_proxy" >> /etc/profile 
-source /etc/profile
-echo "Acquire::http::Proxy \"http://$urlproxy:$portproxy\";" > /etc/apt/apt.conf.d/99HttpProxy
-#echo "Acquire::ftp::Proxy \"http://$urlproxy:$portproxy\";" >> /etc/apt/apt.conf.d/99HttpProxy
-echo "http_proxy = http://$urlproxy:$portproxy/" > $DIR1/.wgetrc
-echo "https_proxy = http://$urlproxy:$portproxy/" >> $DIR1/.wgetrc
-echo "ftp = http://$urlproxy:$portproxy/" >> $DIR1/.wgetrc
-echo "proxy_user = $idproxy" >> $DIR1/.wgetrc
-echo "proxy_password = $passproxy" >> $DIR1/.wgetrc
-echo "use_proxy = on" >> $DIR1/.wgetrc
-chmod u+rw $DIR1/.wgetrc
-echo "HTTP_PROXY=\"http://$urlproxy:$portproxy/\";" > /etc/environment
-echo "HTTPS_PROXY=\"http://$urlproxy:$portproxy/\";" >> /etc/environment
-echo "FTP_PROXY=\"http://$urlproxy:$portproxy/\";" >> /etc/environment
+echo "http_proxy = http://$urlproxy:$portproxy/
+https_proxy = http://$urlproxy:$portproxy/
+ftp_proxy = http://$urlproxy:$portproxy/
+proxy_user = $idproxy
+proxy_password = $passproxy
+use_proxy = on" > $DIR1/.wgetrc
+sudo echo "HTTP_PROXY=\"http://$urlproxy:$portproxy/\";" > /etc/environment
+sudo echo "HTTPS_PROXY=\"http://$urlproxy:$portproxy/\";" >> /etc/environment
+sudo echo "FTP_PROXY=\"http://$urlproxy:$portproxy/\";" >> /etc/environment
 }
 
 function proxyconf {
@@ -176,12 +159,12 @@ else
 		echo "Ancienne configuration restaurée"
 		echo "Pour reconfigurer le proxy, relancer ce script."
 		echo "Fin du script"
-		sleep 5
+		sleep 2
 		exit
 	elif [ "$finscript" = "c" ]; then
 		echo "La nouvelle configuration est en place."
 		echo "Pour reconfigurer le proxy, relancer ce script."
-		sleep 3
+		sleep 2
 		exit
 	elif [ "$finscript" = "r"]; then
 		bash proxyconf.sh relance
