@@ -46,7 +46,7 @@ python-kombu
 python-docopt
 python-anyjson
 python-amqp
-python-ampqplib
+python-amqplib
 python-wsgiref
 python-argparse
 python-virtualenv
