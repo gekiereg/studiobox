@@ -7,6 +7,13 @@ FICHIERQDIFF='.Scripts/config/qdiff'
 FICHIERQREC='.Scripts/config/qrec'
 IP=$(sudo ifconfig  | grep 'inet adr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}')
 
+function annulzen {
+# possibilité d'annuler la config en cliquant sur annuler
+if [ "$?" -eq 1 ]; then
+    exit
+fi
+}
+
 function configPM {
 # formulaire zenity
 CFPM=$(zenity --forms \
@@ -16,10 +23,7 @@ CFPM=$(zenity --forms \
     --add-password="Mot de passe" \
     --add-password="Confirmer le mot de passe" \
     --separator="|" 2>/dev/null)
-# possibilité d'annuler la config en cliquant sur annuler
-if [ "$?" -eq 1 ]; then
-    exit
-fi
+annulzen
 
 # récupération des valeurs (amélioration possible: regex sur le point de montage pour tester cohérence)
 point=$(echo $CFPM | cut -d"|" -f1)
@@ -34,10 +38,7 @@ CFPASS=$(zenity --forms \
     --add-password="Mot de passe" \
     --add-password="Confirmer le mot de passe" \
     --separator="|" 2>/dev/null)
-# possibilité d'annuler la config en cliquant sur annuler
-if [ "$?" -eq 1 ]; then
-    exit
-fi
+annulzen
 pass=$(echo $CFPASS | cut -d"|" -f1)
 pass1=$(echo $CFPASS | cut -d"|" -f2)
 done
@@ -59,10 +60,7 @@ sed -i 's/ /_/g' $FICHIERCS
 LISTECARTES=$(cat $FICHIERCS)
 
 CARTE=$(zenity --entry --title="Configuration de la carte son" --text="Veuillez indiquer la carte son à utiliser" $LISTECARTES 2>/dev/null)
-# possibilité d'annuler la config en cliquant sur annuler
-if [ "$?" -eq 1 ]; then
-    exit
-fi
+annulzen
 
 nombre=$(echo $CARTE | cut -d":" -f1 | tail -c2)
 nombre1=$(echo $CARTE | cut -d":" -f2 | tail -c2)
@@ -103,19 +101,13 @@ fi
 
 function configQREC {
 QREC=$(zenity --scale --min-value=1 --max-value=9 --value=9 --title="Qualité de l'enregistrement" --text="Choisissez la qualité de l'enregistrement. (1 = très faible, 9 = excellente)")
-# possibilité d'annuler la config en cliquant sur annuler
-if [ "$?" -eq 1 ]; then
-    exit
-fi
+annulzen
 echo $QREC > $FICHIERQREC
 }
 
 function configQDIFF {
 QDIFF=$(zenity --scale --min-value=1 --max-value=9 --value=5 --title="Qualité de la diffusion" --text="Choisissez la qualité de la diffusion. (1 = très faible, 9 = excellente)")
-# possibilité d'annuler la config en cliquant sur annuler
-if [ "$?" -eq 1 ]; then
-    exit
-fi
+annulzen
 echo $QDIFF > $FICHIERQDIFF
 }
 
@@ -231,43 +223,90 @@ Les auditeurs pourront vous écouter à l'adresse suivante:
 http://$SERVEURACAD/$PMACAD"
 TEXTEZENAIR="Le flux radio sera envoyé vers le serveur Airtime quand vous validerez cette boîte de dialogue.
 Pour diffuser ce flux sur internet, ouvrez Airtime et basculez la source de flux sur 'Source Maître'"
+TEXTEMONITOR="Souhaitez-vous monitorer le flux avec VLC?"
 
 # amélioration possible sur toutes les fonctions de diffusion et d'enregistrement: effectuer un test 
 # pour vérifier que la diffusion et / ou l'enregistrement se déroulent correctement
 
 function difflocal {
-zenity --info --title="Diffusion en direct" --text="$TEXTEZENDIFFLOCAL" 2>/dev/null
-liquidsoap "output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMLOCAL\",host=\"$SERVEURLOCAL\", port=$PORTICECAST , password=\"$PASSLOCAL\",input.alsa(device=\"hw:$nombre,$nombre1\"))"
+zenity --question --title="Diffusion en direct" --text="$TEXTEZENDIFFLOCAL
+$TEXTEMONITOR" 2>/dev/null
+annulzen
+if [ $? = 0 ]; then
+	liquidsoap "output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMLOCAL\",host=\"$SERVEURLOCAL\", port=$PORTICECAST , password=\"$PASSLOCAL\",input.alsa(device=\"hw:$nombre,$nombre1\"))" &
+	vlc --zoom 0.5 http://localhost:$PORTICECAST/$PMLOCAL --audio-visual visual --effect-list spectrum 2>/dev/null
+else
+	liquidsoap "output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMLOCAL\",host=\"$SERVEURLOCAL\", port=$PORTICECAST , password=\"$PASSLOCAL\",input.alsa(device=\"hw:$nombre,$nombre1\"))"
+fi
 }
 
 function difflocalrec {
-zenity --info --title="Diffusion et enregistrement" --text="$TEXTEZENDIFFLOCAL
-$TEXTEZENREC" 2>/dev/null
-liquidsoap "s=output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMLOCAL\",host=\"$SERVEURLOCAL\", port=$PORTICECAST , password=\"$PASSLOCAL\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",s)"
+zenity --question --title="Diffusion et enregistrement" --text="$TEXTEZENDIFFLOCAL
+$TEXTEZENREC
+$TEXTEMONITOR" 2>/dev/null
+annulzen
+if [ $? = 0 ]; then
+	liquidsoap "s=output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMLOCAL\",host=\"$SERVEURLOCAL\", port=$PORTICECAST , password=\"$PASSLOCAL\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",s)" &
+	vlc --zoom 0.5 http://localhost:$PORTICECAST/$PMLOCAL --audio-visual visual --effect-list spectrum 2>/dev/null
+else
+	liquidsoap "s=output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMLOCAL\",host=\"$SERVEURLOCAL\", port=$PORTICECAST , password=\"$PASSLOCAL\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",s)"
+fi
 }
 
 function localrec {
-zenity --info --title="Enregistrement" --text="L'enregistrement se lancera quand vous fermerez cette fenêtre.
-$TEXTEZENREC" 2>/dev/null
-liquidsoap "output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",input.alsa(device=\"hw:$nombre,$nombre1\"))"
+zenity --question --title="Enregistrement" --text="L'enregistrement se lancera quand vous fermerez cette fenêtre.
+$TEXTEZENREC
+$TEXTEMONITOR" 2>/dev/null
+annulzen
+if [ $? = 0 ]; then
+	liquidsoap "s=output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMLOCAL\",host=\"$SERVEURLOCAL\", port=$PORTICECAST , password=\"$PASSLOCAL\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",s)" &
+	vlc --zoom 0.5 http://localhost:$PORTICECAST/$PMLOCAL --audio-visual visual --effect-list spectrum 2>/dev/null
+else
+	liquidsoap "output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",input.alsa(device=\"hw:$nombre,$nombre1\"))"
+fi
 }
 
 function diffinternet {
-zenity --info --title="Diffusion en direct sur internet" --text="$TEXTEZENDIFFINT" 2>/dev/null
-if [ "$TYPEPM" = "ogg" ]; then
-liquidsoap "output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMACAD\",host=\"$SERVEURACAD\", port=$PORTICECAST , password=\"$PASSACAD\",input.alsa(device=\"hw:$nombre,$nombre1\"))"
+zenity --question --title="Diffusion en direct sur internet" --text="$TEXTEZENDIFFINT
+$TEXTEMONITOR" 2>/dev/null
+annulzen
+if [ $? = 0 ]; then
+	if [ "$TYPEPM" = "ogg" ]; then
+		liquidsoap "output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMACAD\",host=\"$SERVEURACAD\", port=$PORTICECAST , password=\"$PASSACAD\",input.alsa(device=\"hw:$nombre,$nombre1\"))" &
+		vlc --zoom 0.5 http://$SERVEURACAD/$PMACAD --audio-visual visual --effect-list spectrum 2>/dev/null
+	else
+		liquidsoap "output.icecast(%mp3($QUALITEMP3DIFF), mount=\"$PMACAD\",host=\"$SERVEURACAD\", port=$PORTICECAST , password=\"$PASSACAD\",input.alsa(device=\"hw:$nombre,$nombre1\"))" &
+		vlc --zoom 0.5 http://$SERVEURACAD/$PMACAD --audio-visual visual --effect-list spectrum 2>/dev/null
+	fi
 else
-liquidsoap "output.icecast(%mp3($QUALITEMP3DIFF), mount=\"$PMACAD\",host=\"$SERVEURACAD\", port=$PORTICECAST , password=\"$PASSACAD\",input.alsa(device=\"hw:$nombre,$nombre1\"))"
+	if [ "$TYPEPM" = "ogg" ]; then
+		liquidsoap "output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMACAD\",host=\"$SERVEURACAD\", port=$PORTICECAST , password=\"$PASSACAD\",input.alsa(device=\"hw:$nombre,$nombre1\"))"
+	else
+		liquidsoap "output.icecast(%mp3($QUALITEMP3DIFF), mount=\"$PMACAD\",host=\"$SERVEURACAD\", port=$PORTICECAST , password=\"$PASSACAD\",input.alsa(device=\"hw:$nombre,$nombre1\"))"
+	fi
+
 fi
 }
 
 function diffinternetrec {
-zenity --info --title="Diffusion en direct sur internet" --text="$TEXTEZENDIFFINT
-$TEXTEZENREC" 2>/dev/null 
-if [ "$TYPEPM" = "ogg" ]; then
-	liquidsoap "s=output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMACAD\",host=\"$SERVEURACAD\", port=$PORTICECAST , password=\"$PASSACAD\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",s)"
+zenity --question --title="Diffusion en direct sur internet" --text="$TEXTEZENDIFFINT
+$TEXTEZENREC
+$TEXTEMONITOR" 2>/dev/null 
+annulzen
+if [ $? = 0 ]; then
+	if [ "$TYPEPM" = "ogg" ]; then
+		liquidsoap "s=output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMACAD\",host=\"$SERVEURACAD\", port=$PORTICECAST , password=\"$PASSACAD\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",s)" &
+		vlc --zoom 0.5 http://$SERVEURACAD/$PMACAD --audio-visual visual --effect-list spectrum 2>/dev/null
+	else
+		liquidsoap "s=output.icecast(%mp3($QUALITEMP3DIFF), mount=\"$PMACAD\",host=\"$SERVEURACAD\", port=$PORTICECAST , password=\"$PASSACAD\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",s)" &
+		vlc --zoom 0.5 http://$SERVEURACAD/$PMACAD --audio-visual visual --effect-list spectrum 2>/dev/null
+	fi
 else
-	liquidsoap "s=output.icecast(%mp3($QUALITEMP3DIFF), mount=\"$PMACAD\",host=\"$SERVEURACAD\", port=$PORTICECAST , password=\"$PASSACAD\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",s)"
+	if [ "$TYPEPM" = "ogg" ]; then
+		liquidsoap "s=output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMACAD\",host=\"$SERVEURACAD\", port=$PORTICECAST , password=\"$PASSACAD\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",s)"
+	else
+		liquidsoap "s=output.icecast(%mp3($QUALITEMP3DIFF), mount=\"$PMACAD\",host=\"$SERVEURACAD\", port=$PORTICECAST , password=\"$PASSACAD\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",s)"
+	fi
 fi
 }
 
