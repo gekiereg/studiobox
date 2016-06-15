@@ -1,7 +1,5 @@
 #!/bin/bash
 
-DIR1='/home/studiobox'
-
 echo "Ce script a pour objectif de configurer le proxy."
 echo "À la fin du script, un test de connexion est lancé"
 echo "afin de vérifier le bon fonctionnement du réseau."
@@ -9,71 +7,106 @@ echo "Si le test échoue, la configuration est annulée"
 echo "et il vous sera proposé de relancer la configuration"
 echo "ou d'abandonner."
 
-sleep 3
+sleep 1
+
+DIR='/home/studiobox'
+
+cd .mozilla/firefox/*.default/
+CHEMINJS=$(pwd)
+cd ../../../
 
 function saveoldproxy {
-sudo cp /etc/profile /etc/profile.old
 if [ -e /etc/environment ]; then
-	sudo cp /etc/environment /etc/environment.old
+	 cp /etc/environment /etc/environment.old
 fi
-if [ -e $DIR1/.wgetrc ]; then
-	mv $DIR1/.wgetrc $DIR1/.wgetrc.old
+if [ -e $DIR/.wgetrc ]; then
+	mv $DIR/.wgetrc $DIR/.wgetrc.old
 fi
+cp $CHEMINJS/prefs.js $CHEMINJS/prefs.old.js
 }
 
 function restoreoldproxy {
-sudo cp /etc/profile.old /etc/profile
 if [ -e /etc/environment ]; then
-	sudo mv /etc/environment.old /etc/environment
+	 mv /etc/environment.old /etc/environment
 fi
-if [ -e $DIR1/.wgetrc.old ]; then
-	mv $DIR1/.wgetrc.old $DIR1/.wgetrc
+if [ -e $DIR/.wgetrc.old ]; then
+	mv $DIR/.wgetrc.old $DIR/.wgetrc
+fi
+if [ -e $CHEMINJS/prefs.old.jd ]; then
+	cp $CHEMINJS/prefs.old.js $CHEMINJS/prefs.js
 fi
 }
 
 function supprimerproxy {
-rm $DIR1/.wgetrc
-sudo sed -i '/^HTTP/d' /etc/environment
-sudo sed -i '/^FTP/d' /etc/environment
-sudo sed -i '/MY_PROXY_URL/d' /etc/profile
+if [ -e $DIR/.wgetrc ]; then
+	rm $DIR/.wgetrc
+fi
+sed -i '/^HTTP/d' /etc/environment
+sed -i '/^FTP/d' /etc/environment
+FIREFOX=$(pgrep firefox)
+if [ -n "$FIREFOX" ]; then
+	kill $FIREFOX
+	sleep 1
+fi
+sed -i '/network./d' $CHEMINJS/prefs.js
 }
 
 function confproxyauth {
-sudo echo "HTTP_PROXY=\"http://$idproxy:$passproxy@$urlproxy:$portproxy/\"
-HTTPS_PROXY=\"http://$idproxy:$passproxy@$urlproxy:$portproxy/\"
-FTP_PROXY=\"http://$idproxy:$passproxy@$urlproxy:$portproxy/\"
-http_proxy=\"http://$idproxy:$passproxy@$urlproxy:$portproxy/\"
-https_proxy=\"http://$idproxy:$passproxy@$urlproxy:$portproxy/\"
-ftp_proxy=\"http://$idproxy:$passproxy@$urlproxy:$portproxy/\"
-export HTTP_PROXY HTTPS_PROXY FTP_PROXY http_proxy https_proxy ftp_proxy" >> /etc/profile 
 echo "http_proxy = http://$urlproxy:$portproxy/
 https_proxy = http://$urlproxy:$portproxy/
 ftp_proxy = http://$urlproxy:$portproxy/
 proxy_user = $idproxy
 proxy_password = $passproxy
-use_proxy = on" > $DIR1/.wgetrc
-sudo echo "HTTP_PROXY=\"http://$idproxy:$passproxy@$urlproxy:$portproxy/\";" > /etc/environment
-sudo echo "HTTPS_PROXY=\"http://$idproxy:$passproxy@$urlproxy:$portproxy/\";" >> /etc/environment
-sudo echo "FTP_PROXY=\"http://$idproxy:$passproxy@$urlproxy:$portproxy/\";" >> /etc/environment
+use_proxy = on" > $DIR/.wgetrc
+echo "HTTP_PROXY=\"http://$idproxy:$passproxy@$urlproxy:$portproxy/\";" >> /etc/environment
+echo "HTTPS_PROXY=\"http://$idproxy:$passproxy@$urlproxy:$portproxy/\";" >> /etc/environment
+echo "FTP_PROXY=\"http://$idproxy:$passproxy@$urlproxy:$portproxy/\";" >> /etc/environment
+FIREFOX=$(pgrep firefox)
+if [ -n "$FIREFOX" ]; then
+	kill $FIREFOX
+	sleep 1
+fi
+echo "user_pref(\"network.cookie.prefsMigrated\", true);
+user_pref(\"network.predictor.cleaned-up\", true);
+user_pref(\"network.proxy.ftp\", \"$idproxy:$passproxy@$urlproxy\");
+user_pref(\"network.proxy.ftp_port\", $portproxy);
+user_pref(\"network.proxy.http\", \"$idproxy:$passproxy@$urlproxy\");
+user_pref(\"network.proxy.http_port\", $portproxy);
+user_pref(\"network.proxy.share_proxy_settings\", true);
+user_pref(\"network.proxy.socks\", \"$idproxy:$passproxy@$urlproxy\");
+user_pref(\"network.proxy.socks_port\", $portproxy);
+user_pref(\"network.proxy.ssl\", \"$idproxy:$passproxy@$urlproxy\");
+user_pref(\"network.proxy.ssl_port\", $portproxy);
+ser_pref(\"network.proxy.type\", 1);" >> $CHEMINJS/prefs.js
 }
 
+
 function confproxynonauth {
-sudo echo "HTTP_PROXY=\"http://$urlproxy:$portproxy/\"
-HTTPS_PROXY=\"http://$urlproxy:$portproxy/\"
-FTP_PROXY=\"http://$urlproxy:$portproxy/\"
-http_proxy=\"http://$urlproxy:$portproxy/\"
-https_proxy=\"http://$urlproxy:$portproxy/\"
-ftp_proxy=\"http://$urlproxy:$portproxy/\"
-export HTTP_PROXY HTTPS_PROXY FTP_PROXY http_proxy https_proxy ftp_proxy" >> /etc/profile 
 echo "http_proxy = http://$urlproxy:$portproxy/
 https_proxy = http://$urlproxy:$portproxy/
 ftp_proxy = http://$urlproxy:$portproxy/
 proxy_user = $idproxy
 proxy_password = $passproxy
-use_proxy = on" > $DIR1/.wgetrc
-sudo echo "HTTP_PROXY=\"http://$urlproxy:$portproxy/\";" > /etc/environment
-sudo echo "HTTPS_PROXY=\"http://$urlproxy:$portproxy/\";" >> /etc/environment
-sudo echo "FTP_PROXY=\"http://$urlproxy:$portproxy/\";" >> /etc/environment
+use_proxy = on" > $DIR/.wgetrc
+echo "HTTP_PROXY=\"http://$urlproxy:$portproxy/\";" >> /etc/environment
+echo "HTTPS_PROXY=\"http://$urlproxy:$portproxy/\";" >> /etc/environment
+echo "FTP_PROXY=\"http://$urlproxy:$portproxy/\";" >> /etc/environment
+FIREFOX=$(pgrep firefox)
+if [ -n "$FIREFOX" ]; then
+	kill $FIREFOX
+	sleep 1
+fi
+echo "user_pref(\"network.cookie.prefsMigrated\", true);
+user_pref(\"network.predictor.cleaned-up\", true);
+user_pref(\"network.proxy.ftp_port\", $portproxy);
+user_pref(\"network.proxy.http\", \"$urlproxy\");
+user_pref(\"network.proxy.http_port\", $portproxy);
+user_pref(\"network.proxy.share_proxy_settings\", true);
+user_pref(\"network.proxy.socks\", \"$urlproxy\");
+user_pref(\"network.proxy.socks_port\", $portproxy);
+user_pref(\"network.proxy.ssl\", \"$urlproxy\");
+user_pref(\"network.proxy.ssl_port\", $portproxy);
+ser_pref(\"network.proxy.type\", 1);" >> $CHEMINJS/prefs.js
 }
 
 function proxyconf {
@@ -135,38 +168,41 @@ if [ -n "$idproxy" ]; then
 else
 	confproxynonauth
 fi
-echo "Vérification de la connectivité. Soyez patient!"
-verifconnect
-verifconnectapt
-if [ "$CONNECT" = 'reussite' ] && [ "$CONNECTAPT" = 'reussite' ]; then
-#if [ "$CONNECT" = 'reussite' ]; then
-	echo "La nouvelle configuration du proxy fonctionne."
-	echo "Pour reconfigurer le proxy, relancer ce script."
-	sleep 5
-	exit
-else
-	#attente d'une réponse qui soit "c", "a" ou "r"
-	until [[ ${finscript} =~ ^[car]$ ]]; do
-		echo "La configuration ne semble pas correcte."
-		echo "Vous avez le choix entre:"
-		echo "1) retenter une configuration (r)"
-		echo "2) abandonner et restaurer l'ancienne version du proxy (a)"
-		echo "3) confirmer malgré tout cette configuration (c)"
-		read -p "Retenter (r), abandonner (a) ou confirmer (c)? :" finscript
-	done
-	if [ "$finscript" = "a" ]; then
-		restoreoldproxy
-		echo "Ancienne configuration restaurée"
-		echo "Pour reconfigurer le proxy, relancer ce script."
-		echo "Fin du script"
-		sleep 2
-		exit
-	elif [ "$finscript" = "c" ]; then
-		echo "La nouvelle configuration est en place."
-		echo "Pour reconfigurer le proxy, relancer ce script."
-		sleep 2
-		exit
-	elif [ "$finscript" = "r"]; then
-		bash proxyconf.sh relance
-	fi
-fi
+echo "La configuration du proxy est terminée"
+echo "Vous pouvez réutiliser ce script pour configurer à nouveau ou supprimer le proxy"
+sleep 3
+#echo "Vérification de la connectivité. Soyez patient!"
+#verifconnect
+#verifconnectapt
+#if [ "$CONNECT" = 'reussite' ] && [ "$CONNECTAPT" = 'reussite' ]; then
+##if [ "$CONNECT" = 'reussite' ]; then
+#	echo "La nouvelle configuration du proxy fonctionne."
+#	echo "Pour reconfigurer le proxy, relancer ce script."
+#	sleep 5
+#	exit
+#else
+#	#attente d'une réponse qui soit "c", "a" ou "r"
+#	until [[ ${finscript} =~ ^[car]$ ]]; do
+#		echo "La configuration ne semble pas correcte."
+#		echo "Vous avez le choix entre:"
+#		echo "1) retenter une configuration (r)"
+#		echo "2) abandonner et restaurer l'ancienne version du proxy (a)"
+#		echo "3) confirmer malgré tout cette configuration (c)"
+#		read -p "Retenter (r), abandonner (a) ou confirmer (c)? :" finscript
+#	done
+#	if [ "$finscript" = "a" ]; then
+#		restoreoldproxy
+#		echo "Ancienne configuration restaurée"
+#		echo "Pour reconfigurer le proxy, relancer ce script."
+#		echo "Fin du script"
+#		sleep 2
+#		exit
+#	elif [ "$finscript" = "c" ]; then
+#		echo "La nouvelle configuration est en place."
+#		echo "Pour reconfigurer le proxy, relancer ce script."
+#		sleep 2
+#		exit
+#	elif [ "$finscript" = "r"]; then
+#		bash proxyconf.sh relance
+#	fi
+#fi

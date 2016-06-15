@@ -440,12 +440,7 @@
 			</item>
 			<item label="Configurer le proxy">
 				<action name="Execute">
-					<execute>lxterminal -e '.Scripts/proxyconf.sh'</execute>
-				</action>
-			</item>
-			<item label="Rendre la clé persistante">
-				<action name="Execute">
-					<execute>lxterminal -e '.Scripts/persistence.sh'</execute>
+					<execute>sudo lxterminal -e '.Scripts/proxyconf.sh'</execute>
 				</action>
 			</item>
 		</menu>
