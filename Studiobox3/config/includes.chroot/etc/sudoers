@@ -24,6 +24,7 @@ root	ALL=(ALL:ALL) ALL
 studiobox ALL=NOPASSWD:/usr/local/bin/arret1
 studiobox ALL=NOPASSWD:/usr/local/bin/arret2
 studiobox ALL=NOPASSWD:/sbin/ifconfig
+studiobox ALL=NOPASSWD:/usr/bin/proxyconf
 
 # See sudoers(5) for more information on "#include" directives:
 
