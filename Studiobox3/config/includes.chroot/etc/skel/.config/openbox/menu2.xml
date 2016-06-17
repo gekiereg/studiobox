@@ -197,6 +197,14 @@
 				</action>
 			</item>
 			</menu>
+			<separator/>
+			<item label="Documentation WebRadio">
+				<action name="Execute">
+					<execute>
+						evince 'Documents/.docsb3.pdf'
+					</execute>
+				</action>
+			</item>
 		</menu>
 		<menu id="webTV" label="Outils WebTV">
 			<item label="Diffuser un flux vidéo DV">
@@ -441,6 +449,11 @@
 			<item label="Configurer le proxy">
 				<action name="Execute">
 					<execute>sudo lxterminal -e '.Scripts/proxyconf.sh'</execute>
+				</action>
+			</item>
+			<item label="Rendre la clé persistante">
+				<action name="Execute">
+					<execute>lxterminal -e '.Scripts/persistence.sh'</execute>
 				</action>
 			</item>
 		</menu>

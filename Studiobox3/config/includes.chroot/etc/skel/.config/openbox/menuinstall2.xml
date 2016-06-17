@@ -197,6 +197,14 @@
 				</action>
 			</item>
 			</menu>
+			<separator/>
+			<item label="Documentation WebRadio">
+				<action name="Execute">
+					<execute>
+						evince 'Documents/.docsb3.pdf'
+					</execute>
+				</action>
+			</item>
 		</menu>
 		<menu id="webTV" label="Outils WebTV">
 			<item label="Diffuser un flux vidéo DV">
