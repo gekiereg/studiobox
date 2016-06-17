@@ -115,6 +115,19 @@
     </mount>
 -->
 <mount>
+	<mount-name>/monitor.ogg</mount-name>
+	<burst-size>65536</burst-size>	
+	<password>monitor</password>
+	<fallback-override>1</fallback-override>
+        <fallback-when-full>1</fallback-when-full>
+	<fileserve>0</fileserve>
+	<genre>education</genre>
+	<stream-name>point de diffusion dédié au monitoring</stream-name>
+	<stream-url>localhost</stream-url>
+        <on-connect>/home/icecast/bin/stream-start</on-connect>
+        <on-disconnect>/home/icecast/bin/stream-stop</on-disconnect>
+</mount>
+<mount>
 	<mount-name>/webradio.ogg</mount-name>
 	<burst-size>65536</burst-size>	
 	<password>webradio</password>
