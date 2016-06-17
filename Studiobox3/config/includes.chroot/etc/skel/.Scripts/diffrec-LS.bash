@@ -246,8 +246,8 @@ zenity --question --title="Diffusion et enregistrement" --text="$TEXTEZENDIFFLOC
 $TEXTEZENREC
 $TEXTEMONITOR" 2>/dev/null
 if [ $? = 0 ]; then
-	liquidsoap "s=output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMLOCAL\",host=\"$SERVEURLOCAL\", port=$PORTICECAST , password=\"$PASSMONITOR\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",s)" &
-	vlc --zoom 0.5 http://$SERVEURLOCAL:$PORTICECAST/$PMMONITOR --audio-visual visual --effect-list spectrum 2>/dev/null
+	liquidsoap "s=output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMLOCAL\",host=\"$SERVEURLOCAL\", port=$PORTICECAST , password=\"$PASSLOCAL\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",s)" &
+	vlc --zoom 0.5 http://$SERVEURLOCAL:$PORTICECAST/$PMLOCAL --audio-visual visual --effect-list spectrum 2>/dev/null
 else
 	liquidsoap "s=output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMLOCAL\",host=\"$SERVEURLOCAL\", port=$PORTICECAST , password=\"$PASSLOCAL\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",s)"
 fi
