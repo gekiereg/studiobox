@@ -215,16 +215,12 @@ PMMONITOR='monitor.ogg'
 PASSMONITOR='monitor'
 REPREC='Enregistrements'
 FICHIERREC='%Y-%m-%d-%H_%M_%S.ogg'
+VLCVIEW='--zoom 0.5 --audio-visual visual --effect-list spectrum'
 # variables zenity
-TEXTEZENREC="Vous retrouverez l'enregistrement dans le répertoire '$REPREC' (fichier .ogg horodaté)."
-TEXTEZENDIFFLOCAL="Le direct se lancera quand vous validerez cette boîte de dialogue.
-Pour vous écouter sur le réseau de l'établissement, ouvrir un navigateur web et y indiquer l'url suivante:
-http://$IP:$PORTICECAST/$PMLOCAL"
-TEXTEZENDIFFINT="La diffusion commencera quand vous validerez cette boîte de dialogue.
-Les auditeurs pourront vous écouter à l'adresse suivante:
-http://$SERVEURACAD/$PMACAD"
-TEXTEZENAIR="Le flux radio sera envoyé vers le serveur Airtime quand vous validerez cette boîte de dialogue.
-Pour diffuser ce flux sur internet, ouvrez Airtime et basculez la source de flux sur 'Source Maître'"
+TEXTEZENREC="Répertoire d'enregistrement: '$REPREC' (fichier .ogg horodaté)."
+TEXTEZENDIFFLOCAL="Adresse de diffusion: http://$IP:$PORTICECAST/$PMLOCAL"
+TEXTEZENDIFFINT="Adresse de diffusion: http://$SERVEURACAD/$PMACAD"
+TEXTEZENAIR="Pour diffuser ce flux sur internet, ouvrir Airtime et basculer la source de flux sur 'Source Maître'"
 TEXTEMONITOR="Souhaitez-vous monitorer le flux avec VLC?"
 
 # amélioration possible sur toutes les fonctions de diffusion et d'enregistrement: effectuer un test 
@@ -235,7 +231,7 @@ zenity --question --title="Diffusion en direct" --text="$TEXTEZENDIFFLOCAL
 $TEXTEMONITOR" 2>/dev/null
 if [ $? = 0 ]; then
 	liquidsoap "output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMLOCAL\",host=\"$SERVEURLOCAL\", port=$PORTICECAST , password=\"$PASSLOCAL\",input.alsa(device=\"hw:$nombre,$nombre1\"))" &
-	vlc --zoom 0.5 http://$SERVEURLOCAL:$PORTICECAST/$PMLOCAL --audio-visual visual --effect-list spectrum 2>/dev/null
+	vlc http://$SERVEURLOCAL:$PORTICECAST/$PMLOCAL $VLCVIEW 2>/dev/null
 else
 	liquidsoap "output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMLOCAL\",host=\"$SERVEURLOCAL\", port=$PORTICECAST , password=\"$PASSLOCAL\",input.alsa(device=\"hw:$nombre,$nombre1\"))"
 fi
@@ -247,19 +243,18 @@ $TEXTEZENREC
 $TEXTEMONITOR" 2>/dev/null
 if [ $? = 0 ]; then
 	liquidsoap "s=output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMLOCAL\",host=\"$SERVEURLOCAL\", port=$PORTICECAST , password=\"$PASSLOCAL\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",s)" &
-	vlc --zoom 0.5 http://$SERVEURLOCAL:$PORTICECAST/$PMLOCAL --audio-visual visual --effect-list spectrum 2>/dev/null
+	vlc http://$SERVEURLOCAL:$PORTICECAST/$PMLOCAL $VLCVIEW 2>/dev/null
 else
 	liquidsoap "s=output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMLOCAL\",host=\"$SERVEURLOCAL\", port=$PORTICECAST , password=\"$PASSLOCAL\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",s)"
 fi
 }
 
 function localrec {
-zenity --question --title="Enregistrement" --text="L'enregistrement se lancera quand vous fermerez cette fenêtre.
-$TEXTEZENREC
+zenity --question --title="Enregistrement" --text="$TEXTEZENREC
 $TEXTEMONITOR" 2>/dev/null
 if [ $? = 0 ]; then
 	liquidsoap "s=output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMMONITOR\",host=\"$SERVEURLOCAL\", port=$PORTICECAST , password=\"$PASSMONITOR\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",s)" &
-	vlc --zoom 0.5 http://$SERVEURLOCAL:$PORTICECAST/$PMMONITOR --audio-visual visual --effect-list spectrum 2>/dev/null
+	vlc http://$SERVEURLOCAL:$PORTICECAST/$PMMONITOR $VLCVIEW 2>/dev/null
 else
 	liquidsoap "output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",input.alsa(device=\"hw:$nombre,$nombre1\"))"
 fi
@@ -271,10 +266,10 @@ $TEXTEMONITOR" 2>/dev/null
 if [ $? = 0 ]; then
 	if [ "$TYPEPM" = "ogg" ]; then
 		liquidsoap "output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMACAD\",host=\"$SERVEURACAD\", port=$PORTICECAST , password=\"$PASSACAD\",input.alsa(device=\"hw:$nombre,$nombre1\"))" &
-		vlc --zoom 0.5 http://$SERVEURACAD/$PMACAD --audio-visual visual --effect-list spectrum 2>/dev/null
+		vlc http://$SERVEURACAD/$PMACAD $VLCVIEW 2>/dev/null
 	else
 		liquidsoap "output.icecast(%mp3($QUALITEMP3DIFF), mount=\"$PMACAD\",host=\"$SERVEURACAD\", port=$PORTICECAST , password=\"$PASSACAD\",input.alsa(device=\"hw:$nombre,$nombre1\"))" &
-		vlc --zoom 0.5 http://$SERVEURACAD/$PMACAD --audio-visual visual --effect-list spectrum 2>/dev/null
+		vlc http://$SERVEURACAD/$PMACAD $VLCVIEW 2>/dev/null
 	fi
 else
 	if [ "$TYPEPM" = "ogg" ]; then
@@ -293,10 +288,10 @@ $TEXTEMONITOR" 2>/dev/null
 if [ $? = 0 ]; then
 	if [ "$TYPEPM" = "ogg" ]; then
 		liquidsoap "s=output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMACAD\",host=\"$SERVEURACAD\", port=$PORTICECAST , password=\"$PASSACAD\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",s)" &
-		vlc --zoom 0.5 http://$SERVEURACAD/$PMACAD --audio-visual visual --effect-list spectrum 2>/dev/null
+		vlc http://$SERVEURACAD/$PMACAD $VLCVIEW 2>/dev/null
 	else
 		liquidsoap "s=output.icecast(%mp3($QUALITEMP3DIFF), mount=\"$PMACAD\",host=\"$SERVEURACAD\", port=$PORTICECAST , password=\"$PASSACAD\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",s)" &
-		vlc --zoom 0.5 http://$SERVEURACAD/$PMACAD --audio-visual visual --effect-list spectrum 2>/dev/null
+		vlc http://$SERVEURACAD/$PMACAD $VLCVIEW 2>/dev/null
 	fi
 else
 	if [ "$TYPEPM" = "ogg" ]; then
@@ -313,7 +308,7 @@ $TEXTEMONITOR" 2>/dev/null
 if [ $? = 0 ]; then
 	liquidsoap "s=output.icecast(%vorbis($QUALITEVORBISREC), mount=\"$PMAIRTIME\",host=\"$SERVEURLOCAL\",port=$PORTAIRTIME,user=\"$USERAIRTIME\",password=\"$PASSAIRTIME\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMMONITOR\",host=\"$SERVEURLOCAL\", port=$PORTICECAST , password=\"$PASSMONITOR\",s)"  &
 	sleep 2
-	vlc --zoom 0.5 http://$SERVEURLOCAL:$PORTICECAST/$PMMONITOR --audio-visual visual --effect-list spectrum 2>/dev/null
+	vlc http://$SERVEURLOCAL:$PORTICECAST/$PMMONITOR $VLCVIEW 2>/dev/null
 else
 	liquidsoap "output.icecast(%vorbis($QUALITEVORBISREC), mount=\"$PMAIRTIME\",host=\"$SERVEURLOCAL\",port=$PORTAIRTIME,user=\"$USERAIRTIME\",password=\"$PASSAIRTIME\",input.alsa(device=\"hw:$nombre,$nombre1\"))"
 fi
@@ -326,7 +321,7 @@ $TEXTEMONITOR" 2>/dev/null
 if [ $? = 0 ]; then
 	liquidsoap "s=output.icecast(%vorbis($QUALITEVORBISREC), mount=\"$PMAIRTIME\",host=\"$SERVEURLOCAL\",port=$PORTAIRTIME,user=\"$USERAIRTIME\",password=\"$PASSAIRTIME\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.icecast(%vorbis($QUALITEVORBISDIFF), mount=\"$PMMONITOR\",host=\"$SERVEURLOCAL\", port=$PORTICECAST , password=\"$PASSMONITOR\",s) output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",s)" &
 	sleep 2
-	vlc --zoom 0.5 http://$SERVEURLOCAL:$PORTICECAST/$PMMONITOR --audio-visual visual --effect-list spectrum 2>/dev/null
+	vlc http://$SERVEURLOCAL:$PORTICECAST/$PMMONITOR $VLCVIEW 2>/dev/null
 else
 	liquidsoap "s=output.icecast(%vorbis($QUALITEVORBISREC), mount=\"$PMAIRTIME\",host=\"$SERVEURLOCAL\",port=$PORTAIRTIME,user=\"$USERAIRTIME\",password=\"$PASSAIRTIME\",input.alsa(device=\"hw:$nombre,$nombre1\")) output.file(%vorbis($QUALITEVORBISREC),\"~/$REPREC/$FICHIERREC\",s)"
 fi
