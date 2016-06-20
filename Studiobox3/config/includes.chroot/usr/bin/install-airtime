@@ -1,15 +1,15 @@
 #!/bin/bash
 
-cd $HOME/Documents/
+cd /home/studiobox/Documents/
 VERSIONAIRTIME=$(ls .*.tar.gz | grep ^.airtime | cut -d"." -f2-5)
 # ménage en cas de réinstallation
 if [ -d ".$VERSIONAIRTIME" ]; then
-	sudo rm -rf .$VERSIONAIRTIME
+	rm -rf .$VERSIONAIRTIME
 fi
 tar zxvf .$VERSIONAIRTIME.tar.gz
 mv $VERSIONAIRTIME/ .$VERSIONAIRTIME/
 cd .$VERSIONAIRTIME
-sudo lxterminal -e './install -fpaid' | tee >(zenity --no-cancel --progress --pulsate --auto-close --title="Installation d'Airtime" --text="Installation en cours, merci de patienter..." 2>/dev/null)
+lxterminal -e './install -fpaid' | tee >(zenity --no-cancel --progress --pulsate --auto-close --title="Installation d'Airtime" --text="Installation en cours, merci de patienter..." 2>/dev/null)
 zenity --info --text="Une fenêtre de votre navigateur va se lancer pour\\ 
 vous permettre de finaliser l'installation.\\
 Faites défiler les boîtes de dialogue en laissant\\
@@ -18,8 +18,8 @@ zenity --info --text="Une dernière chose :)
 Ne tenez pas compte des demandes concernant des commandes à renseigner 
 dans le terminal et du message d'erreur sur la dernière page: ces 
 manipulations seront réalisées automatiquement quand vous fermerez votre navigateur..." 2>/dev/null
-sudo sed -i 's/5434/5432/' /etc/postgresql/9.4/main/postgresql.conf
-sudo /etc/init.d/postgresql restart
+sed -i 's/5434/5432/' /etc/postgresql/9.4/main/postgresql.conf
+/etc/init.d/postgresql restart
 sleep 2
 FIREFOX=$(pgrep firefox)
 if [ -n "$FIREFOX" ]; then
@@ -28,9 +28,9 @@ if [ -n "$FIREFOX" ]; then
 fi
 firefox http://localhost/login 2>/dev/null | tee >(zenity --no-cancel --progress --pulsate --auto-close --title="Finalisation de l'installation" --text="Lancement du navigateur web" 2>/dev/null)
 cd ../../
-sudo service airtime-playout start
-sudo service airtime-liquidsoap start
-sudo service airtime-media-monitor start
+service airtime-playout start
+service airtime-liquidsoap start
+service airtime-media-monitor start
 # L'install se termine si ce qui précède s'est déroulé sans problème
 sleep 5 | tee >(zenity --no-cancel --progress --pulsate --auto-close --title="Vérifications" --text="Vérification de l'installation d'Airtime en cours" 2>/dev/null)
 OK=$(pgrep airtime)
@@ -40,9 +40,9 @@ Il semblerait qu'il y ait eu un problème durant le processus d'installation." 2
 	exit
 else
 # correction du bug d'airtime 2.5.2 - à surveiller en cas de nouvelle version
-	sudo mkdir -p /usr/lib/airtime/pypo/bin/liquidsoap_scripts/
-	sudo ln -s /usr/local/lib/python2.7/dist-packages/airtime_playout-1.0-py2.7.egg/liquidsoap/liquidsoap_auth.py /usr/lib/airtime/pypo/bin/liquidsoap_scripts/liquidsoap_auth.py
-	sudo service airtime-liquidsoap restart
+	mkdir -p /usr/lib/airtime/pypo/bin/liquidsoap_scripts/
+	ln -s /usr/local/lib/python2.7/dist-packages/airtime_playout-1.0-py2.7.egg/liquidsoap/liquidsoap_auth.py /usr/lib/airtime/pypo/bin/liquidsoap_scripts/liquidsoap_auth.py
+	service airtime-liquidsoap restart
 ##la partie ci-dessous fonctionne sur le principe, mais airtime écrase le fichier /etc/airtime/liquidsoap.cfg en redémarrant ses services
 ##à décommenter quand le problème sera résolu
 #	zenity --info --text="Airtime est désormais installé.\\
@@ -61,28 +61,28 @@ else
 #	read -p "Souhaitez-vous utiliser ce flux dans Airtime? (oui, non) " reponse
 #	if [ "$reponse" = oui ]; then
 #		echo "Arrêt des services d'Airtime"
-#		sudo service airtime-playout stop
-#		sudo service airtime-liquidsoap stop
-#		sudo service airtime-media-monitor stop
+#		service airtime-playout stop
+#		service airtime-liquidsoap stop
+#		service airtime-media-monitor stop
 #		CONFAIRTIME='/etc/airtime/liquidsoap.cfg'
 #		echo "Modification du fichier de configuration d'airtime $CONFAIRTIME"
 #		echo "- point de montage: $POINTMONTAGE"
 #		echo "- mot de passe: $PASSPOINTMONTAGE"
 #		echo "- format: $TYPEFLUX"
-#		sudo sed -i "s/^s1_mount.*$/s1_mount = $POINTMONTAGE/" $CONFAIRTIME
-#		sudo sed -i "s/^s1_pass.*$/s1_pass = $PASSPOINTMONTAGE/" $CONFAIRTIME
-#		sudo sed -i "s/^s1_host.*$/s1_host = \"webradio.ac-versailles.fr\"/" $CONFAIRTIME
-#		sudo sed -i "s/^s1_type.*$/s1_type = \"$TYPEFLUX\"/" $CONFAIRTIME
-#		sudo sed -i "s/^master_live_stream_port.*$/master_live_stream_port = 8001/" $CONFAIRTIME
-#		sudo sed -i "s/^master_live_stream_mp.*$/master_live_stream_mp = \"webradio.ogg\"/" $CONFAIRTIME
+#		sed -i "s/^s1_mount.*$/s1_mount = $POINTMONTAGE/" $CONFAIRTIME
+#		sed -i "s/^s1_pass.*$/s1_pass = $PASSPOINTMONTAGE/" $CONFAIRTIME
+#		sed -i "s/^s1_host.*$/s1_host = \"webradio.ac-versailles.fr\"/" $CONFAIRTIME
+#		sed -i "s/^s1_type.*$/s1_type = \"$TYPEFLUX\"/" $CONFAIRTIME
+#		sed -i "s/^master_live_stream_port.*$/master_live_stream_port = 8001/" $CONFAIRTIME
+#		sed -i "s/^master_live_stream_mp.*$/master_live_stream_mp = \"webradio.ogg\"/" $CONFAIRTIME
 #	else
-#		sudo sed -i "s/^master_live_stream_port.*$/master_live_stream_port = 8001/" $CONFAIRTIME
-#		sudo sed -i "s/^master_live_stream_mp.*$/master_live_stream_mp = \"webradio.ogg\"/" $CONFAIRTIME
+#		sed -i "s/^master_live_stream_port.*$/master_live_stream_port = 8001/" $CONFAIRTIME
+#		sed -i "s/^master_live_stream_mp.*$/master_live_stream_mp = \"webradio.ogg\"/" $CONFAIRTIME
 #	fi
 ##	echo "Redémarrage des services d'Airtime"
-#	sudo service airtime-playout start
-#	sudo service airtime-liquidsoap start
-#	sudo service airtime-media-monitor start
+#	service airtime-playout start
+#	service airtime-liquidsoap start
+#	service airtime-media-monitor start
 #else
 #	echo "Pas de flux de diffusion repéré. Suite et fin de la configuration."
 #	sleep 5	

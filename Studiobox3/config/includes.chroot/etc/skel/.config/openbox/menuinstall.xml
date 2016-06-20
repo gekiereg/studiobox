@@ -175,7 +175,7 @@
 			<separator/>
 		  <item label="Installer l'outil de programmation radio (Airtime)">
 		    <action name="Execute">
-		      <execute>lxterminal -e 'bash .Scripts/install-airtime'</execute>
+		      <execute>sudo install-airtime</execute>
 		    </action>
 		  </item>
 			<separator/>
