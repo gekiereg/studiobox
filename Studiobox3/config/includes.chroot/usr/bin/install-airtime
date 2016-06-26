@@ -18,6 +18,7 @@ zenity --info --text="Une dernière chose :)
 Ne tenez pas compte des demandes concernant des commandes à renseigner 
 dans le terminal et du message d'erreur sur la dernière page: ces 
 manipulations seront réalisées automatiquement quand vous fermerez votre navigateur..." 2>/dev/null
+echo "Configuration et redémarrage de postgresql"
 sed -i 's/5434/5432/' /etc/postgresql/9.4/main/postgresql.conf
 /etc/init.d/postgresql restart
 sleep 2
@@ -32,7 +33,7 @@ service airtime-playout start
 service airtime-liquidsoap start
 service airtime-media-monitor start
 # L'install se termine si ce qui précède s'est déroulé sans problème
-sleep 5 | tee >(zenity --no-cancel --progress --pulsate --auto-close --title="Vérifications" --text="Vérification de l'installation d'Airtime en cours" 2>/dev/null)
+sleep 3 | tee >(zenity --no-cancel --progress --pulsate --auto-close --title="Vérifications" --text="Vérification de l'installation d'Airtime en cours" 2>/dev/null)
 OK=$(pgrep airtime)
 if [ -z "$OK" ]; then
 	zenity --info --text="Aïe :( \\
@@ -49,14 +50,13 @@ else
 #Vous pourrez y accéder avec l'identifiant 'admin' et le mot de passe 'admin'\\
 #Le script va maintenant rechercher l'existence d'un flux de diffusion, et le cas échéant,\\
 #vous proposer de l'utiliser dans Airtime (voir le contenu de la fenêtre de Terminal)." 
-#FICHIERDIRECT="$HOME/.Scripts/diff-internet/direct_dist.liq"
-#POINTMONTAGE=$(cat $FICHIERDIRECT | cut -d"," -f2 | cut -d"=" -f2)
-#PASSPOINTMONTAGE=$(cat $FICHIERDIRECT | cut -d"," -f5 | cut -d"=" -f2)
-#TYPEFLUX=$(cat $FICHIERDIRECT | cut -d"," -f2 | cut -d"." -f2 | cut -d'"' -f1)
+#FICHIERDIRECT="$HOME/.Scripts/config/pm"
+#POINTMONTAGE=$(cat $FICHIERDIRECT | grep ^pm | cut -d"," -f2)
+#PASSPOINTMONTAGE=$(cat $FICHIERDIRECT | grep ^pass | cut -d"," -f2)
+#TYPEFLUX=$(cat $FICHIERDIRECT | grep ^pm | cut -d"," -f2 | cut -d"." -f2)
 #if [ -n "$POINTMONTAGE" ]; then
 #	echo "Le flux de diffusion suivant a déjà été utilisé: "
 #	echo "- point de montage: $POINTMONTAGE"
-#	echo "- mot de passe: $PASSPOINTMONTAGE"
 #	echo "- format: $TYPEFLUX"
 #	read -p "Souhaitez-vous utiliser ce flux dans Airtime? (oui, non) " reponse
 #	if [ "$reponse" = oui ]; then
@@ -100,9 +100,7 @@ else
 	done
 	cp $HOME/Documents/.memento_airtime.pdf $HOME/Documents/memento_airtime.pdf
 	cp $HOME/Documents/.memento_airtime.odt $HOME/Documents/memento_airtime.odt
-	zenity --info --text="L'installation est terminée: pour se connecter à Airtime, l'identifiant par défaut est 'admin' et 
-le mot de passe est 'admin'" 2>/dev/null
-	zenity --question --title "Lire la documentation" --text "L'installation et la configuration d'Airtime se sont bien déroulées.
+	zenity --question --title "Lire la documentation" --text "L'installation s'est bien déroulée et est désormais terminée: pour se connecter à Airtime, l'identifiant par défaut est 'admin' et le mot de passe est 'admin'.
 Nous vous conseillons fortement de procéder dès maintenant à la configuration des flux de diffusion (procédure décrite dans la documentation).
 Souhaitez-vous lire dès maintenant la documentation?" 2>/dev/null
 	if [ $? = 0 ]; then
