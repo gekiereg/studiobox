@@ -3,15 +3,12 @@
 echo "Ce script a pour objectif de configurer le proxy."
 echo "À la fin du script, un test de connexion est lancé"
 echo "afin de vérifier le bon fonctionnement du réseau."
-echo "Si le test échoue, la configuration est annulée"
-echo "et il vous sera proposé de relancer la configuration"
-echo "ou d'abandonner."
 
 sleep 1
 
 DIR='/home/studiobox'
 
-cd .mozilla/firefox/*.default/
+cd $DIR/.mozilla/firefox/*.default/
 CHEMINJS=$(pwd)
 cd ../../../
 
@@ -138,24 +135,24 @@ if [ -n "$idproxy" ]; then
 fi
 }
 
-function verifconnect {
-wget -q --tries=20 --timeout=10 http://www.google.com -O /tmp/google.idx &> /dev/null
-if [ ! -s /tmp/google.idx ]; then
-	CONNECT='echec'	
-else
-	CONNECT='reussite'
-	rm /tmp/google.idx
-fi
-}
-
-function verifconnectapt {
-TESTERREURAPT=$(aptitude update | grep ^Err)
-if [ -n "$TESTERREURAPT" ]; then
-	CONNECTAPT='echec'
-else
-	CONNECTAPT='reussite'
-fi
-}
+#function verifconnect {
+#wget -q --tries=20 --timeout=10 http://www.google.com -O /tmp/google.idx &> /dev/null
+#if [ ! -s /tmp/google.idx ]; then
+#	CONNECT='echec'	
+#else
+#	CONNECT='reussite'
+#	rm /tmp/google.idx
+#fi
+#}
+#
+#function verifconnectapt {
+#TESTERREURAPT=$(aptitude update | grep ^Err)
+#if [ -n "$TESTERREURAPT" ]; then
+#	CONNECTAPT='echec'
+#else
+#	CONNECTAPT='reussite'
+#fi
+#}
 
 if [ "$1" = 'relance' ]; then 
 	supprimerproxy	
