@@ -73,8 +73,7 @@ echo "*** Effacement des deux partitions"
 sudo parted /dev/$CLE rm 1
 sudo parted /dev/$CLE rm 2
 echo "*** Création de la partition StudioBox"
-dd if=$1 of=/dev/$CLE 
-sync
+dd if=$1 of=/dev/$CLE bs=4M; sync
 echo "*** Création de la partiton persistante"
 START=`sudo parted /dev/$CLE print free | grep Free | grep [MG]B | gawk '{print $1}'`
 END=`sudo parted /dev/$CLE print free | grep Free | grep [MG]B | gawk '{print $2}'`
