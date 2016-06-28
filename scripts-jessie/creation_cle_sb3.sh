@@ -8,22 +8,50 @@
 # Erreur de syntaxe
 function Erreur
 {
-  echo "Il manque un ou plusieurs paramètres"
   echo ""
-  echo "*** Utilisation du script"
-  echo "	/bin/bash creation_cle.sh device_de_la_clé image_iso"
+  echo "*** Utilisation du script:"
+  echo "	/bin/bash creation_cle_sb3.sh image_iso"
+  echo "Merci d'indiquer l'emplacement de l'image iso de StudioBox en paramètre."
   echo ""
-  echo "		* Spécifier sur quel « device » créer la clé, sdb, sdc ou..."
   exit
 }
 
-CLE=$1
-PART1="1"
-PART2="2"
+function DisqueUSB
+{
+USB_DISK_ID=$(ls /dev/disk/by-id/ | grep ^usb | grep ':0'$)
 
-if  [ "$CLE" = "" ] || [ "$2" = "" ];
+if [ -z $USB_DISK_ID ]; then
+	echo "Studiobox est conçue pour être installée sur une clé USB."
+	echo "Veuillez connecter une clé USB à l'ordinateur pour utiliser ce script."
+	exit
+else
+	echo ""
+	echo "Voici les disques USB disponibles, ainsi que leur taille:"
+
+	for i in $USB_DISK_ID
+	do
+		USB_DISK_DEV=$(readlink -e /dev/disk/by-id/$i)
+		SIZE=$(sudo parted -l | grep $USB_DISK_DEV | cut -d":" -f2)
+		USBNAME=$(echo $USB_DISK_DEV | cut -d'/' -f3)
+		echo "Disque $USBNAME, taille:$SIZE"
+	done
+
+	#Jusqu'à ce que la réponse soit composée par sd puis une lettre, j'attends la saisie
+	until [[ ${sd} =~ ^sd[a-z]$ ]]; do
+	read -p  "Identifiant de la clé USB qui sera utilisée pour studiobox (sdb? sdc? etc.): " sd
+	done
+	CLE=$sd
+fi
+}
+
+if [ "$1" = "" ];
 	then Erreur
 fi
+
+DisqueUSB
+
+PART1="1"
+PART2="2"
 
 DISQUE=(`sudo fdisk -l | grep ^/dev/$CLE`)
 if [ "$DISQUE" = "" ]; then
@@ -41,12 +69,11 @@ else
     fi
 fi
 
-
 echo "*** Effacement des deux partitions"
 sudo parted /dev/$CLE rm 1
 sudo parted /dev/$CLE rm 2
 echo "*** Création de la partition StudioBox"
-dd if=$2 of=/dev/$CLE 
+dd if=$1 of=/dev/$CLE 
 sync
 echo "*** Création de la partiton persistante"
 START=`sudo parted /dev/$CLE print free | grep Free | grep [MG]B | gawk '{print $1}'`
