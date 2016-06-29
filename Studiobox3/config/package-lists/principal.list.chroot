@@ -90,7 +90,6 @@ firefox-esr-l10n-fr
 flashplugin-nonfree 
 filezilla 
 arandr
-lame 
 x264
 firmware-iwlwifi 
 firmware-realtek 
@@ -124,10 +123,8 @@ vlc
 gnome-subtitles 
 devede
 xfburn 
-liquidsoap
 liquidsoap-plugin-alsa
 alsa-utils
-icecast2
 icedtea-7-plugin
 gdebi
 gparted
