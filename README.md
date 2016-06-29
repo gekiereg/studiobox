@@ -7,7 +7,11 @@ Studiobox3 est une distribution GNU/Linux orientée multimédia basée sur Debia
 
 Studiobox est avant tout une distribution "live", destinée à être utilisée depuis une clé USB. Dans ce cas, l'utilisateur est `studiobox` et le mot de passe est `live`.
 
-L'environnement de bureau est `Openbox`, choisi pour sa légèreté. On accède aux différentes applications par un simple clic droit sur le bureau.
+Pour conserver des qualités de légèreté, l'environnement de bureau est composé de : 
+
+* Openbox (gestionnaire de fenêtres);
+* PcmanFM (gestionnaire de fichiers);
+* LightDM (gestionnaire d'affichage);
 
 Les entrées de menu `Install` ou `Grapical Install` au démarrage permettent d'installer Studiobox sans aucune intervention ni configuration (preseed). Dans ce cas, l'utilisateur est `studiobox` et le mot de passe est `studiobox`.
 
@@ -77,3 +81,9 @@ dans le script de diffusion radio (`/home/studiobox/.Scripts/diffrec-LS.bash`) p
 ```
 
 * Être patient...
+
+# Contribuer à Studiobox #
+
+Toute proposition d'amélioration, de correction de bugs, etc. est bienvenue. 
+
+Une liste de diffusion permet aux membres du projet d'échanger: [studiobox@ac-versailles.fr](https://messagerie.ac-versailles.fr/listes/info/studiobox)
