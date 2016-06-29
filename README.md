@@ -28,7 +28,7 @@ Les entrées de menu `Install` ou `Grapical Install` au démarrage permettent d'
 
 # Graver studiobox sur une clé #
 
-_Si vous disposez d'un sytème GNU/Linux..._
+## Pour les utilisateurs de GNU/Linux ##
 
 Prérequis:
 * les paquets suivants sont installés: parted, coreutils, util-linux, e2fsprogs, gawk
@@ -49,7 +49,7 @@ Pour créer la clé, placez dans un répertoire dédié l'image iso et le script
 
 Que fait le script ? Dans l'ordre, il vous demandera d'indiquer l'identifiant de la clé usb sur laquelle graver StudioBox, puis y supprimera tout ce qui s'y trouve, et enfin installera le système studiobox et créera une deuxième partition qui servira à stocker les données et rendre le système _persistant_ (les réglages et manipulations effectuées seront conservées au redémarrage).
 
-_Pour les utilisateurs de Windows ou de MacOS_
+## Pour les utilisateurs de Windows ou de MacOS ##
 
 Si vous ne possédez qu'un système Windows, vous pouvez créer la clé avec le logiciel [win32diskimager](http://sourceforge.net/projects/win32diskimager/). Sélectionnez le fichier iso (si le fichier iso n'apparaît pas, changez le filtre des fichiers à `*.*`) de la Studiobox dans la section `Image File` et la lettre correspondant à la clef USB (l'image doit être copiée sur le disque complet, et pas sur une partition; par exemple `/dev/sdb` et non pas `/dev/sdb1`). Enfin, cliquez sur `Write`.
 
@@ -62,3 +62,13 @@ Les scripts présents sur Studiobox sont préconfigurés pour fonctionner avec c
 Par exemple, il suffit de modifier la variable 
 > SERVEURACAD='webradio.ac-versailles.fr'
 dans le script de diffusion radio (`/home/studiobox/.Scripts/diffrec-LS.bash`) pour diffuser sur le serveur icecast de son choix.
+
+# Construire sa propre image studiobox #
+
+* Cloner le dépôt [studiobox](https://gitlab.crdp.ac-versailles.fr/francois.lafont/studiobox/)
+* Se rendre dans le répertoire `/Studiobox3`
+* Lancer la commande
+```sh
+# lb build
+```
+* Être patient...
