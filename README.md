@@ -1,9 +1,7 @@
 Studiobox3
 =============================================
 
-Studiobox3 est une distribution GNU/Linux orientée multimédia 
-basée sur Debian Jessie. Elle est destinée aux enseignants souhaitant 
-construire des projets multimédias (son, vidéo, radio, etc.).
+Studiobox3 est une distribution GNU/Linux orientée multimédia basée sur Debian Jessie. Elle est destinée aux enseignants souhaitant construire des projets multimédias (son, vidéo, radio, etc.).
 
 # Caractéristiques principales #
 
@@ -31,6 +29,7 @@ Les entrées de menu `Install` ou `Grapical Install` au démarrage permettent d'
 ## Pour les utilisateurs de GNU/Linux ##
 
 Prérequis:
+
 * les paquets suivants sont installés: parted, coreutils, util-linux, e2fsprogs, gawk
 * vous disposez d'une clé USB d'au moins 2 Go (**Attention! toutes les données présentes sur cette clé seront détruites**)
 * vous avez téléchargé l'[image iso de la studiobox](http://www.education-aux-medias.ac-versailles.fr/studiobox/) ainsi que le [script d'installation automatiquei](http://www.education-aux-medias.ac-versailles.fr/studiobox/creation_cle_sb3.sh)
@@ -38,9 +37,11 @@ Prérequis:
 Pour créer la clé, placez dans un répertoire dédié l'image iso et le script `creation_cle_sb3.sh`
 
 * Ouvrez un terminal, et rendez ce script exécutable :
+
 ```sh
 # chmod u+x creation_cle_sb3.sh
 ```
+
 * Lancez le script en indiquant le fichier iso de studiobox, sur le modèle suivant:
 
 ```sh
@@ -60,7 +61,9 @@ Les utilisateurs de Mac OS X pourront utiliser l'utilitaire de disque.
 Les scripts présents sur Studiobox sont préconfigurés pour fonctionner avec certains services mis en place par l'académie de Versailles. Cependant, il sera très aisé d'adapter Studiobox a un usage dans un contexte différent.
 
 Par exemple, il suffit de modifier la variable 
+
 > SERVEURACAD='webradio.ac-versailles.fr'
+
 dans le script de diffusion radio (`/home/studiobox/.Scripts/diffrec-LS.bash`) pour diffuser sur le serveur icecast de son choix.
 
 # Construire sa propre image studiobox #
@@ -68,7 +71,9 @@ dans le script de diffusion radio (`/home/studiobox/.Scripts/diffrec-LS.bash`) p
 * Cloner le dépôt [studiobox](https://gitlab.crdp.ac-versailles.fr/francois.lafont/studiobox/)
 * Se rendre dans le répertoire `/Studiobox3`
 * Lancer la commande
+
 ```sh
 # lb build
 ```
+
 * Être patient...
