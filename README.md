@@ -35,8 +35,8 @@ Les entrées de menu `Install` ou `Grapical Install` au démarrage permettent d'
 Prérequis:
 
 * les paquets suivants sont installés: parted, coreutils, util-linux, e2fsprogs, gawk
-* vous disposez d'une clé USB d'au moins 2 Go (**Attention! toutes les données présentes sur cette clé seront détruites**)
-* vous avez téléchargé l'[image iso de la studiobox](http://www.education-aux-medias.ac-versailles.fr/studiobox/) ainsi que le [script d'installation automatiquei](http://www.education-aux-medias.ac-versailles.fr/studiobox/creation_cle_sb3.sh)
+* vous disposez d'une clé USB d'au moins 2 Go (attention: toutes les données présentes sur cette clé seront détruites)
+* vous avez téléchargé l'[image iso de la studiobox](http://www.education-aux-medias.ac-versailles.fr/studiobox/) ainsi que le [script d'installation automatique](http://www.education-aux-medias.ac-versailles.fr/studiobox/creation_cle_sb3.sh)
 
 Pour créer la clé, placez dans un répertoire dédié l'image iso et le script `creation_cle_sb3.sh`
 
@@ -68,7 +68,7 @@ Par exemple, il suffit de modifier la variable
 
 > SERVEURACAD='webradio.ac-versailles.fr'
 
-dans le script de diffusion radio (`/home/studiobox/.Scripts/diffrec-LS.bash`) pour diffuser sur le serveur icecast de son choix.
+dans le script de diffusion radio (`/home/studiobox/.Scripts/diffrec-LS.bash`) pour diffuser vers le serveur icecast de son choix.
 
 # Construire sa propre image studiobox #
 
