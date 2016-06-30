@@ -6,4 +6,7 @@ nitrogen --restore &
 tint2 &
 sleep 1 && conky &
 sleep 1 && volumeicon &
-sleep 1 && bash $HOME/.Scripts/menupersistence.sh
+xset -dpms &
+xset s noblank &
+xset s off &
+bash $HOME/.Scripts/menupersistence.sh &
