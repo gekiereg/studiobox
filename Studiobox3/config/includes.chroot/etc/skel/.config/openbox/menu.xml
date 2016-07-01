@@ -150,6 +150,13 @@
 				</action>
 			</item>
 			</menu>
+			<menu id="menuairtime" label="Airtime">
+			  <item label="Installer l'outil de programmation radio (Airtime)">
+			    <action name="Execute">
+			      <execute>sudo install-airtime</execute>
+			    </action>
+			  </item>
+			</menu>
 			<menu id="configurePM_CS" label="Configurer la WebRadio">
 			<item label="Configurer le point de diffusion radio">
 				<action name="Execute">
@@ -173,11 +180,13 @@
 			</item>
 			</menu>
 			<separator/>
-		  <item label="Installer l'outil de programmation radio (Airtime)">
-		    <action name="Execute">
-		      <execute>sudo install-airtime</execute>
-		    </action>
-		  </item>
+			<item label="Accéder aux enregistrements">
+				<action name="Execute">
+					<execute>
+						pcmanfm 'Enregistrements/'
+					</execute>
+				</action>
+			</item>
 			<separator/>
 			<item label="Documentation WebRadio">
 				<action name="Execute">

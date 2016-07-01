@@ -109,31 +109,6 @@
 			</item>
 		</menu>
 		<menu id="webradio" label="Outils WebRadio">
-			<menu id="diff_airtime" label="Airtime">
-			<item label="Programmer une émission (Airtime)">
-				<action name="Execute">
-					<execute>firefox &quot;http://localhost/login&quot;</execute>
-				</action>
-			</item>
-			<item label="Diffuser un flux vers le serveur Airtime">
-				<action name="Execute">
-					<execute>lxterminal -e '.Scripts/diffrec-LS.bash airtime'</execute>
-				</action>
-			</item>
-			<item label="Diffuser et enregistrer un flux vers le serveur Airtime">
-				<action name="Execute">
-					<execute>lxterminal -e '.Scripts/diffrec-LS.bash airtime rec'</execute>
-				</action>
-			</item>
-			<separator/>
-			<item label="Documentation Airtime">
-				<action name="Execute">
-					<execute>
-						evince 'Documents/.memento_airtime.pdf'
-					</execute>
-				</action>
-			</item>
-			</menu>
 			<menu id="diff_local" label="Dans l'établissement...">
 			<item label="Enregistrer une émission">
 				<action name="Execute">
@@ -175,6 +150,31 @@
 				</action>
 			</item>
 			</menu>
+			<menu id="diff_airtime" label="Airtime">
+			<item label="Programmer une émission (Airtime)">
+				<action name="Execute">
+					<execute>firefox &quot;http://localhost/login&quot;</execute>
+				</action>
+			</item>
+			<item label="Diffuser un flux vers le serveur Airtime">
+				<action name="Execute">
+					<execute>lxterminal -e '.Scripts/diffrec-LS.bash airtime'</execute>
+				</action>
+			</item>
+			<item label="Diffuser et enregistrer un flux vers le serveur Airtime">
+				<action name="Execute">
+					<execute>lxterminal -e '.Scripts/diffrec-LS.bash airtime rec'</execute>
+				</action>
+			</item>
+			<separator/>
+			<item label="Documentation Airtime">
+				<action name="Execute">
+					<execute>
+						evince 'Documents/.memento_airtime.pdf'
+					</execute>
+				</action>
+			</item>
+			</menu>
 			<menu id="configurePM_CS" label="Configurer la WebRadio">
 			<item label="Configurer le point de diffusion radio">
 				<action name="Execute">
@@ -198,6 +198,14 @@
 			</item>
 			</menu>
 			<separator/>
+			<item label="Accéder aux enregistrements">
+				<action name="Execute">
+					<execute>
+						pcmanfm 'Enregistrements/'
+					</execute>
+				</action>
+			</item>
+			<separator/>
 			<item label="Documentation WebRadio">
 				<action name="Execute">
 					<execute>
@@ -206,7 +214,7 @@
 				</action>
 			</item>
 		</menu>
-		<menu id="webTV" label="Outils WebTV">
+			<menu id="webTV" label="Outils WebTV">
 			<item label="Diffuser un flux vidéo DV">
 				<action name="Execute">
 					<execute>lxterminal -e '.Scripts/diff-tv.bash'</execute>
