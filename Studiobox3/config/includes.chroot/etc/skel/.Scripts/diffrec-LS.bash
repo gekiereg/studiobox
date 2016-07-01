@@ -18,7 +18,7 @@ function configPM {
 # formulaire zenity
 CFPM=$(zenity --forms \
     --title="Configuration du point de diffusion" \
-    --text="Définition du point de montage et du mot de passe" \
+    --text="Définition du point de diffusion et du mot de passe" \
     --add-entry="Nom du point de diffusion (sous la forme etab-type-ville.mp3 ou etab-type-ville.ogg" \
     --add-password="Mot de passe" \
     --add-password="Confirmer le mot de passe" \
@@ -100,13 +100,23 @@ fi
 }
 
 function configQREC {
-QREC=$(zenity --scale --min-value=1 --max-value=9 --value=9 --title="Qualité de l'enregistrement" --text="Choisissez la qualité de l'enregistrement. (1 = très faible, 9 = excellente)")
+if [ -e $FICHIERQREC ]; then
+	QRECDEF=$(cat $FICHIERQREC)
+else
+	QRECDEF='9'
+fi
+QREC=$(zenity --scale --min-value=1 --max-value=9 --value=$QRECDEF --title="Qualité de l'enregistrement" --text="Choisissez la qualité de l'enregistrement. (1 = très faible, 9 = excellente)")
 annulzen
 echo $QREC > $FICHIERQREC
 }
 
 function configQDIFF {
-QDIFF=$(zenity --scale --min-value=1 --max-value=9 --value=5 --title="Qualité de la diffusion" --text="Choisissez la qualité de la diffusion. (1 = très faible, 9 = excellente)")
+if [ -e $FICHIERQDIFF ]; then
+	QDIFFDEF=$(cat $FICHIERQDIFF)
+else
+	QDIFFDEF='5'
+fi
+QDIFF=$(zenity --scale --min-value=1 --max-value=9 --value=$QDIFFDEF --title="Qualité de la diffusion" --text="Choisissez la qualité de la diffusion. (1 = très faible, 9 = excellente)")
 annulzen
 echo $QDIFF > $FICHIERQDIFF
 }
@@ -193,8 +203,8 @@ function verifAIR {
 CONFAIR=$(cat /etc/airtime/liquidsoap.cfg | grep ^master_live_stream_mp | grep $PMAIRTIME)
 if [ -z "$CONFAIR" ]; then
 	zenity --info --title="Configurer Airtime" --text="Pour diffuser un flux vers Airtime, celui-ci doit être configuré.
-	Vous trouverez une description précise de la configuration à effectuer dans 'Documents/memento_airtime.pdf'
-	(rubrique 'Configurer Airtime > Configuration des flux')" 2>/dev/null
+Vous trouverez une description précise de la configuration à effectuer dans 'Documents/memento_airtime.pdf'
+(rubrique 'Configurer Airtime > Configuration des flux')" 2>/dev/null
 	exit
 fi
 }
