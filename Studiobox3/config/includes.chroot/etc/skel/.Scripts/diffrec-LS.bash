@@ -19,7 +19,7 @@ function configPM {
 CFPM=$(zenity --forms \
     --title="Configuration du point de diffusion" \
     --text="Définition du point de diffusion et du mot de passe" \
-    --add-entry="Nom du point de diffusion (sous la forme etab-type-ville.mp3 ou etab-type-ville.ogg" \
+    --add-entry="Nom du point de diffusion (sous la forme etab-type-ville.mp3 ou etab-type-ville.ogg)" \
     --add-password="Mot de passe" \
     --add-password="Confirmer le mot de passe" \
     --separator="|" 2>/dev/null)
@@ -59,7 +59,7 @@ sed -i 's/ /_/g' $FICHIERCS
 
 LISTECARTES=$(cat $FICHIERCS)
 
-CARTE=$(zenity --entry --title="Configuration de la carte son" --text="Veuillez indiquer la carte son à utiliser" $LISTECARTES 2>/dev/null)
+CARTE=$(zenity --entry --title="Choix de la carte son" --text="Sélectionner la carte son à utiliser" $LISTECARTES 2>/dev/null)
 annulzen
 
 nombre=$(echo $CARTE | cut -d":" -f1 | tail -c2)
@@ -93,7 +93,7 @@ fi
 function verifPM {
 TYPEPM=$(cat $FICHIERPM | grep ^pm | cut -d"," -f2 | cut -d"." -f2)
 if [ "$TYPEPM" != ogg ] && [ "$TYPEPM" != mp3 ]; then
-	zenity --info --text="Votre point de diffusion est mal ou non configuré (il doit être de forme 'type-nom-ville.mp3' ou 'type-nom-ville.ogg'.
+	zenity --info --text="Votre point de diffusion est mal ou non configuré (il doit être de forme 'type-nom-ville.mp3' ou 'type-nom-ville.ogg').
 Veuillez le reconfigurer (menu 'Outils WebRadio' > 'Configurer la webradio' > 'Configurer le point de diffusion radio')" 2>/dev/null
 	exit
 fi
@@ -105,7 +105,7 @@ if [ -e $FICHIERQREC ]; then
 else
 	QRECDEF='9'
 fi
-QREC=$(zenity --scale --min-value=1 --max-value=9 --value=$QRECDEF --title="Qualité de l'enregistrement" --text="Choisissez la qualité de l'enregistrement. (1 = très faible, 9 = excellente)")
+QREC=$(zenity --scale --min-value=1 --max-value=9 --value=$QRECDEF --title="Qualité de l'enregistrement" --text="Choisissez la qualité de l'enregistrement (1 = très faible, 9 = excellente).")
 annulzen
 echo $QREC > $FICHIERQREC
 }
@@ -116,7 +116,7 @@ if [ -e $FICHIERQDIFF ]; then
 else
 	QDIFFDEF='5'
 fi
-QDIFF=$(zenity --scale --min-value=1 --max-value=9 --value=$QDIFFDEF --title="Qualité de la diffusion" --text="Choisissez la qualité de la diffusion. (1 = très faible, 9 = excellente)")
+QDIFF=$(zenity --scale --min-value=1 --max-value=9 --value=$QDIFFDEF --title="Qualité de la diffusion" --text="Choisissez la qualité de la diffusion (1 = très faible, 9 = excellente).")
 annulzen
 echo $QDIFF > $FICHIERQDIFF
 }
