@@ -117,6 +117,7 @@ arandr
 gdebi
 gparted
 keyboard-configuration
+ftp
 
 # éditeurs
 vim 
