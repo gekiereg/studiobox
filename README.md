@@ -54,11 +54,9 @@ Pour créer la clé, placez dans un répertoire dédié l'image iso et le script
 
 Que fait le script ? Dans l'ordre, il vous demandera d'indiquer l'identifiant de la clé usb sur laquelle graver StudioBox, puis y supprimera tout ce qui s'y trouve, et enfin installera le système studiobox et créera une deuxième partition qui servira à stocker les données et rendre le système _persistant_ (les réglages et manipulations effectuées seront conservées au redémarrage).
 
-## Pour les utilisateurs de Windows ou de MacOS ##
+## Pour les utilisateurs de Windows ##
 
-Si vous ne possédez qu'un système Windows, vous pouvez créer la clé avec le logiciel [win32diskimager](http://sourceforge.net/projects/win32diskimager/). Sélectionnez le fichier iso (si le fichier iso n'apparaît pas, changez le filtre des fichiers à `*.*`) de la Studiobox dans la section `Image File` et la lettre correspondant à la clef USB (l'image doit être copiée sur le disque complet, et pas sur une partition; par exemple `/dev/sdb` et non pas `/dev/sdb1`). Enfin, cliquez sur `Write`.
-
-Les utilisateurs de Mac OS X pourront utiliser l'utilitaire de disque.
+Si vous ne possédez qu'un système Windows, vous pouvez créer la clé avec le logiciel [Rufus](https://rufus.akeo.ie/). Sélectionnez la clé USB, cocher `Créer un disque de démarrage` et choisir `Image ISO` dans le menu déroulant. Sélectionner enfin le fichier iso de studiobox précédemment téléchargé puis lancer la gravure en cliquant sur `Démarrer`. Attention: le système créé ainsi n'est pas _persistant_ (réglages et manipulations sont effacés à chaque redémarrage). Il est possible de rendre le système persistant en suivant la méthode indiquée à l'ouverture de la session studiobox.
 
 # Utilisation dans un contexte non versaillais #
 
