@@ -36,7 +36,7 @@
 				</action>
 			</item>
 		</menu>
-		<menu id="montage" label="Outils montage vidéo-son">
+		<menu id="montage" label="Outils vidéo-son">
 			<menu id="root-menu-60133" label="Outils Vidéo">
 				<item label="Capture DV/HDV (Kino)">
 					<action name="Execute">
@@ -58,6 +58,11 @@
 				<item label="Montage (Audacity)">
 					<action name="Execute">
 						<execute>audacity</execute>
+					</action>
+				</item>
+				<item label="Gestion des métadonnées (EasyTag)">
+					<action name="Execute">
+						<execute>easytag</execute>
 					</action>
 				</item>
 			</menu>
@@ -109,20 +114,32 @@
 			</item>
 		</menu>
 		<menu id="webradio" label="Outils WebRadio">
-			<menu id="diff_local" label="Dans l'établissement...">
+			<menu id="record" label="Enregistrer">
 			<item label="Enregistrer une émission">
 				<action name="Execute">
 					<execute>lxterminal -e '.Scripts/diffrec-LS.bash rec'</execute>
 				</action>
 			</item>
-			<item label="Diffuser un flux radio dans l'établissement">
+			</menu>
+			<menu id="broadcast" label="Diffuser">
+			<item label="Programmer une émission (Airtime)">
+				<action name="Execute">
+					<execute>firefox &quot;http://localhost/login&quot;</execute>
+				</action>
+			</item>
+			<item label="Diffuser avec Airtime">
+				<action name="Execute">
+					<execute>lxterminal -e '.Scripts/diffrec-LS.bash airtime'</execute>
+				</action>
+			</item>
+			<item label="Diffuser dans l'établissement">
 				<action name="Execute">
 					<execute>lxterminal -e '.Scripts/diffrec-LS.bash local'</execute>
 				</action>
 			</item>
-			<item label="Diffuser et enregistrer un flux radio dans l'établissement">
+			<item label="Diffuser sur internet">
 				<action name="Execute">
-					<execute>lxterminal -e '.Scripts/diffrec-LS.bash local rec'</execute>
+					<execute>lxterminal -e '.Scripts/diffrec-LS.bash internet'</execute>
 				</action>
 			</item>
 			<separator/>
@@ -131,67 +148,46 @@
 					<execute>firefox &quot;http://localhost:8000&quot;</execute>
 				</action>
 			</item>
-			</menu>
-			<menu id="diff-internet" label="Sur internet...">
-			<item label="Diffuser un flux radio sur internet">
-				<action name="Execute">
-					<execute>lxterminal -e '.Scripts/diffrec-LS.bash internet'</execute>
-				</action>
-			</item>
-			<item label="Diffuser et enregistrer un flux radio sur internet">
-				<action name="Execute">
-					<execute>lxterminal -e '.Scripts/diffrec-LS.bash internet rec'</execute>
-				</action>
-			</item>
-			<separator/>
 			<item label="Interface web du serveur de diffusion radiophonique académique">
 				<action name="Execute">
 					<execute>firefox &quot;http://webradio.ac-versailles.fr&quot;</execute>
 				</action>
 			</item>
 			</menu>
-			<menu id="diff_airtime" label="Airtime">
-			<item label="Programmer une émission (Airtime)">
+			<menu id="record_broadcast" label="Diffuser et enregistrer">
+			<item label="Diffuser dans l'établissement et enregistrer">
 				<action name="Execute">
-					<execute>firefox &quot;http://localhost/login&quot;</execute>
+					<execute>lxterminal -e '.Scripts/diffrec-LS.bash local rec'</execute>
 				</action>
 			</item>
-			<item label="Diffuser un flux vers le serveur Airtime">
+			<item label="Diffuser sur internet et enregistrer">
 				<action name="Execute">
-					<execute>lxterminal -e '.Scripts/diffrec-LS.bash airtime'</execute>
+					<execute>lxterminal -e '.Scripts/diffrec-LS.bash internet rec'</execute>
 				</action>
 			</item>
-			<item label="Diffuser et enregistrer un flux vers le serveur Airtime">
+			<item label="Diffuser avec Airtime et enregistrer">
 				<action name="Execute">
 					<execute>lxterminal -e '.Scripts/diffrec-LS.bash airtime rec'</execute>
 				</action>
 			</item>
-			<separator/>
-			<item label="Documentation Airtime">
-				<action name="Execute">
-					<execute>
-						evince 'Documents/.memento_airtime.pdf'
-					</execute>
-				</action>
-			</item>
 			</menu>
-			<menu id="configurePM_CS" label="Configurer la WebRadio">
-			<item label="Configurer le point de diffusion radio">
+			<menu id="configure" label="Configurer">
+			<item label="Configurer la diffusion sur internet">
 				<action name="Execute">
 					<execute>bash .Scripts/diffrec-LS.bash configurePM</execute>
 				</action>
 			</item>
-			<item label="Configurer la carte son des flux">
+			<item label="Choisir la carte son">
 				<action name="Execute">
 					<execute>bash .Scripts/diffrec-LS.bash configureCS</execute>
 				</action>
 			</item>
-			<item label="Configurer la qualité de l'enregistrement">
+			<item label="Définir la qualité de l'enregistrement">
 				<action name="Execute">
 					<execute>bash .Scripts/diffrec-LS.bash configureQREC</execute>
 				</action>
 			</item>
-			<item label="Configurer la qualité de la diffusion">
+			<item label="Définir la qualité de la diffusion">
 				<action name="Execute">
 					<execute>bash .Scripts/diffrec-LS.bash configureQDIFF</execute>
 				</action>
@@ -210,6 +206,13 @@
 				<action name="Execute">
 					<execute>
 						evince 'Documents/.docsb3.pdf'
+					</execute>
+				</action>
+			</item>
+			<item label="Documentation Airtime">
+				<action name="Execute">
+					<execute>
+						evince 'Documents/.memento_airtime.pdf'
 					</execute>
 				</action>
 			</item>
