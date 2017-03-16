@@ -25,7 +25,7 @@ CFPM=$(zenity --forms \
     --separator="|" 2>/dev/null)
 annulzen
 
-# récupération des valeurs (amélioration possible: regex sur le point de montage pour tester cohérence)
+# récupération des valeurs
 point=$(echo $CFPM | cut -d"|" -f1)
 pass=$(echo $CFPM | cut -d"|" -f2)
 pass1=$(echo $CFPM | cut -d"|" -f3)
@@ -73,8 +73,8 @@ $CARTEOK" 2>/dev/null
 
 function verifIP {
 if  [ -z "$IP" ]; then
-	zenity --info --title="Diffusion impossible" --text="Studiobox ne possède pas d'adresse sur le réseau de 
-l'établissement: il est donc impossible de procéder à une diffusion. Vous pouvez par contre lancer un enregistrement." 2>/dev/null
+	zenity --info --title="Diffusion impossible" --text="Studiobox n'est pas connecté au réseau de 
+l'établissement: il est donc impossible de procéder à une diffusion." 2>/dev/null
 	exit
 fi
 }
@@ -85,7 +85,7 @@ nombre1=$(cat $FICHIERCS | cut -d"," -f2)
 DISPO=$(aplay -l | grep ^"carte $nombre" |  grep "périphérique $nombre1")
 if [ -z "$DISPO" ] || [ -z "$nombre" ] ; then
         zenity --info --title="Carte son indisponible" --text="Il semblerait que la carte son configurée soit indisponible.
-Veuillez la reconfigurer (menu 'Outils WebRadio' > 'Configurer la webradio' > 'Configurer la carte son des flux')" 2>/dev/null
+Veuillez la reconfigurer (menu 'Outils WebRadio' > 'Configurer' > 'Choisir la carte son')" 2>/dev/null
 	exit
 fi
 }
@@ -93,8 +93,8 @@ fi
 function verifPM {
 TYPEPM=$(cat $FICHIERPM | grep ^pm | cut -d"," -f2 | cut -d"." -f2)
 if [ "$TYPEPM" != ogg ] && [ "$TYPEPM" != mp3 ]; then
-	zenity --info --text="Votre point de diffusion est mal ou non configuré (il doit être de forme 'type-nom-ville.mp3' ou 'type-nom-ville.ogg').
-Veuillez le reconfigurer (menu 'Outils WebRadio' > 'Configurer la webradio' > 'Configurer le point de diffusion radio')" 2>/dev/null
+	zenity --info --text="La diffusion sur internet n'est pas configurée.
+(menu 'Outils WebRadio' > 'Configurer' > 'Configurer la diffusion sur internet')" 2>/dev/null
 	exit
 fi
 }
@@ -230,7 +230,7 @@ VLCVIEW='--zoom 0.5 --audio-visual visual --effect-list spectrum'
 TEXTEZENREC="Répertoire d'enregistrement: '$REPREC' (fichier .ogg horodaté)."
 TEXTEZENDIFFLOCAL="Adresse de diffusion: http://$IP:$PORTICECAST/$PMLOCAL"
 TEXTEZENDIFFINT="Adresse de diffusion: http://$SERVEURACAD/$PMACAD"
-TEXTEZENAIR="Pour diffuser ce flux sur internet, ouvrir Airtime et basculer la source de flux sur 'Source Maître'"
+TEXTEZENAIR="Flux envoyé vers la 'Source Maître' d'Airtime"
 TEXTEMONITOR="Souhaitez-vous monitorer le flux avec VLC?"
 
 # amélioration possible sur toutes les fonctions de diffusion et d'enregistrement: effectuer un test 
