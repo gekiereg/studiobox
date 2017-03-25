@@ -5,6 +5,7 @@ FICHIERCS='.Scripts/config/cs'
 FICHIERPM='.Scripts/config/pm'
 FICHIERQDIFF='.Scripts/config/qdiff'
 FICHIERQREC='.Scripts/config/qrec'
+FICHIERPLAYER='.Scripts/config/player'
 IP=$(sudo ifconfig  | grep 'inet adr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}')
 
 function annulzen {
@@ -231,10 +232,17 @@ TEXTEZENREC="Répertoire d'enregistrement: '$REPREC' (fichier .ogg horodaté)."
 TEXTEZENDIFFLOCAL="Adresse de diffusion: http://$IP:$PORTICECAST/$PMLOCAL"
 TEXTEZENDIFFINT="Adresse de diffusion: http://$SERVEURACAD/$PMACAD"
 TEXTEZENAIR="Flux envoyé vers la 'Source Maître' d'Airtime"
-TEXTEMONITOR="Souhaitez-vous monitorer le flux avec VLC?"
+TEXTEMONITOR="Écouter avec VLC?"
 
 # amélioration possible sur toutes les fonctions de diffusion et d'enregistrement: effectuer un test 
 # pour vérifier que la diffusion et / ou l'enregistrement se déroulent correctement
+
+function generateplayer {
+echo "<iframe frameborder=\"0\" width=\"750\" height=\"170\"
+src=\"https://scolawebtv.crdp-versailles.fr/webradio/?play=$PMACAD\">
+</iframe>" > $FICHIERPLAYER
+gedit $FICHIERPLAYER
+}
 
 function difflocal {
 zenity --question --title="Diffusion en direct" --text="$TEXTEZENDIFFLOCAL
@@ -402,4 +410,8 @@ case $1 in
 		diffairtimerec
 	fi
 	;;	
+	'embed')
+	verifPM
+	generateplayer
+	;;
 esac

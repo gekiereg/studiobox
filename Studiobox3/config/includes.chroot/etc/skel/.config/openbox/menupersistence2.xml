@@ -192,6 +192,11 @@
 					<execute>bash .Scripts/diffrec-LS.bash configureQDIFF</execute>
 				</action>
 			</item>
+				<item label="Générer le code du lecteur html5 pour le direct">
+					<action name="Execute">
+						<execute>bash .Scripts/diffrec-LS.bash embed</execute>
+					</action>
+				</item>
 			</menu>
 			<separator/>
 			<item label="Accéder aux enregistrements">
