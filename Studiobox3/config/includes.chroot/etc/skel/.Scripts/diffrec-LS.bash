@@ -239,7 +239,7 @@ TEXTEMONITOR="Écouter avec VLC?"
 
 function generateplayer {
 echo "<iframe frameborder=\"0\" width=\"750\" height=\"170\"
-src=\"https://scolawebtv.crdp-versailles.fr/webradio/?play=$PMACAD\">
+src=\"http://scolawebtv.crdp-versailles.fr/webradio/?play=$PMACAD\">
 </iframe>" > $FICHIERPLAYER
 gedit $FICHIERPLAYER
 }
