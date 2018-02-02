@@ -5,7 +5,6 @@ FICHIERCS='.Scripts/config/cs'
 FICHIERPM='.Scripts/config/pm'
 FICHIERQDIFF='.Scripts/config/qdiff'
 FICHIERQREC='.Scripts/config/qrec'
-FICHIERPLAYER='.Scripts/config/player'
 IP=$(sudo ifconfig  | grep 'inet adr:'| grep -v '127.0.0.1' | cut -d: -f2 | awk '{ print $1}')
 
 function annulzen {
@@ -60,16 +59,23 @@ sed -i 's/ /_/g' $FICHIERCS
 
 LISTECARTES=$(cat $FICHIERCS)
 
-CARTE=$(zenity --entry --title="Choix de la carte son" --text="Sélectionner la carte son à utiliser" $LISTECARTES 2>/dev/null)
-annulzen
-
-nombre=$(echo $CARTE | cut -d":" -f1 | tail -c2)
-nombre1=$(echo $CARTE | cut -d":" -f2 | tail -c2)
-
-echo "$nombre,$nombre1" > $FICHIERCS
-CARTEOK=$(aplay -l | grep ^"carte $nombre" | grep "périphérique $nombre1")
+NBRECARTES=$(wc -l $FICHIERCS | cut -d" " -f1)
+if [ "$NBRECARTES" -eq 1 ]; then
+	zenity --info --title="Carte son configurée" --text="La carte son qui sera utilisée pour les enregistrements et la diffusion est la suivante:
+$LISTECARTES"
+	nombre=$(echo $LISTECARTES | cut -d":" -f1 | tail -c2)
+	nombre1=$(echo $LISTECARTES | cut -d":" -f2 | tail -c2)
+	echo "$nombre,$nombre1" > $FICHIERCS
+else
+	CARTE=$(zenity --entry --title="Choix de la carte son" --text="Sélectionner la carte son à utiliser" $LISTECARTES 2>/dev/null)
+	annulzen
+	nombre=$(echo $CARTE | cut -d":" -f1 | tail -c2)
+	nombre1=$(echo $CARTE | cut -d":" -f2 | tail -c2)
+	echo "$nombre,$nombre1" > $FICHIERCS
+	CARTEOK=$(aplay -l | grep ^"carte $nombre" | grep "périphérique $nombre1")
 	zenity --info --title="Carte son configurée" --text="La configuration est maintenant terminée. Au prochain enregistrement ou à la prochaine diffusion, la carte suivante sera utilisée:
-$CARTEOK" 2>/dev/null
+	$CARTEOK" 2>/dev/null
+fi
 }
 
 function verifIP {
@@ -232,17 +238,10 @@ TEXTEZENREC="Répertoire d'enregistrement: '$REPREC' (fichier .ogg horodaté)."
 TEXTEZENDIFFLOCAL="Adresse de diffusion: http://$IP:$PORTICECAST/$PMLOCAL"
 TEXTEZENDIFFINT="Adresse de diffusion: http://$SERVEURACAD/$PMACAD"
 TEXTEZENAIR="Flux envoyé vers la 'Source Maître' d'Airtime"
-TEXTEMONITOR="Écouter avec VLC?"
+TEXTEMONITOR="Souhaitez-vous monitorer le flux avec VLC?"
 
 # amélioration possible sur toutes les fonctions de diffusion et d'enregistrement: effectuer un test 
 # pour vérifier que la diffusion et / ou l'enregistrement se déroulent correctement
-
-function generateplayer {
-echo "<iframe frameborder=\"0\" width=\"750\" height=\"170\"
-src=\"http://scolawebtv.crdp-versailles.fr/webradio/?play=$PMACAD\">
-</iframe>" > $FICHIERPLAYER
-gedit $FICHIERPLAYER
-}
 
 function difflocal {
 zenity --question --title="Diffusion en direct" --text="$TEXTEZENDIFFLOCAL
@@ -410,8 +409,4 @@ case $1 in
 		diffairtimerec
 	fi
 	;;	
-	'embed')
-	verifPM
-	generateplayer
-	;;
 esac
