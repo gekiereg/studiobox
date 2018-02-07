@@ -452,7 +452,7 @@
 			</item>
 			<item label="Rendre la clé persistante">
 				<action name="Execute">
-					<execute>lxterminal -e '.Scripts/persistence.sh'</execute>
+					<execute>lxterminal -e '.Scripts/menupersistence.sh'</execute>
 				</action>
 			</item>
 		</menu>
