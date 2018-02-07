@@ -32,7 +32,7 @@ Souhaitez-vous lancer l'outil de création de la persistance maintenant?"
 		zenity --question --title="Mise en place de la persistence" --text="La clé $USB_DISK_DEV (taille:$SIZE) a été repérée comme clé usb Studiobox.
 Mettre en place la persistance sur cette clé?" 2>/dev/null
 		if [ $? = 0 ]; then
-		lxterminal -e "sudo bash /home/studiobox/.Scripts/persistence.sh $USB_DISK_DEV" | tee >(zenity --no-cancel --progress --pulsate --autoclose --title="Mise en place de la persistance" --text="Cela peut prendre plusieurs minutes, selon la taille de la clé USB... merci de patienter" 2>/dev/null)
+		lxterminal -e "sudo bash /home/studiobox/.Scripts/persistence.sh $USB_DISK_DEV" | tee >(zenity --no-cancel --progress --pulsate --auto-close --title="Mise en place de la persistance" --text="Cela peut prendre plusieurs minutes, selon la taille de la clé USB... merci de patienter" 2>/dev/null)
 		else
 			exit
 		fi
@@ -44,7 +44,7 @@ Mettre en place la persistance sur cette clé?" 2>/dev/null
 	zenity --question --title="Persistance mise place" --text="La persistance sera activée au prochain redémarrage.
 Souhaitez-vous redémarrer dès maintenant?" 2>/dev/null
 	if [ $? = 0 ]; then
-		reboot
+		sudo reboot
 	else
 		exit
 	fi
