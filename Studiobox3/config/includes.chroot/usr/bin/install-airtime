@@ -32,9 +32,11 @@ Ne tenez pas compte des demandes concernant des commandes à renseigner
 dans le terminal et du message d'erreur sur la dernière page: ces 
 manipulations seront réalisées automatiquement quand vous fermerez votre navigateur..." 2>/dev/null
 
-# correction d'un bug de cong de postgresql
 echo "Configuration et redémarrage de postgresql"
-sed -i 's/5434/5432/' /etc/postgresql/9.4/main/postgresql.conf
+portpostgres=$(netstat -nlp |grep -m1 postgres |cut -d: -f2 |awk '{print $1}')
+if [ $portpostgres != 5432 ]; then
+sed -i 's/'$portpostgres'/5432/' /etc/postgresql/9.4/main/postgresql.conf
+fi
 /etc/init.d/postgresql restart
 
 # finalisation de la configuration par l'utilisateur, dans firefox
