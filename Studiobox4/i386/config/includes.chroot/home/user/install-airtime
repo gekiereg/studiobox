@@ -1,3 +1,0 @@
-#!/bin/bash
-cd Documents/airtime-airtime-2.5.2.1
-./install -fpai

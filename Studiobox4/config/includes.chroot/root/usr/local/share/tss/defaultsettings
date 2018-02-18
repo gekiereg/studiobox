@@ -1,0 +1,22 @@
+server1: localhost
+port1: 8000
+mountpoint1: /radio.ogg
+password1: motdepasse4
+framesize1: 3
+framerate1: 1
+vquality1: 5
+aquality1: 5
+achannels1: 1
+samplerate1: 1
+artist1: Francois-Xavier Vial
+title1: Emission test
+date1: 5-5-2007
+location1: Réseau local
+organization1: Etablissement
+copyright1:
+license1: creative commons share alike
+description1: 
+genre1: Emissions scolaires
+name1: WebTV et Webradio de l'établissement
+url1: http://localhost:8000/radio.ogg
+dump1: 

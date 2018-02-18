@@ -1,4 +1,0 @@
-#!/bin/sh
-chown -R user:user /home/user
-chown icecast2:icecast /etc/icecast2/icecast.xml
-chmod 644 /etc/icecast2/icecast.xml

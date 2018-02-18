@@ -1,0 +1,11 @@
+#!/bin/bash
+chown -R studiobox:studiobox /home/studiobox
+chown -R studiobox:studiobox /home/studiobox/Documents/.*
+cp -r /root/etc/* /etc
+rm -rf /root/etc
+cp -r /root/usr/* /usr
+rm -rf /root/usr
+chown icecast2:icecast /etc/icecast2/icecast.xml
+chmod 644 /etc/icecast2/icecast.xml
+
+

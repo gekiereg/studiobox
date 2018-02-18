@@ -1,0 +1,5 @@
+#!/bin/bash
+sudo /etc/init.d/mpd stop
+sudo mpd --create-db
+sudo /etc/init.d/mpd start
+exit 0
