@@ -1,6 +1,8 @@
 #!/bin/bash
 
-if [ -e /persistence.conf ] && [ -e "$HOME/.config/openbox/menupersistence.xml" ]; then
+PERSISTENCE=$(ls /lib/live/mount/persistence/sd* | grep persistence.conf)
+
+if [ -e $PERSISTENCE ] && [ -e "$HOME/.config/openbox/menupersistence.xml" ]; then
 	mv $HOME/.config/openbox/menupersistence.xml $HOME/.config/openbox/menu.xml
 	mv $HOME/.config/openbox/menupersistence2.xml $HOME/.config/openbox/menu2.xml
 	sed -i '/menupersistence/d' .config/openbox/autostart.sh
