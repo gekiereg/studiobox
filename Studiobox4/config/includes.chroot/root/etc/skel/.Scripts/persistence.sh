@@ -3,7 +3,7 @@
 
 VERIFPERSIST=$(ls /lib/live/mount/persistence/sd* | grep persistence.conf)
 
-if [ "$VERIFPERSIST" = "persistence.conf" ]; then
+if [ -e $VERIFPERSIST ]; then
   echo "La persistance existe déjà"
   echo "Vous n'avez pas besoin de lancer ce script"
   sleep 5
@@ -19,9 +19,9 @@ if  [ "$CLE" = "" ]
 fi
 
 echo "*** Création de la partiton persistante"
-START=`LC_ALL=C sudo parted -s $CLE print free | grep Free | grep [MG]B | gawk '{print $1}'`
-END=`LC_ALL=C sudo parted -s $CLE print free | grep Free | grep [MG]B | gawk '{print $2}'`
-sudo parted -a -s optimal $CLE mkpart primary ext2 $START $END
+START=`LC_ALL=C sudo parted $CLE print free | grep Free | grep [MG]B | gawk '{print $1}'`
+END=`LC_ALL=C sudo parted $CLE print free | grep Free | grep [MG]B | gawk '{print $2}'`
+sudo parted -a optimal -s $CLE mkpart primary ext2 $START $END
 sudo mkfs.ext2 $CLE$PART2
 echo "*** définition du label « persistence »"
 sudo tune2fs -L persistence $CLE$PART2
