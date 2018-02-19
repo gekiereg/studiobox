@@ -3,7 +3,7 @@
 
 VERIFPERSIST=$(ls /lib/live/mount/persistence/sd* | grep persistence.conf)
 
-if [ -e $VERIFPERSIST ]; then
+if [ -e "$VERIFPERSIST" ]; then
   echo "La persistance existe déjà"
   echo "Vous n'avez pas besoin de lancer ce script"
   sleep 5
